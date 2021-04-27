@@ -1,0 +1,34 @@
+﻿<Window x:Class="AlanMocek.LifeLog.Client.Windows.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows"
+        xmlns:activitiesPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.ActivitiesPanel"
+        xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="900" Width="1600">
+    
+    
+    <i:Interaction.Triggers>
+        <i:EventTrigger EventName="Loaded">
+            <i:InvokeCommandAction Command="{Binding InitializeApplicationCommand}" />
+        </i:EventTrigger>
+    </i:Interaction.Triggers>
+    
+    <Grid>
+        <Grid>
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center">
+                <StackPanel Orientation="Vertical">
+                    <TextBlock Text="Alan Mocek" HorizontalAlignment="Center" FontSize="24"/>
+                    <TextBlock Text="LifeLog" HorizontalAlignment="Center" FontSize="24"/>
+                    <TextBlock Text="(Application Loading)" HorizontalAlignment="Center" FontSize="16"/>
+                </StackPanel>
+            </Border>
+        </Grid>
+
+        <ContentPresenter Content="{Binding CurrentPanelViewModel}">
+
+        </ContentPresenter>
+    </Grid>
+</Window>

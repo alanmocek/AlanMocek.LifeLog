@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>LifeLog.App</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="ActivityRecords\Commands\" />
+    <Folder Include="ActivityRecords\CommandHandlers\" />
+    <Folder Include="ActivityRecords\Queries\" />
+    <Folder Include="ActivityRecords\ViewModels\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlanMocek.LifeLog.Core\AlanMocek.LifeLog.Core.csproj" />
+    <ProjectReference Include="..\AlanMocek.LifeLog.Data\AlanMocek.LifeLog.Data.csproj" />
+    <ProjectReference Include="..\AlanMocek.LifeLog.Infrastructure\AlanMocek.LifeLog.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>

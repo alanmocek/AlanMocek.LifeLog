@@ -1,0 +1,27 @@
+﻿<Application x:Class="AlanMocek.LifeLog.Client.Windows.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows"
+             Startup="Application_Startup"
+             Exit="Application_Exit"
+             
+             xmlns:converters="clr-namespace:AlanMocek.LifeLog.Client.Application.Converters;assembly=LifeLog.ClientApp"
+             
+             xmlns:activitiesPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel;assembly=LifeLog.ClientApp"
+             xmlns:activitiesPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.ActivitiesPanel">
+    <Application.Resources>
+
+        <converters:ObjectExistenceToVisiblityConverter x:Key="ObjectExistenceToVisiblityConverter"/>
+
+        
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelViewModel}">
+            <activitiesPanelViews:ActivitiesPanelView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelCreateActivityDialogViewModel}">
+            <activitiesPanelViews:ActivitiesPanelCreateActivityDialogView/>
+        </DataTemplate>
+
+        
+    </Application.Resources>
+</Application>

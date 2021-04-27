@@ -1,0 +1,12 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <AssemblyName>LifeLog.Core</AssemblyName>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AlanMocek.LifeLog.Infrastructure\AlanMocek.LifeLog.Infrastructure.csproj" />
+  </ItemGroup>
+
+</Project>
