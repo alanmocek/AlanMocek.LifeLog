@@ -50,6 +50,7 @@ namespace AlanMocek.LifeLog.Client.Windows
                 services.AddActivitiesServices();
 
                 services.AddTransient<ActivitiesPanelCreateActivityDialogViewModel>();
+                services.AddTransient<ActivitiesPanelDeleteActivityDialogViewModel>();
             });
 
         private async void Application_Startup(object sender, StartupEventArgs e)

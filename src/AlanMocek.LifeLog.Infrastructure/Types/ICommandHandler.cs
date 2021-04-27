@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AlanMocek.LifeLog.Infrastructure.Types
 {
     public interface ICommandHandler<TCommand>
-        where TCommand : ICommand
+        where TCommand : ILifeLogCommand
     {
         Task HandleAsync(TCommand command);
     }

@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.Activities.Commands
 {
-    public record CreateActivity : ILifeLogCommand
+    public record DeleteActivity : ILifeLogCommand
     {
         public Guid Id { get; init; }
-        public string Name { get; init; }
-        public string Type { get; init; }
 
 
-        public CreateActivity(Guid id, string name, string type)
+        public DeleteActivity(Guid id)
         {
             Id = id;
-            Name = name;
-            Type = type;
         }
     }
 }

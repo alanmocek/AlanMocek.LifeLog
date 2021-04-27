@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Infrastructure.Types
 {
-    public interface ICommand
+    public interface ILifeLogQuery<TQueryResult>
     {
 
     }

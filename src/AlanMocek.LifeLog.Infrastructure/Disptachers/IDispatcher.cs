@@ -10,8 +10,8 @@ namespace AlanMocek.LifeLog.Infrastructure.Dispatchers
     public interface IDispatcher
     {
         Task<CommandResult> DispatchCommandAndGetResultAsync<TCommand>(TCommand command)
-            where TCommand : ICommand;
+            where TCommand : ILifeLogCommand;
         Task<QueryResult<TQueryResult>> DispatchQueryAndGetResultAsync<TQueryResult, TQuery>(TQuery query)
-            where TQuery : IQuery<TQueryResult>;
+            where TQuery : ILifeLogQuery<TQueryResult>;
     }
 }

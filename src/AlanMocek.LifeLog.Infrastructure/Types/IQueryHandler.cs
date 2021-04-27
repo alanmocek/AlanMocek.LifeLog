@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace AlanMocek.LifeLog.Infrastructure.Types
 {
     public interface IQueryHandler<TQuery, TQueryResult>
-        where TQuery : IQuery<TQueryResult>
+        where TQuery : ILifeLogQuery<TQueryResult>
     {
         Task<TQueryResult> HandleAndGetResultAsync(TQuery query);
     }

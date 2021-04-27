@@ -9,6 +9,7 @@ namespace AlanMocek.LifeLog.Core.Activities.Services
     public interface IActivitiesRepository
     {
         void Add(Activity activity);
+        void Remove(Activity activity);
         Task<bool> GetIsActivityWithNameExistingAsync(string name);
         Task<IEnumerable<Activity>> GetAllAsync();
         Task<Activity> GetByIdAsync(Guid id);

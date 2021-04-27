@@ -28,6 +28,11 @@ namespace AlanMocek.LifeLog.Data.Repositories
             _lifeLogContext.Activities.Add(activity);
         }
 
+        public void Remove(Activity activity)
+        {
+            _lifeLogContext.Activities.Remove(activity);
+        }
+
         public async Task<IEnumerable<Activity>> GetAllAsync()
         {
             return await _lifeLogContext.Activities.ToListAsync();

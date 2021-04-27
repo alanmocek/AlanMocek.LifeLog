@@ -22,6 +22,10 @@
             <activitiesPanelViews:ActivitiesPanelCreateActivityDialogView/>
         </DataTemplate>
 
-        
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelDeleteActivityDialogViewModel}">
+            <activitiesPanelViews:ActivitiesPanelDeleteActivityDialogView/>
+        </DataTemplate>
+
+
     </Application.Resources>
 </Application>

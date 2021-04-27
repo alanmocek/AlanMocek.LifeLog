@@ -21,7 +21,7 @@ namespace AlanMocek.LifeLog.Infrastructure.Dispatchers
         }
 
 
-        public async Task<CommandResult> DispatchCommandAndGetResultAsync<TCommand>(TCommand command) where TCommand : ICommand
+        public async Task<CommandResult> DispatchCommandAndGetResultAsync<TCommand>(TCommand command) where TCommand : ILifeLogCommand
         {
             using(var scope = _serviceProvider.CreateScope())
             {
@@ -42,7 +42,7 @@ namespace AlanMocek.LifeLog.Infrastructure.Dispatchers
             }
         }
 
-        public async Task<QueryResult<TQueryResult>> DispatchQueryAndGetResultAsync<TQueryResult, TQuery>(TQuery query) where TQuery : IQuery<TQueryResult>
+        public async Task<QueryResult<TQueryResult>> DispatchQueryAndGetResultAsync<TQueryResult, TQuery>(TQuery query) where TQuery : ILifeLogQuery<TQueryResult>
         {
             using (var scope = _serviceProvider.CreateScope())
             {

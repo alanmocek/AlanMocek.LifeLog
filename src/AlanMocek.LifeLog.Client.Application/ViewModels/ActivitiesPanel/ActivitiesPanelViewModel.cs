@@ -27,6 +27,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 
 
         public ICommand OpenCreateActivityDialogCommand { get; private set; }
+        public ICommand OpenDeleteActivityDialogCommand { get; private set; }
 
 
         public ActivitiesPanelViewModel(
@@ -42,6 +43,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 
 
             OpenCreateActivityDialogCommand = new AsyncCommand(OpenCreateActivityDialogCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
+            OpenDeleteActivityDialogCommand = new AsyncCommand(OpenDeleteActivityDialogCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
         }
 
 
@@ -84,10 +86,34 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             return Task.CompletedTask;
         }
 
+        private Task OpenDeleteActivityDialogCommandExecutionAsync(object parameter)
+        {
+            var deleteActivityDialog = _serviceProvider.GetRequiredService<ActivitiesPanelDeleteActivityDialogViewModel>();
+            var activityToDelete = (parameter as ActivityViewModel);
+            deleteActivityDialog.Initialize(activityToDelete);
+            deleteActivityDialog.DialogClosed += OnDialogClosed;
+            deleteActivityDialog.ActivityDeleted += OnActivityDeleted;
+            CurrentDialog = deleteActivityDialog;
+            RaisePropertyChanged(nameof(CurrentDialog));
+            return Task.CompletedTask;
+        }
+
         private void OnDialogClosed()
         {
             CurrentDialog = null;
             RaisePropertyChanged(nameof(CurrentDialog));
+        }
+
+        private void OnActivityDeleted(ActivityDeletedEventArgs args)
+        {
+            CurrentDialog = null;
+            RaisePropertyChanged(nameof(CurrentDialog));
+
+            var deletedActivity = Activities.FirstOrDefault(activity => activity.ActivityId == args.DeletedActivityId);
+            if (deletedActivity is null)
+                return;
+
+            Activities.Remove(deletedActivity);
         }
 
         private async Task OnActivityCreatedAsync(ActivityCreatedEventArgs args)

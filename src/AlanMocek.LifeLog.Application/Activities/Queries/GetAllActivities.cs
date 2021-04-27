@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.Activities.Queries
 {
-    public record GetAllActivities : IQuery<IEnumerable<ActivityViewModel>>
+    public record GetAllActivities : ILifeLogQuery<IEnumerable<ActivityViewModel>>
     {
 
     }

@@ -26,6 +26,7 @@ namespace AlanMocek.LifeLog.Application.Activities
             
 
             services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
+            services.AddScoped<ICommandHandler<DeleteActivity>, DeleteActivityHandler>();
 
 
             services.AddScoped<ActivitiesCreator>();
