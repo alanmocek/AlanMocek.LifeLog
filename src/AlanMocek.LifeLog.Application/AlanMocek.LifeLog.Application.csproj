@@ -6,10 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ActivityRecords\Commands\" />
     <Folder Include="ActivityRecords\CommandHandlers\" />
-    <Folder Include="ActivityRecords\Queries\" />
-    <Folder Include="ActivityRecords\ViewModels\" />
   </ItemGroup>
 
   <ItemGroup>

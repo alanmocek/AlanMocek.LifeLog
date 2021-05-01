@@ -10,5 +10,7 @@ namespace AlanMocek.LifeLog.Core.DayRecords.Services
     {
         void Add(DayRecord dayRecord);
         Task<IEnumerable<DayRecord>> GetBrowsedByYearAndMonthAsync(int year, int month);
+        Task<DayRecord> GetByIdAsync(Guid id);
+        Task<bool> GetIsExistingForDateAsync(DateTime date);
     }
 }

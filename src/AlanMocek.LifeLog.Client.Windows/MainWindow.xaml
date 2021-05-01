@@ -7,7 +7,7 @@
         xmlns:activitiesPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.ActivitiesPanel"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="MainWindow" Height="900" Width="1600">
+        Title="AM Life Log" Height="900" Width="1600">
     
     
     <i:Interaction.Triggers>

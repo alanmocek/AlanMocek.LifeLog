@@ -11,6 +11,8 @@ using AlanMocek.LifeLog.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Runtime.ExceptionServices;
+using AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;
+using AlanMocek.LifeLog.Infrastructure.Types;
 
 namespace AlanMocek.LifeLog.Client.Application.ViewModels
 {
@@ -18,9 +20,12 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
     {
         private readonly IServiceProvider _serviceProvider;
         private readonly LifeLogContext _lifeLogContext;
+        private readonly NavigationService _navigationService;
 
 
         public PanelViewModel CurrentPanelViewModel { get; private set; }
+        
+        
         public bool IsApplicationInitialized { get; private set; }
 
 
@@ -29,14 +34,18 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
 
         public MainViewModel(
             IServiceProvider serviceProvider,
-            LifeLogContext dbContext)
+            LifeLogContext dbContext,
+            NavigationService navigationService)
         {
             _serviceProvider = serviceProvider;
             _lifeLogContext = dbContext;
+            _navigationService = navigationService;
 
             IsApplicationInitialized = false;
 
             InitializeApplicationCommand = new AsyncCommand(InitializeApplicationCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
+
+            _navigationService.CurrentPanelChanged += OnCurrentPanelChanged;
         }
 
 
@@ -59,12 +68,21 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
 
         private async Task InitializePrimaryPanelAsync()
         {
-            var primaryPanel = _serviceProvider.GetRequiredService<ActivitiesPanelViewModel>();
-            await primaryPanel.InitializePanelAsync();
-            CurrentPanelViewModel = primaryPanel;
-            IsApplicationInitialized = true;
+            await _navigationService.ChangePanelAsync(typeof(CalendarPanelViewModel));
+            //var primaryPanel = _serviceProvider.GetRequiredService<ActivitiesPanelViewModel>();
+            //var primaryPanel = _serviceProvider.GetRequiredService<CalendarPanelViewModel>();
+            //await primaryPanel.InitializePanelAsync();
+            //CurrentPanelViewModel = primaryPanel;
+            //IsApplicationInitialized = true;
+            //RaisePropertyChanged(nameof(CurrentPanelViewModel));
+            //RaisePropertyChanged(nameof(IsApplicationInitialized));
+        }
+
+        private Task OnCurrentPanelChanged()
+        {
+            CurrentPanelViewModel = _navigationService.CurrentPanel;
             RaisePropertyChanged(nameof(CurrentPanelViewModel));
-            RaisePropertyChanged(nameof(IsApplicationInitialized));
+            return Task.CompletedTask;
         }
     }
 }

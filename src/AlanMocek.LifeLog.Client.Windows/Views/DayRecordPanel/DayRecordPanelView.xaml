@@ -18,7 +18,15 @@
                 <Button DockPanel.Dock="Right" Content="Add Activity Record" MinHeight="40" Padding="8,0"/>
 
                 <Border DockPanel.Dock="Left" MinHeight="40">
-                    <TextBlock Text="Monday 16.04.2021" VerticalAlignment="Center"/>
+                    <TextBlock VerticalAlignment="Center">
+                        <Run Text="{Binding DayRecord.DayRecordDate.DayOfWeek, Mode=OneWay}"/>
+                        <Run Text=" "/>
+                        <Run Text="{Binding DayRecord.DayRecordDate.Date.Day, Mode=OneWay}"/>
+                        <Run Text="."/>
+                        <Run Text="{Binding DayRecord.DayRecordDate.Date.Month, Mode=OneWay}"/>
+                        <Run Text="."/>
+                        <Run Text="{Binding DayRecord.DayRecordDate.Date.Year, Mode=OneWay}"/>
+                    </TextBlock>
                 </Border>
             </DockPanel>
 

@@ -12,8 +12,10 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords
         public QuantityValue Value { get; private set; }
 
 
-        public QuantityActivityRecord(Guid id, Guid dayRecordId, ActivityRecordOrder order, QuantityValue value)
-            : base(id, dayRecordId, order)
+        public QuantityActivityRecord() { }
+
+        public QuantityActivityRecord(Guid id, Guid activityId, Guid dayRecordId, ActivityRecordOrder order, QuantityValue value)
+            : base(id, activityId, dayRecordId, order, "activity_record_quantity")
         {
             Value = value;
         }

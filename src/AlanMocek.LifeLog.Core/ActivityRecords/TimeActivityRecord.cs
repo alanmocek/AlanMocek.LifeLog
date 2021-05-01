@@ -12,8 +12,10 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords
         public TimeValue Value { get; private set; }
 
 
-        public TimeActivityRecord(Guid id, Guid dayRecordId, ActivityRecordOrder order, TimeValue value)
-            : base(id, dayRecordId, order)
+        public TimeActivityRecord() { }
+
+        public TimeActivityRecord(Guid id, Guid activityId, Guid dayRecordId, ActivityRecordOrder order, TimeValue value)
+            : base(id, activityId, dayRecordId, order, "activity_record_time")
         {
             Value = value;
         }

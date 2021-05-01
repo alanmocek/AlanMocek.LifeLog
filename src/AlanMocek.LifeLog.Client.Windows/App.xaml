@@ -8,7 +8,13 @@
              xmlns:converters="clr-namespace:AlanMocek.LifeLog.Client.Application.Converters;assembly=LifeLog.ClientApp"
              
              xmlns:activitiesPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel;assembly=LifeLog.ClientApp"
-             xmlns:activitiesPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.ActivitiesPanel">
+             xmlns:activitiesPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.ActivitiesPanel"
+             
+             xmlns:dayRecordPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel;assembly=LifeLog.ClientApp"
+             xmlns:dayRecordPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel"
+
+             xmlns:calendarPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;assembly=LifeLog.ClientApp"
+             xmlns:calendarPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.CalendarPanel">
     <Application.Resources>
 
         <converters:ObjectExistenceToVisiblityConverter x:Key="ObjectExistenceToVisiblityConverter"/>
@@ -24,6 +30,16 @@
 
         <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelDeleteActivityDialogViewModel}">
             <activitiesPanelViews:ActivitiesPanelDeleteActivityDialogView/>
+        </DataTemplate>
+
+        
+        <DataTemplate DataType="{x:Type calendarPanelViewModels:CalendarPanelViewModel}">
+            <calendarPanelViews:CalendarPanelView/>
+        </DataTemplate>
+
+
+        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelViewModel}">
+            <dayRecordPanelViews:DayRecordPanelView/>
         </DataTemplate>
 
 

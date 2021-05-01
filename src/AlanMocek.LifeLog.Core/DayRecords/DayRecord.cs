@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AlanMocek.LifeLog.Core.DayRecords.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,7 +13,12 @@ namespace AlanMocek.LifeLog.Core.DayRecords
         public DateTime Date { get; private set; }
 
 
-        public DayRecord(Guid id, DateTime date)
+        /// <summary>
+        /// Internal constructor for <see cref="DayRecordsCreator"/> use.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="date"></param>
+        internal DayRecord(Guid id, DateTime date)
         {
             Id = id;
             Date = date;

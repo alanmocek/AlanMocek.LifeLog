@@ -9,7 +9,7 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
     public interface IActivityRecordsRepository
     {
         void Add(ActivityRecord activityRecord);
-        
-        
+        Task<IEnumerable<ActivityRecord>> GetAllForDayRecordWithIdAsync(Guid dayRecordId);
+        //Task<IEnumerable<IActivityRecordWithActivity>> GetAllWithActivityForDayRecordWithIdAsync(Guid dayRecordId);
     }
 }

@@ -22,6 +22,9 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
         private readonly IServiceProvider _serviceProvider;
 
 
+        private bool _isInitialized;
+
+
         public PanelDialogViewModel CurrentDialog { get; private set; }
         public ObservableCollection<ActivityViewModel> Activities { get; private set; }
 
@@ -38,6 +41,8 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             _serviceProvider = serviceProvider;
 
 
+            _isInitialized = false;
+
             CurrentDialog = null;
             Activities = new ObservableCollection<ActivityViewModel>();
 
@@ -47,11 +52,14 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
         }
 
 
-        public async Task InitializePanelAsync()
+        public override async Task InitializeAsync()
         {
-            await LoadActivitiesAsync();
-        }
+            if (_isInitialized == true)
+                return;
 
+            await LoadActivitiesAsync();
+            _isInitialized = true;
+        }
 
         private async Task LoadActivitiesAsync()
         {

@@ -1,5 +1,7 @@
 ﻿using AlanMocek.LifeLog.Core.Activities;
+using AlanMocek.LifeLog.Core.ActivityRecords;
 using AlanMocek.LifeLog.Core.DayRecords;
+using AlanMocek.LifeLog.Data.Configurations;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +21,12 @@ namespace AlanMocek.LifeLog.Data.Contexts
 
         public DbSet<DayRecord> DayRecords { get; set; }
 
+        public DbSet<ActivityRecord> ActivityRecords { get; set; }
+        public DbSet<QuantityActivityRecord> QuantityActivityRecords { get; set; }
+        public DbSet<ClockActivityRecord> ClockActivityRecords { get; set; }
+        public DbSet<TimeActivityRecord> TimeActivityRecords { get; set; }
+        public DbSet<OccurrenceActivityRecord> OccurrenceActivityRecords { get; set; }
+
 
         public LifeLogContext(DbContextOptions<LifeLogContext> options)
             : base(options)
@@ -26,14 +34,6 @@ namespace AlanMocek.LifeLog.Data.Contexts
 
         }
 
-
-        //protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        //{
-        //    optionsBuilder.UseSqlite(
-        //        "Data Source = UserData.db");
-
-        //    base.OnConfiguring(optionsBuilder);
-        //}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -43,6 +43,23 @@ namespace AlanMocek.LifeLog.Data.Contexts
                 .HasValue<OccurrenceActivity>("activity_occurrence")
                 .HasValue<TimeActivity>("activity_time")
                 .HasValue<QuantityActivity>("activity_quantity");
+
+            
+
+
+            modelBuilder.Entity<ActivityRecord>()
+                .HasDiscriminator(activityRecord => activityRecord.Type)
+                .HasValue<ClockActivityRecord>("activity_record_clock")
+                .HasValue<OccurrenceActivityRecord>("activity_record_occurrence")
+                .HasValue<TimeActivityRecord>("activity_record_time")
+                .HasValue<QuantityActivityRecord>("activity_record_quantity");
+
+
+            modelBuilder.ApplyConfiguration(new ActivityRecordConfiguration());
+            modelBuilder.ApplyConfiguration(new ClockActivityRecordConfiguration());
+            modelBuilder.ApplyConfiguration(new TimeActivityRecordConfiguration());
+            modelBuilder.ApplyConfiguration(new QuantityActivityRecordConfiguration());
+
 
             base.OnModelCreating(modelBuilder);
         }

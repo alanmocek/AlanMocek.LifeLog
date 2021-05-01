@@ -8,16 +8,14 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.DayRecords.Queries
 {
-    public record GetDayRecordCardsByYearAndMonth : ILifeLogQuery<IEnumerable<DayRecordCardViewModel>>
+    public record GetDayRecordCardById : ILifeLogQuery<DayRecordCardViewModel>
     {
-        public int Year { get; init; }
-        public int Month { get; init; }
+        public Guid Id { get; init; }
 
 
-        public GetDayRecordCardsByYearAndMonth(int year, int month)
+        public GetDayRecordCardById(Guid id)
         {
-            Year = year;
-            Month = month;
+            Id = id;
         }
     }
 }

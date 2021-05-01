@@ -3,14 +3,16 @@ using System;
 using AlanMocek.LifeLog.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace AlanMocek.LifeLog.Data.Migrations
 {
     [DbContext(typeof(LifeLogContext))]
-    partial class LifeLogContextModelSnapshot : ModelSnapshot
+    [Migration("20210501152123_Initial8")]
+    partial class Initial8
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
