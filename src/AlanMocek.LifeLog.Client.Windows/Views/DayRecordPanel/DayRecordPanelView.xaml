@@ -17,13 +17,13 @@
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0" LastChildFill="True">
-                <Button DockPanel.Dock="Right" Content="Add Activity Record" MinHeight="40" Padding="8,0" Command="{Binding OpenAddActivityRecordDialogCommand}"/>
+                <Button DockPanel.Dock="Right" FontSize="14" Content="Add Activity Record" MinHeight="40" Padding="8,0" Command="{Binding OpenAddActivityRecordDialogCommand}"/>
 
                 <Border DockPanel.Dock="Left" MinHeight="40">
-                    <TextBlock VerticalAlignment="Center">
-                        <Run Text="{Binding DayRecord.DayRecordDate.DayOfWeek, Mode=OneWay}"/>
+                    <TextBlock VerticalAlignment="Center" FontSize="14">
+                        <Run Text="{Binding DayRecord.DayRecordDate.DayOfWeek, Mode=OneWay}" FontWeight="Bold"/>
                         <Run Text=" "/>
-                        <Run Text="{Binding DayRecord.DayRecordDate.Date.Day, Mode=OneWay}"/>
+                        <Run Text="{Binding DayRecord.DayRecordDate.Date.Day, Mode=OneWay}" FontWeight="Bold"/>
                         <Run Text="."/>
                         <Run Text="{Binding DayRecord.DayRecordDate.Date.Month, Mode=OneWay}"/>
                         <Run Text="."/>
@@ -32,20 +32,20 @@
                 </Border>
             </DockPanel>
 
-            <Border Grid.Row="1" MinHeight="40">
-                <TextBlock Text="Recorded Activities:" VerticalAlignment="Center"/>
+            <Border Grid.Row="1" MinHeight="36" Margin="0,20,0,0">
+                <TextBlock Text="Recorded Activities:" FontSize="14" VerticalAlignment="Center"/>
             </Border>
 
-            <ScrollViewer Grid.Row="2">
+            <ScrollViewer Grid.Row="2" Margin="0,10,0,0">
                 <ItemsControl ItemsSource="{Binding ActivityRecords}">
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type activityRecordsViewModels:ClockActivityRecordForDayRecordPanel}">
                             <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Clock"/>
-                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}"/>
-                                    <TextBlock Text="{Binding ActivityRecordHourValue}"/>
-                                    <TextBlock Text="{Binding ActivityRecordMinuteValue}"/>
+                                    <TextBlock Text="Clock" FontSize="14"/>
+                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}" FontSize="14"/>
+                                    <TextBlock Text="{Binding ActivityRecordHourValue}" FontSize="14"/>
+                                    <TextBlock Text="{Binding ActivityRecordMinuteValue}" FontSize="14"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -53,8 +53,8 @@
                         <DataTemplate DataType="{x:Type activityRecordsViewModels:OccurredActivityRecordForDayRecordPanel}">
                             <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
                                 <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Occurrence"/>
-                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}"/>
+                                    <TextBlock Text="Occurrence" FontSize="14"/>
+                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}" FontSize="14"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -63,8 +63,8 @@
                             <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Clock"/>
-                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}"/>
-                                    <TextBlock Text="{Binding ActivityRecordTimeValue}"/>
+                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}" FontSize="14"/>
+                                    <TextBlock Text="{Binding ActivityRecordTimeValue}" FontSize="14"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>
@@ -73,8 +73,8 @@
                             <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
                                 <StackPanel Orientation="Horizontal">
                                     <TextBlock Text="Quantity"/>
-                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}"/>
-                                    <TextBlock Text="{Binding ActivityRecordQuantityValue}"/>
+                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}" FontSize="14"/>
+                                    <TextBlock Text="{Binding ActivityRecordQuantityValue}" FontSize="14"/>
                                 </StackPanel>
                             </Border>
                         </DataTemplate>

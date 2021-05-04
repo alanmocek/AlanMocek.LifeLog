@@ -14,9 +14,9 @@
                 </Grid.RowDefinitions>
 
                 <Border MinHeight="40" DockPanel.Dock="Left">
-                    <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center">
-                        <Run Text="Do you want to delete: "/>
-                        <Run Text="{Binding ActivityToDelete.ActivityName, Mode=OneWay}"/>
+                    <TextBlock TextWrapping="Wrap" TextTrimming="CharacterEllipsis" VerticalAlignment="Center" FontSize="14">
+                        <Run Text="Do you want to delete: " FontWeight="Bold"/>
+                        <Run Text="{Binding ActivityToDeleteName, Mode=OneWay}"/>
                     </TextBlock>
                 </Border>
 
@@ -26,8 +26,8 @@
                         <ColumnDefinition Width="40"/>
                         <ColumnDefinition Width="*"/>
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" MinHeight="36" Content="Delete" Command="{Binding ConfirmActivityDeletionCommand}"/>
-                    <Button Grid.Column="2" MinHeight="36" Content="Cancel" Command="{Binding CancelActivityDeletionCommand}"/>
+                    <Button Grid.Column="0" MinHeight="36" Content="Delete" FontSize="14" Command="{Binding ConfirmActivityDeletionCommand}" FontWeight="Bold"/>
+                    <Button Grid.Column="2" MinHeight="36" Content="Cancel" FontSize="14" Command="{Binding CancelActivityDeletionCommand}"/>
                 </Grid>
             </Grid>
         </Border>

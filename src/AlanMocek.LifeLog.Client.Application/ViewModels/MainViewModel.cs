@@ -18,7 +18,6 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
 {
     public class MainViewModel : ViewModel
     {
-        private readonly IServiceProvider _serviceProvider;
         private readonly LifeLogContext _lifeLogContext;
         private readonly NavigationService _navigationService;
 
@@ -30,20 +29,21 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
 
 
         public ICommand InitializeApplicationCommand { get; private set; }
+        public ICommand ChangePanelCommand { get; private set; }
 
 
         public MainViewModel(
-            IServiceProvider serviceProvider,
             LifeLogContext dbContext,
             NavigationService navigationService)
         {
-            _serviceProvider = serviceProvider;
-            _lifeLogContext = dbContext;
-            _navigationService = navigationService;
+            _lifeLogContext = dbContext ?? throw new ArgumentNullException(nameof(dbContext));
+            _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService)); ;
 
             IsApplicationInitialized = false;
 
             InitializeApplicationCommand = new AsyncCommand(InitializeApplicationCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
+            ChangePanelCommand = new AsyncCommand(ChangePanelCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
+
 
             _navigationService.CurrentPanelChanged += OnCurrentPanelChanged;
         }
@@ -62,6 +62,30 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
             IsApplicationInitialized = true;
         }
 
+        private async Task ChangePanelCommandExecutionAsync(object parameter)
+        {
+            var panelType = (string)parameter;
+
+            switch(panelType)
+            {
+                case "calendar":
+                    {
+                        await _navigationService.ChangePanelAsync(typeof(CalendarPanelViewModel));
+                        break;
+                    }
+
+                case "activities":
+                    {
+                        await _navigationService.ChangePanelAsync(typeof(ActivitiesPanelViewModel));
+                        break;
+                    }
+
+                default:
+                    {
+                        throw new ArgumentException($"Panel of type {panelType} is not implemented.");
+                    }
+            }
+        }
 
         private async Task InitializeDatabaseAsync()
         {
@@ -71,14 +95,6 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
         private async Task InitializePrimaryPanelAsync()
         {
             await _navigationService.ChangePanelAsync(typeof(CalendarPanelViewModel));
-            //await _navigationService.ChangePanelAsync(typeof(ActivitiesPanelViewModel));
-            //var primaryPanel = _serviceProvider.GetRequiredService<ActivitiesPanelViewModel>();
-            //var primaryPanel = _serviceProvider.GetRequiredService<CalendarPanelViewModel>();
-            //await primaryPanel.InitializePanelAsync();
-            //CurrentPanelViewModel = primaryPanel;
-            //IsApplicationInitialized = true;
-            //RaisePropertyChanged(nameof(CurrentPanelViewModel));
-            //RaisePropertyChanged(nameof(IsApplicationInitialized));
         }
 
         private Task OnCurrentPanelChanged()

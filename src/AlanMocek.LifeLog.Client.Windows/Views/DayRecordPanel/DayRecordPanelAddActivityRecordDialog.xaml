@@ -17,22 +17,22 @@
                 </Grid.RowDefinitions>
 
                 <DockPanel LastChildFill="True" Grid.Row="0">
-                    <Button DockPanel.Dock="Right" MinHeight="36" MinWidth="36" Content="X" Command="{Binding CloseDialogCommand}"/>
+                    <Button DockPanel.Dock="Right" FontSize="14" MinHeight="36" MinWidth="36" Content="X" Command="{Binding CloseDialogCommand}"/>
 
                     <Border MinHeight="36" DockPanel.Dock="Left">
-                        <TextBlock Text="Create Activity Record" VerticalAlignment="Center"/>
+                        <TextBlock Text="Create Activity Record" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
                     </Border>
                 </DockPanel>
 
                 <ScrollViewer Grid.Row="1" Margin="0,20,0,0" Padding="0,0,10,0" VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Vertical" >
-                            <Label Content="For Activity:" MinHeight="32"/>
+                            <Label Content="For Activity:" MinHeight="32" FontSize="14"/>
                             <ComboBox SelectedItem="{Binding SelectedActivity}" ItemsSource="{Binding AvailableActivities}" MinHeight="36">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <ComboBoxItem MinHeight="32" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <TextBlock Text="{Binding ActivityName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                            <TextBlock Text="{Binding ActivityName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
                                         </ComboBoxItem>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
@@ -77,7 +77,7 @@
                     </StackPanel>
                 </ScrollViewer>
 
-                <Button Margin="0,20,0,0" Grid.Row="2" MinHeight="36" Content="Create Activity Record" Command="{Binding CreateActivityRecordCommand}"/>
+                <Button FontSize="14" FontWeight="Bold" Margin="0,20,0,0" Grid.Row="2" MinHeight="36" Content="Create Activity Record" Command="{Binding CreateActivityRecordCommand}"/>
             </Grid>
         </Border>
     </Grid>

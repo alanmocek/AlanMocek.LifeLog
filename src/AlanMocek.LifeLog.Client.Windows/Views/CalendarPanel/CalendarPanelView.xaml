@@ -17,17 +17,23 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <Border Grid.Row="0" MinHeight="40">
-                <TextBlock Text="Calendar Panel" VerticalAlignment="Center"/>
+            <Border Grid.Row="0" MinHeight="36">
+                <TextBlock Text="Calendar Panel" VerticalAlignment="Center" FontSize="14" FontWeight="Bold"/>
             </Border>
 
             <StackPanel Grid.Row="1" Orientation="Horizontal">
                 <Border MinHeight="40">
-                    <TextBlock Text="{Binding SelectedMonth}" VerticalAlignment="Center"/>
+                    <TextBlock VerticalAlignment="Center" FontSize="14">
+                        <Run Text="Month: " FontWeight="Bold"/>
+                        <Run Text="{Binding SelectedMonth, Mode=OneWay}"/>
+                    </TextBlock>
                 </Border>
 
                 <Border MinHeight="40" Margin="20,0,0,0">
-                    <TextBlock Text="{Binding SelectedYear}" VerticalAlignment="Center"/>
+                    <TextBlock VerticalAlignment="Center" FontSize="14">
+                        <Run Text="Year: " FontWeight="Bold"/>
+                        <Run Text="{Binding SelectedYear, Mode=OneWay}"/>
+                    </TextBlock>
                 </Border>
             </StackPanel>
 
@@ -43,25 +49,25 @@
                 </Grid.ColumnDefinitions>
 
                 <Border MinHeight="40" Grid.Column="0">
-                    <TextBlock Text="Monday" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Monday" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
                 </Border>
                 <Border MinHeight="40" Grid.Column="1">
-                    <TextBlock Text="Thuesday" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Thuesday" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
                 </Border>
                 <Border MinHeight="40" Grid.Column="2">
-                    <TextBlock Text="Wendsday" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Wendsday" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
                 </Border>
                 <Border MinHeight="40" Grid.Column="3">
-                    <TextBlock Text="Thursday" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Thursday" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
                 </Border>
                 <Border MinHeight="40" Grid.Column="4">
-                    <TextBlock Text="Friday" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Friday" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
                 </Border>
                 <Border MinHeight="40" Grid.Column="5">
-                    <TextBlock Text="Saturday" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Saturday" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
                 </Border>
                 <Border MinHeight="40" Grid.Column="6">
-                    <TextBlock Text="Sunday" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                    <TextBlock Text="Sunday" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
                 </Border>
             </Grid>
 
@@ -100,16 +106,16 @@
 
                     <ItemsControl.Resources>
                         <DataTemplate DataType="{x:Type calendarPanelViewModels:CalendarPanelNotRecordedDayCardViewModel}">
-                            <Button Command="{Binding DataContext.CreateDayRecordForDayCardCommand, ElementName=ViewGrid}" CommandParameter="{Binding}" Content="{Binding Day}"/>
+                            <Button FontSize="14" FontWeight="Bold" Margin="10" Command="{Binding DataContext.CreateDayRecordForDayCardCommand, ElementName=ViewGrid}" CommandParameter="{Binding}" Content="{Binding Day}"/>
                         </DataTemplate>
                         
                         <DataTemplate DataType="{x:Type calendarPanelViewModels:CalendarPanelRecordedDayCardViewModel}">
                             <Border>
-                                <Button Command="{Binding DataContext.GoToDayRecordPanelOfDayRecordCardCommand, ElementName=ViewGrid}" CommandParameter="{Binding DayRecord.DayRecordId}">
+                                <Button Margin="10" Command="{Binding DataContext.GoToDayRecordPanelOfDayRecordCardCommand, ElementName=ViewGrid}" CommandParameter="{Binding DayRecord.DayRecordId}">
                                     <Button.Content>
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock Text="{Binding DayRecord.DayRecordDate.Date.Day}"/>
-                                            <TextBlock Text="(Recorded)"/>
+                                            <TextBlock Text="{Binding DayRecord.DayRecordDate.Date.Day}" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+                                            <TextBlock Text="(Recorded)" HorizontalAlignment="Center" FontSize="12"/>
                                         </StackPanel>
                                     </Button.Content>
                                 </Button>

@@ -47,6 +47,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
         {
             _activityToDeleteId = activityToDeleteId;
             ActivityToDeleteName = activityToDeleteName;
+            RaisePropertyChanged(nameof(ActivityToDeleteName));
         }
 
 

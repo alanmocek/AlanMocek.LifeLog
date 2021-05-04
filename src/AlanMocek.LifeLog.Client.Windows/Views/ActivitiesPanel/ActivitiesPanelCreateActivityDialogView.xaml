@@ -15,26 +15,26 @@
                 </Grid.RowDefinitions>
 
                 <DockPanel LastChildFill="True" Grid.Row="0">
-                    <Button DockPanel.Dock="Right" MinHeight="36" MinWidth="36" Content="X" Command="{Binding CloseDialogCommand}"/>
+                    <Button DockPanel.Dock="Right" FontSize="14" MinHeight="36" MinWidth="36" Content="X" Command="{Binding CloseDialogCommand}"/>
 
                     <Border MinHeight="40" DockPanel.Dock="Left">
-                        <TextBlock Text="Create Activity" VerticalAlignment="Center"/>
+                        <TextBlock Text="Create Activity" FontSize="14" FontWeight="Bold" VerticalAlignment="Center"/>
                     </Border>
                 </DockPanel>
 
                 <ScrollViewer Grid.Row="1" Margin="0,20,0,0" Padding="0,0,10,0" VerticalScrollBarVisibility="Auto">
                     <StackPanel Orientation="Vertical">
                         <StackPanel Orientation="Vertical">
-                            <Label Content="Activity Name:" MinHeight="32"/>
-                            <TextBox Text="{Binding NewActivityName}" MinHeight="36" VerticalContentAlignment="Center"/>
+                            <Label Content="Activity Name:" MinHeight="32" FontSize="14"/>
+                            <TextBox FontSize="14" Text="{Binding NewActivityName}" MinHeight="36" VerticalContentAlignment="Center"/>
                         </StackPanel>
 
                         <StackPanel Orientation="Vertical" Margin="0,20,0,0">
-                            <Label Content="Activity Type:" MinHeight="32"/>
+                            <Label Content="Activity Type:" MinHeight="32" FontSize="14"/>
                             <ComboBox SelectedItem="{Binding NewActivityType}" ItemsSource="{Binding AvailableActivityTypes}" MinHeight="36">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <ComboBoxItem Content="{Binding}" MinHeight="32"/>
+                                        <ComboBoxItem FontSize="14" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Content="{Binding}" MinHeight="32" />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>
@@ -42,7 +42,7 @@
                     </StackPanel>
                 </ScrollViewer>
 
-                <Button Margin="0,20,0,0" Grid.Row="2" MinHeight="36" Content="Create Activity" Command="{Binding CreateActivityCommand}"/>
+                <Button Margin="0,20,0,0" Grid.Row="2" FontSize="14" FontWeight="Bold" MinHeight="36" Content="Create Activity" Command="{Binding CreateActivityCommand}"/>
             </Grid>
         </Border>
     </Grid>

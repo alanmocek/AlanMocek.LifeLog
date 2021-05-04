@@ -7,7 +7,7 @@
         xmlns:activitiesPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.ActivitiesPanel"
         xmlns:i="http://schemas.microsoft.com/xaml/behaviors"
         mc:Ignorable="d"
-        Title="AM Life Log" Height="900" Width="1600">
+        Title="AM LifeLog" Height="900" Width="1600">
     
     
     <i:Interaction.Triggers>
@@ -27,8 +27,23 @@
             </Border>
         </Grid>
 
-        <ContentPresenter Visibility="{Binding DataContext.CurrentPanelViewModel, ElementName=MainWindowGrid, Converter={StaticResource ObjectExistenceToVisiblityConverter}}" Content="{Binding CurrentPanelViewModel}">
+        <Grid Visibility="{Binding DataContext.CurrentPanelViewModel, ElementName=MainWindowGrid, Converter={StaticResource ObjectExistenceToVisiblityConverter}}" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="240"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
-        </ContentPresenter>
+            <StackPanel Orientation="Vertical">
+                <Border MinHeight="36">
+                    <TextBlock Text="AM LifeLog" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="16" FontWeight="Black" Opacity="0.5"/>
+                </Border>
+                <Button Height="36" FontSize="15" Content="Activities" Command="{Binding ChangePanelCommand}" CommandParameter="activities"/>
+                <Button Height="36" FontSize="15" Content="Calendar" Command="{Binding ChangePanelCommand}" CommandParameter="calendar"/>
+            </StackPanel>
+
+            <ContentPresenter Grid.Column="1"  Content="{Binding CurrentPanelViewModel}">
+
+            </ContentPresenter>
+        </Grid>
     </Grid>
 </Window>
