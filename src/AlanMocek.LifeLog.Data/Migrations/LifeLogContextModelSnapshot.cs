@@ -22,6 +22,9 @@ namespace AlanMocek.LifeLog.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<bool>("HasValue")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Name")
                         .HasColumnType("TEXT");
 
@@ -53,6 +56,10 @@ namespace AlanMocek.LifeLog.Data.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ActivityId");
+
+                    b.HasIndex("DayRecordId");
 
                     b.ToTable("ActivityRecords");
 
@@ -131,6 +138,18 @@ namespace AlanMocek.LifeLog.Data.Migrations
 
             modelBuilder.Entity("AlanMocek.LifeLog.Core.ActivityRecords.ActivityRecord", b =>
                 {
+                    b.HasOne("AlanMocek.LifeLog.Core.Activities.Activity", "Activity")
+                        .WithMany()
+                        .HasForeignKey("ActivityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("AlanMocek.LifeLog.Core.DayRecords.DayRecord", null)
+                        .WithMany()
+                        .HasForeignKey("DayRecordId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.OwnsOne("AlanMocek.LifeLog.Core.ActivityRecords.ActivityRecordOrder", "Order", b1 =>
                         {
                             b1.Property<Guid>("ActivityRecordId")
@@ -146,6 +165,8 @@ namespace AlanMocek.LifeLog.Data.Migrations
                             b1.WithOwner()
                                 .HasForeignKey("ActivityRecordId");
                         });
+
+                    b.Navigation("Activity");
 
                     b.Navigation("Order");
                 });

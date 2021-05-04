@@ -4,9 +4,11 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel"
+             xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel;assembly=LifeLog.ClientApp"
+             xmlns:activityRecordsViewModels="clr-namespace:AlanMocek.LifeLog.Application.ActivityRecords.ViewModels;assembly=LifeLog.App"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="1280">
-    <Grid x:Name="ViewGrid" Background="White">
+             d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance viewModels:DayRecordPanelViewModel}">
+    <Grid x:Name="ViewGrid" Background="White" >
         <Grid x:Name="PanelGrid" Margin="20">
             <Grid.RowDefinitions>
                 <RowDefinition Height="auto"/>
@@ -15,7 +17,7 @@
             </Grid.RowDefinitions>
 
             <DockPanel Grid.Row="0" LastChildFill="True">
-                <Button DockPanel.Dock="Right" Content="Add Activity Record" MinHeight="40" Padding="8,0"/>
+                <Button DockPanel.Dock="Right" Content="Add Activity Record" MinHeight="40" Padding="8,0" Command="{Binding OpenAddActivityRecordDialogCommand}"/>
 
                 <Border DockPanel.Dock="Left" MinHeight="40">
                     <TextBlock VerticalAlignment="Center">
@@ -31,12 +33,53 @@
             </DockPanel>
 
             <Border Grid.Row="1" MinHeight="40">
-                <TextBlock Text="Recorder Activities:" VerticalAlignment="Center"/>
+                <TextBlock Text="Recorded Activities:" VerticalAlignment="Center"/>
             </Border>
 
             <ScrollViewer Grid.Row="2">
-                <ItemsControl>
-                    <Border MinHeight="60" BorderBrush="Black" BorderThickness="1">
+                <ItemsControl ItemsSource="{Binding ActivityRecords}">
+                    <ItemsControl.Resources>
+                        <DataTemplate DataType="{x:Type activityRecordsViewModels:ClockActivityRecordForDayRecordPanel}">
+                            <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Clock"/>
+                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}"/>
+                                    <TextBlock Text="{Binding ActivityRecordHourValue}"/>
+                                    <TextBlock Text="{Binding ActivityRecordMinuteValue}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type activityRecordsViewModels:OccurredActivityRecordForDayRecordPanel}">
+                            <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Occurrence"/>
+                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type activityRecordsViewModels:TimeActivityRecordForDayRecordPanel}">
+                            <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Clock"/>
+                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}"/>
+                                    <TextBlock Text="{Binding ActivityRecordTimeValue}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+
+                        <DataTemplate DataType="{x:Type activityRecordsViewModels:QuantityActivityRecordForDayRecordPanel}">
+                            <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
+                                <StackPanel Orientation="Horizontal">
+                                    <TextBlock Text="Quantity"/>
+                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}"/>
+                                    <TextBlock Text="{Binding ActivityRecordQuantityValue}"/>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.Resources>
+                    <!--<Border MinHeight="60" BorderBrush="Black" BorderThickness="1">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="auto"/>
@@ -67,13 +110,15 @@
 
                             <Button Content="Delete" Grid.Column="5" MinHeight="40" MinWidth="40" Margin="10,10,10,10"/>
                         </Grid>
-                    </Border>
+                    </Border>-->
                 </ItemsControl>
             </ScrollViewer>
         </Grid>
 
-        <Grid Visibility="Collapsed" x:Name="DialogGrid" Background="#99000000">
-            
+        <Grid Visibility="{Binding CurrentDialog, Converter={StaticResource ObjectExistenceToVisiblityConverter}}" x:Name="DialogGrid" Background="#99000000">
+            <ContentPresenter Content="{Binding CurrentDialog}" HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            </ContentPresenter>
         </Grid>
     </Grid>
 </UserControl>

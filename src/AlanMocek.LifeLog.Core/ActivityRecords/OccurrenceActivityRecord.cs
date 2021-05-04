@@ -11,7 +11,7 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords
     {
         public OccurrenceActivityRecord() { }
 
-        public OccurrenceActivityRecord(Guid id, Guid activityId, Guid dayRecordId, ActivityRecordOrder order)
+        internal OccurrenceActivityRecord(Guid id, Guid activityId, Guid dayRecordId, ActivityRecordOrder order)
             : base(id, activityId, dayRecordId, order, "activity_record_occurrence")
         {
             

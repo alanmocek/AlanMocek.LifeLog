@@ -8,8 +8,8 @@ namespace AlanMocek.LifeLog.Application.Activities.ViewModels
 {
     public class QuantityActivityViewModel : ActivityViewModel
     {
-        public QuantityActivityViewModel(Guid activityId, string activityName)
-            : base(activityId, activityName)
+        internal QuantityActivityViewModel(Guid activityId, string activityName, string activityType, bool activityHasValue)
+            : base(activityId, activityName, activityType, activityHasValue)
         {
 
         }

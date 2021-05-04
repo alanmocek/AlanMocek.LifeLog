@@ -42,6 +42,10 @@
             <dayRecordPanelViews:DayRecordPanelView/>
         </DataTemplate>
 
+        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordAddActivityRecordDialogViewModel}">
+            <dayRecordPanelViews:DayRecordPanelAddActivityRecordDialog/>
+        </DataTemplate>
+
 
     </Application.Resources>
 </Application>

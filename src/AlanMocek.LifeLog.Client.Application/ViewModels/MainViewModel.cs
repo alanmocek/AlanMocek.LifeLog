@@ -69,6 +69,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
         private async Task InitializePrimaryPanelAsync()
         {
             await _navigationService.ChangePanelAsync(typeof(CalendarPanelViewModel));
+            //await _navigationService.ChangePanelAsync(typeof(ActivitiesPanelViewModel));
             //var primaryPanel = _serviceProvider.GetRequiredService<ActivitiesPanelViewModel>();
             //var primaryPanel = _serviceProvider.GetRequiredService<CalendarPanelViewModel>();
             //await primaryPanel.InitializePanelAsync();

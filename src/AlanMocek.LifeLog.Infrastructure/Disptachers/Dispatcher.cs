@@ -27,8 +27,20 @@ namespace AlanMocek.LifeLog.Infrastructure.Dispatchers
             {
                 try
                 {
-                    var commandHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<TCommand>>();
-                    await commandHandler.HandleAsync(command);
+                    var commandType = typeof(TCommand);
+                    if (commandType.IsAbstract == true)
+                    {
+                        var trueCommandType = command.GetType();
+                        dynamic trueCommandHandler = scope.ServiceProvider.GetRequiredService(typeof(ICommandHandler<>).MakeGenericType(trueCommandType));
+                        dynamic trueCommand = Convert.ChangeType(command, trueCommandType);
+                        await trueCommandHandler.HandleAsync(trueCommand);
+                    }
+
+                    if (commandType.IsAbstract == false)
+                    {
+                        var commandHandler = scope.ServiceProvider.GetRequiredService<ICommandHandler<TCommand>>();
+                        await commandHandler.HandleAsync(command);
+                    }
 
                     var result = CommandResult.Succes();
                     return result;

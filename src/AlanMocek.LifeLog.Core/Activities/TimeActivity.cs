@@ -7,7 +7,7 @@ namespace AlanMocek.LifeLog.Core.Activities
     public class TimeActivity : Activity
     {
         public TimeActivity(Guid id, string name) 
-            : base(id, name, "activity_time")
+            : base(id, name, "activity_time", true)
         {
 
         }

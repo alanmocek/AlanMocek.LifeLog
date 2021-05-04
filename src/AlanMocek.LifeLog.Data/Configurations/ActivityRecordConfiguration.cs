@@ -1,4 +1,6 @@
-﻿using AlanMocek.LifeLog.Core.ActivityRecords;
+﻿using AlanMocek.LifeLog.Core.Activities;
+using AlanMocek.LifeLog.Core.ActivityRecords;
+using AlanMocek.LifeLog.Core.DayRecords;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using System;
@@ -29,6 +31,17 @@ namespace AlanMocek.LifeLog.Data.Configurations
                 ownsBuilder.Property(order => order.Order)
                 .IsRequired(true);
             });
+
+
+            builder.HasOne<DayRecord>()
+                .WithMany()
+                .HasForeignKey(ActivityRecord => ActivityRecord.DayRecordId);
+
+
+            builder.HasOne(activityRecord => (activityRecord as IActivityRecordWithActivity).Activity)
+                .WithMany()
+                .HasForeignKey(activityRecord => (activityRecord).ActivityId)
+                .Metadata.DependentToPrincipal.SetField("_IActivityRecordWithActivity_Activity");
         }
     }
 }

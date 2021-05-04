@@ -8,8 +8,8 @@ namespace AlanMocek.LifeLog.Application.Activities.ViewModels
 {
     public class ClockActivityViewModel : ActivityViewModel
     {
-        public ClockActivityViewModel(Guid activityId, string activityName) 
-            : base(activityId, activityName)
+        internal ClockActivityViewModel(Guid activityId, string activityName, string activityType, bool activityHasValue) 
+            : base(activityId, activityName, activityType, activityHasValue)
         {
 
         }

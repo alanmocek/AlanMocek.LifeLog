@@ -7,14 +7,18 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Core.ActivityRecords
 {
-    //public interface IActivityRecordWithActivity
-    //{
-    //    public Guid Id { get; }
-    //    public Guid ActivityId { get; }
-    //    public Guid DayRecordId { get; }
-    //    public ActivityRecordOrder Order { get; }
+    /// <summary>
+    /// Should be obtained only from repository.
+    /// Must include <see cref="Activities.Activity"/>.
+    /// </summary>
+    public interface IActivityRecordWithActivity
+    {
+        public Guid Id { get; }
+        public Guid ActivityId { get; }
+        public Guid DayRecordId { get; }
+        public ActivityRecordOrder Order { get; }
 
 
-    //    public Activity Activity { get; internal set; }
-    //}
+        public Activity Activity { get; }
+    }
 }

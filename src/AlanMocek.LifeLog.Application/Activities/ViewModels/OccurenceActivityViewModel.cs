@@ -8,8 +8,8 @@ namespace AlanMocek.LifeLog.Application.Activities.ViewModels
 {
     public class OccurenceActivityViewModel : ActivityViewModel
     {
-        public OccurenceActivityViewModel(Guid activityId, string activityName)
-            : base(activityId, activityName)
+        internal OccurenceActivityViewModel(Guid activityId, string activityName, string activityType, bool activityHasValue)
+            : base(activityId, activityName, activityType, activityHasValue)
         {
 
         }

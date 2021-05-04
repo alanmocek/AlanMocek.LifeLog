@@ -11,13 +11,15 @@ namespace AlanMocek.LifeLog.Core.Activities
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Type { get; private set; }
+        public bool HasValue { get; private set; }
 
 
-        public Activity(Guid id, string name, string type)
+        public Activity(Guid id, string name, string type, bool hasValue)
         {
             Id = id;
             Name = name;
             Type = type;
+            HasValue = hasValue;
         }
 
 

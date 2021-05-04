@@ -1,6 +1,7 @@
 ﻿using AlanMocek.LifeLog.Application.Activities;
 using AlanMocek.LifeLog.Application.ActivityRecords;
 using AlanMocek.LifeLog.Application.DayRecords;
+using AlanMocek.LifeLog.Client.Application.Services;
 using AlanMocek.LifeLog.Client.Application.Types;
 using AlanMocek.LifeLog.Client.Application.ViewModels;
 using AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel;
@@ -31,8 +32,6 @@ namespace AlanMocek.LifeLog.Client.Windows
     {
         private readonly IHost _host;
 
-        //public IConfiguration Configuration { get; private set; }
-
 
         public App()
         {
@@ -52,7 +51,7 @@ namespace AlanMocek.LifeLog.Client.Windows
                 // Add main panels view models
                 services.AddScoped<ActivitiesPanelViewModel>();
                 services.AddScoped<CalendarPanelViewModel>();
-                services.AddScoped<DayRecordPanelViewModel>();
+                services.AddTransient<DayRecordPanelViewModel>();
 
 
                 // Add main window
@@ -69,8 +68,12 @@ namespace AlanMocek.LifeLog.Client.Windows
                 // Add dialogs view models
                 services.AddTransient<ActivitiesPanelCreateActivityDialogViewModel>();
                 services.AddTransient<ActivitiesPanelDeleteActivityDialogViewModel>();
+                services.AddTransient<DayRecordAddActivityRecordDialogViewModel>();
+
 
                 // Add client services
+                services.AddSingleton<ActivityRecordValueViewModelsFactory>();
+                services.AddSingleton<CreateActivityRecordCommandFactory>();
                 services.AddSingleton<NavigationService>();
                 services.AddSingleton<TemporaryApplicationValues>();
             });

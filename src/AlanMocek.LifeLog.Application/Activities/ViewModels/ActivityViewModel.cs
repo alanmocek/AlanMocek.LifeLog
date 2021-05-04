@@ -11,12 +11,16 @@ namespace AlanMocek.LifeLog.Application.Activities.ViewModels
     {
         public Guid ActivityId { get; protected set; }
         public string ActivityName { get; protected set; }
+        public bool ActivityHasValue { get; protected set; }
+        public string ActivityType { get; protected set; }
 
 
-        public ActivityViewModel(Guid activityId, string activityName)
+        internal ActivityViewModel(Guid activityId, string activityName, string acctivityType, bool activityHasValue)
         {
             ActivityId = activityId;
             ActivityName = activityName;
+            ActivityType = acctivityType;
+            ActivityHasValue = activityHasValue;
         }
     }
 }

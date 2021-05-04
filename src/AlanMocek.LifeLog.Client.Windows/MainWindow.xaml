@@ -16,7 +16,7 @@
         </i:EventTrigger>
     </i:Interaction.Triggers>
     
-    <Grid>
+    <Grid x:Name="MainWindowGrid">
         <Grid>
             <Border HorizontalAlignment="Center" VerticalAlignment="Center">
                 <StackPanel Orientation="Vertical">
@@ -27,7 +27,7 @@
             </Border>
         </Grid>
 
-        <ContentPresenter Content="{Binding CurrentPanelViewModel}">
+        <ContentPresenter Visibility="{Binding DataContext.CurrentPanelViewModel, ElementName=MainWindowGrid, Converter={StaticResource ObjectExistenceToVisiblityConverter}}" Content="{Binding CurrentPanelViewModel}">
 
         </ContentPresenter>
     </Grid>

@@ -6,10 +6,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="ActivityRecords\CommandHandlers\" />
-  </ItemGroup>
-
-  <ItemGroup>
     <ProjectReference Include="..\AlanMocek.LifeLog.Core\AlanMocek.LifeLog.Core.csproj" />
     <ProjectReference Include="..\AlanMocek.LifeLog.Data\AlanMocek.LifeLog.Data.csproj" />
     <ProjectReference Include="..\AlanMocek.LifeLog.Infrastructure\AlanMocek.LifeLog.Infrastructure.csproj" />

@@ -9,8 +9,11 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Core.ActivityRecords
 {
-    public abstract class ActivityRecord// : IActivityRecordWithActivity
+    public abstract class ActivityRecord : IActivityRecordWithActivity
     {
+        private Activity _IActivityRecordWithActivity_Activity;
+
+
         public Guid Id { get; private set; }
         public Guid ActivityId { get; private set; }
         public Guid DayRecordId { get; private set; }
@@ -18,7 +21,7 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords
         public ActivityRecordOrder Order { get; private set; }
 
 
-        //Activity IActivityRecordWithActivity.Activity { get; set; }
+        Activity IActivityRecordWithActivity.Activity => _IActivityRecordWithActivity_Activity;
 
 
         public ActivityRecord() { }

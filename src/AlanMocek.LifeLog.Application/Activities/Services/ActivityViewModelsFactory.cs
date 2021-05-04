@@ -16,27 +16,27 @@ namespace AlanMocek.LifeLog.Application.Activities.Services
 
             if(activity is ClockActivity)
             {
-                activityViewModel = new ClockActivityViewModel(activity.Id, activity.Name);
+                activityViewModel = new ClockActivityViewModel(activity.Id, activity.Name, activity.Type, activity.HasValue);
             }
 
             if (activity is TimeActivity)
             {
-                activityViewModel = new TimeActivityViewModel(activity.Id, activity.Name);
+                activityViewModel = new TimeActivityViewModel(activity.Id, activity.Name, activity.Type, activity.HasValue);
             }
 
             if (activity is OccurrenceActivity)
             {
-                activityViewModel = new OccurenceActivityViewModel(activity.Id, activity.Name);
+                activityViewModel = new OccurenceActivityViewModel(activity.Id, activity.Name, activity.Type, activity.HasValue);
             }
 
             if (activity is QuantityActivity)
             {
-                activityViewModel = new QuantityActivityViewModel(activity.Id, activity.Name);
+                activityViewModel = new QuantityActivityViewModel(activity.Id, activity.Name, activity.Type, activity.HasValue);
             }
 
             if (activityViewModel is null)
             {
-                throw new ArgumentException($"Activity of type '{activity.GetType()}' is not supported.");
+                throw new ArgumentException($"Activity of type '{activity.Type}' is not supported.");
             }
             
             return activityViewModel;

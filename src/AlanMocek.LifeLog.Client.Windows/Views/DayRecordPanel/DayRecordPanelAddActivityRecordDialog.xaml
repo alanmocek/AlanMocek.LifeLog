@@ -4,9 +4,81 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel"
-             mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
-    <Grid>
-            
+             xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel;assembly=LifeLog.ClientApp"
+             xmlns:activityRecordValueViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.Services;assembly=LifeLog.ClientApp"
+             mc:Ignorable="d" MinWidth="400" d:DataContext="{d:DesignInstance viewModels:DayRecordAddActivityRecordDialogViewModel}">
+    <Grid x:Name="AddActivityRecordDialogGrid">
+        <Border Background="White">
+            <Grid Margin="20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="auto"/>
+                </Grid.RowDefinitions>
+
+                <DockPanel LastChildFill="True" Grid.Row="0">
+                    <Button DockPanel.Dock="Right" MinHeight="36" MinWidth="36" Content="X" Command="{Binding CloseDialogCommand}"/>
+
+                    <Border MinHeight="36" DockPanel.Dock="Left">
+                        <TextBlock Text="Create Activity Record" VerticalAlignment="Center"/>
+                    </Border>
+                </DockPanel>
+
+                <ScrollViewer Grid.Row="1" Margin="0,20,0,0" Padding="0,0,10,0" VerticalScrollBarVisibility="Auto">
+                    <StackPanel Orientation="Vertical">
+                        <StackPanel Orientation="Vertical" >
+                            <Label Content="For Activity:" MinHeight="32"/>
+                            <ComboBox SelectedItem="{Binding SelectedActivity}" ItemsSource="{Binding AvailableActivities}" MinHeight="36">
+                                <ComboBox.ItemTemplate>
+                                    <DataTemplate>
+                                        <ComboBoxItem MinHeight="32" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                            <TextBlock Text="{Binding ActivityName}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </ComboBoxItem>
+                                    </DataTemplate>
+                                </ComboBox.ItemTemplate>
+                            </ComboBox>
+                        </StackPanel>
+
+                        <ContentPresenter  Visibility="{Binding Path=DataContext.SelectedActivityRecordValue, ElementName=AddActivityRecordDialogGrid, Converter={StaticResource ObjectExistenceToVisiblityConverter}}" 
+                                          Content="{Binding SelectedActivityRecordValue}">
+                            <ContentPresenter.Resources>
+                                <DataTemplate DataType="{x:Type activityRecordValueViewModels:QuantityActivityRecordValueViewModel}">
+                                    <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                                        <Label Content="Quantity:"/>
+                                        <TextBox  Text="{Binding Quantity}" MinHeight="32" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
+                                    </StackPanel>
+                                </DataTemplate>
+
+                                <DataTemplate DataType="{x:Type activityRecordValueViewModels:ClockActivityRecordValueViewModel}">
+                                    <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                                        <Label Content="Oclock:"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Text="{Binding Hour}" MinHeight="32" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" MinWidth="32"/>
+                                            <TextBlock Text=" : " VerticalAlignment="Center"/>
+                                            <TextBox Text="{Binding Minute}" MinHeight="32" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" MinWidth="32"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+
+                                <DataTemplate DataType="{x:Type activityRecordValueViewModels:TimeActivityRecordValueViewModel}">
+                                    <StackPanel Margin="0,20,0,0" Orientation="Vertical">
+                                        <Label Content="Time:"/>
+                                        <StackPanel Orientation="Horizontal">
+                                            <TextBox Text="{Binding Hours}" MinHeight="32" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" MinWidth="32"/>
+                                            <TextBlock Text=" : " VerticalAlignment="Center"/>
+                                            <TextBox Text="{Binding Minutes}" MinHeight="32" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" MinWidth="32"/>
+                                            <TextBlock Text=" : " VerticalAlignment="Center"/>
+                                            <TextBox Text="{Binding Seconds}" MinHeight="32" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" MinWidth="32"/>
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ContentPresenter.Resources>
+                        </ContentPresenter>
+                    </StackPanel>
+                </ScrollViewer>
+
+                <Button Margin="0,20,0,0" Grid.Row="2" MinHeight="36" Content="Create Activity Record" Command="{Binding CreateActivityRecordCommand}"/>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

@@ -1,4 +1,6 @@
-﻿using AlanMocek.LifeLog.Application.ActivityRecords.Queries;
+﻿using AlanMocek.LifeLog.Application.ActivityRecords.CommandHandlers;
+using AlanMocek.LifeLog.Application.ActivityRecords.Commands;
+using AlanMocek.LifeLog.Application.ActivityRecords.Queries;
 using AlanMocek.LifeLog.Application.ActivityRecords.QueryHandlers;
 using AlanMocek.LifeLog.Application.ActivityRecords.Services;
 using AlanMocek.LifeLog.Application.ActivityRecords.ViewModels;
@@ -19,14 +21,24 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords
         public static IServiceCollection AddActivityRecordsServices(
              this IServiceCollection services)
         {
-            services.AddScoped<IQueryHandler<GetAllActivityRecordsForDayRecordWithId, IEnumerable<ActivityRecordViewModel>>, GetAllActivityRecordsForDayRecordWithIdHandler>();
+            services.AddScoped<IQueryHandler<GetActivityRecordForDayRecordPanelById, ActivityRecordForDayRecordPanel>, GetActivityRecordForDayRecordPanelByIdHandler>();
+            services.AddScoped<IQueryHandler<BrowseActivityRecordsForDayRecordPanel, IEnumerable<ActivityRecordForDayRecordPanel>>, BrowseActivityRecordsForDayRecordPanelHandler>();
 
 
-            services.AddScoped<ActivityRecordViewModelFactory>();
+            services.AddScoped<ICommandHandler<CreateTimeActivityRecord>, CreateTimeActivityRecordHandler>();
+            services.AddScoped<ICommandHandler<CreateQuantityActivityRecord>, CreateQuantityActivityRecordHandler>();
+            services.AddScoped<ICommandHandler<CreateOccurrenceActivityRecord>, CreateOccurrenceActivityRecordHandler>();
+            services.AddScoped<ICommandHandler<CreateClockActivityRecord>, CreateClockActivityRecordHandler>();
 
+
+            services.AddScoped<ActivityRecordForDayRecordPanelMapper>();
 
             services.AddScoped<IActivityRecordsRepository, ActivityRecordsRepository>();
             
+            
+            services.AddScoped<ActivityRecordCreator>();
+            
+
             return services;
         }
     }
