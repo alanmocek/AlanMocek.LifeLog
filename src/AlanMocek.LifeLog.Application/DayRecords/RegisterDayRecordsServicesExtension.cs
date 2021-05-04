@@ -20,9 +20,9 @@ namespace AlanMocek.LifeLog.Application.DayRecords
         public static IServiceCollection AddDayRecordsServices(
              this IServiceCollection services)
         {
-            services.AddScoped<IQueryHandler<GetDayRecordCardsByYearAndMonth, IEnumerable<DayRecordCardViewModel>>, GetDayRecordCardsByYearAndMonthHandler>();
-            services.AddScoped<IQueryHandler<GetDayRecordCardById, DayRecordCardViewModel>, GetDayRecordCardByIdHandler>();
-            services.AddScoped<IQueryHandler<GetDayRecordById, DayRecordViewModel>, GetDayRecordByIdHandler>();
+            services.AddScoped<IQueryHandler<BrowseDayRecordsForCalendarPanel, IEnumerable<DayRecordForCalendarPanel>>, BrowseDayRecordsForCalendarPanelHandler>();
+            services.AddScoped<IQueryHandler<GetDayRecordForCalendarPanelById, DayRecordForCalendarPanel>, GetDayRecordForCalendarPanelByIdHandler>();
+            services.AddScoped<IQueryHandler<GetDayRecordForDayRecordPanelById, DayRecordForDayRecordPanel>, GetDayRecordForDayRecordPanelByIdHandler>();
 
 
             services.AddScoped<ICommandHandler<CreateDayRecord>, CreateDayRecordHandler>();

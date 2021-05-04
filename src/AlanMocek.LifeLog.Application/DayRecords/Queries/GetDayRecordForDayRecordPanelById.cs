@@ -8,12 +8,12 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.DayRecords.Queries
 {
-    public record GetDayRecordCardById : ILifeLogQuery<DayRecordCardViewModel>
+    public record GetDayRecordForDayRecordPanelById : ILifeLogQuery<DayRecordForDayRecordPanel>
     {
         public Guid Id { get; init; }
 
 
-        public GetDayRecordCardById(Guid id)
+        public GetDayRecordForDayRecordPanelById(Guid id)
         {
             Id = id;
         }

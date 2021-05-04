@@ -10,25 +10,26 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.DayRecords.QueryHandlers
 {
-    public class GetDayRecordCardByIdHandler : IQueryHandler<GetDayRecordCardById, DayRecordCardViewModel>
+    public class BrowseDayRecordsForCalendarPanelHandler : IQueryHandler<BrowseDayRecordsForCalendarPanel,
+        IEnumerable<DayRecordForCalendarPanel>>
     {
         private readonly IDayRecordsRepository _dayRecordsRepository;
 
 
-        public GetDayRecordCardByIdHandler(
+        public BrowseDayRecordsForCalendarPanelHandler(
             IDayRecordsRepository dayRecordsRepository)
         {
             _dayRecordsRepository = dayRecordsRepository ?? throw new ArgumentNullException(nameof(dayRecordsRepository));
         }
 
 
-        public async Task<DayRecordCardViewModel> HandleAndGetResultAsync(GetDayRecordCardById query)
+        public async Task<IEnumerable<DayRecordForCalendarPanel>> HandleAndGetResultAsync(BrowseDayRecordsForCalendarPanel query)
         {
-            var dayRecord = await _dayRecordsRepository.GetByIdAsync(query.Id);
-            
-            var dayRecordCard = new DayRecordCardViewModel(dayRecord.Id, dayRecord.Date);
+            var dayRecords = await _dayRecordsRepository.BrowseAsync(new BrowseQuery(query.Year, query.Month));
 
-            return dayRecordCard;
+            var dayRecordsForCalendarPanel = dayRecords.Select(dayRecord => new DayRecordForCalendarPanel(dayRecord.Id, dayRecord.Date));
+
+            return dayRecordsForCalendarPanel;
         }
     }
 }

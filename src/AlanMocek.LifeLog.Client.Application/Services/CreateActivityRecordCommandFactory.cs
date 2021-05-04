@@ -11,21 +11,21 @@ namespace AlanMocek.LifeLog.Client.Application.Services
 {
     public class CreateActivityRecordCommandFactory
     {
-        public CreateActivityRecord FactorCreateActivityRecordCommand(Guid commandId, DayRecordViewModel dayRecord, ActivityViewModel activity, ActivityRecordValueViewModel value)
+        public CreateActivityRecord FactorCreateActivityRecordCommand(Guid commandId, Guid dayRecordId, Guid activityId, string activityType, ActivityRecordValueViewModel value)
         {
-            return activity.ActivityType switch
+            return activityType switch
             {
-                "activity_time" => new CreateTimeActivityRecord(commandId, activity.ActivityId, dayRecord.DayRecordId, 
+                "activity_time" => new CreateTimeActivityRecord(commandId, activityId, dayRecordId, 
                 new TimeSpan((value as TimeActivityRecordValueViewModel).Hours, (value as TimeActivityRecordValueViewModel).Minutes, (value as TimeActivityRecordValueViewModel).Seconds)),
                 
-                "activity_quantity" => new CreateQuantityActivityRecord(commandId, activity.ActivityId, dayRecord.DayRecordId, (value as QuantityActivityRecordValueViewModel).Quantity),
+                "activity_quantity" => new CreateQuantityActivityRecord(commandId, activityId, dayRecordId, (value as QuantityActivityRecordValueViewModel).Quantity),
 
-                "activity_occurrence" => new CreateOccurrenceActivityRecord(commandId, activity.ActivityId, dayRecord.DayRecordId),
+                "activity_occurrence" => new CreateOccurrenceActivityRecord(commandId, activityId, dayRecordId),
 
-                "activity_clock" => new CreateClockActivityRecord(commandId, activity.ActivityId, dayRecord.DayRecordId,
+                "activity_clock" => new CreateClockActivityRecord(commandId, activityId, dayRecordId,
                 (value as ClockActivityRecordValueViewModel).Hour, (value as ClockActivityRecordValueViewModel).Minute),
 
-                _ => throw new ArgumentException($"Factoring creation command of activity record for activity of type {activity.ActivityType} is not implemented.")
+                _ => throw new ArgumentException($"Factoring creation command of activity record for activity of type {activityType} is not implemented.")
             };
         }
     }

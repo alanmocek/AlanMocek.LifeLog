@@ -75,7 +75,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
 
 
             CreateDayRecordForDayCardCommand = new AsyncCommand(CreateDayRecordForDayCardCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
-            GoToDayRecordPanelOfDayRecordCardCommand = new AsyncCommand(GotoDayRecordPanelOfDayRecordCardCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
+            GoToDayRecordPanelOfDayRecordCardCommand = new AsyncCommand(GotoDayRecordPanelCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
         }
 
 
@@ -90,17 +90,19 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
 
         private async Task LoadDaysAsync()
         {
-            var getDayRecordForSelectedYearAndMonthQuery = new GetDayRecordCardsByYearAndMonth(SelectedYear, SelectedMonth);
-            var getDayRecordForSelectedYearAndMonthQueryResult =
-                await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<DayRecordCardViewModel>, GetDayRecordCardsByYearAndMonth>(getDayRecordForSelectedYearAndMonthQuery);
+            var browseDayRecords = new BrowseDayRecordsForCalendarPanel(SelectedYear, SelectedMonth);
+            var browseDayRecordsResult = await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<DayRecordForCalendarPanel>, BrowseDayRecordsForCalendarPanel>(browseDayRecords);
+            //var getDayRecordForSelectedYearAndMonthQuery = new GetDayRecordCardsByYearAndMonth(SelectedYear, SelectedMonth);
+            //var getDayRecordForSelectedYearAndMonthQueryResult =
+            //    await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<DayRecordCardViewModel>, GetDayRecordCardsByYearAndMonth>(getDayRecordForSelectedYearAndMonthQuery);
 
-            if(getDayRecordForSelectedYearAndMonthQueryResult.Successful == false)
+            if(browseDayRecordsResult.Successful == false)
             {
                 // TODO
                 return;
             }
 
-            var dayRecords = getDayRecordForSelectedYearAndMonthQueryResult.Result;
+            var dayRecords = browseDayRecordsResult.Result;
 
             var daysInMonth = DateTime.DaysInMonth(SelectedYear, SelectedMonth);
 
@@ -148,8 +150,8 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
 
             var dayCardIndex = Days.IndexOf(dayCard);
 
-            var getCreatedDayRecordQuery = new GetDayRecordCardById(createDayRecordCommand.Id);
-            var getCreatedDayRecordQueryResult = await _dispatcher.DispatchQueryAndGetResultAsync<DayRecordCardViewModel, GetDayRecordCardById>(getCreatedDayRecordQuery);
+            var getCreatedDayRecordQuery = new GetDayRecordForCalendarPanelById(createDayRecordCommand.Id);
+            var getCreatedDayRecordQueryResult = await _dispatcher.DispatchQueryAndGetResultAsync<DayRecordForCalendarPanel, GetDayRecordForCalendarPanelById>(getCreatedDayRecordQuery);
 
             if(getCreatedDayRecordQueryResult.Successful == false)
             {
@@ -161,14 +163,14 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
 
             Days[dayCardIndex] = new CalendarPanelRecordedDayCardViewModel(createdDayRecord, dayCard.DayOfWeekAsNumber, dayCard.WeekOfMonthAsNumber);
 
-            await GotoDayRecordPanelOfDayRecordCardCommandExecutionAsync(createdDayRecord);
+            await GotoDayRecordPanelCommandExecutionAsync(createdDayRecord.DayRecordId);
         }
 
-        private async Task GotoDayRecordPanelOfDayRecordCardCommandExecutionAsync(object parameter)
+        private async Task GotoDayRecordPanelCommandExecutionAsync(object parameter)
         {
-            var dayRecordCard = parameter as DayRecordCardViewModel;
+            var dayRecordId = (Guid)parameter;
 
-            _temporaryApplicationValues.DayRecordIdToOpen = dayRecordCard.DayRecordId;
+            _temporaryApplicationValues.DayRecordIdToOpen = dayRecordId;
             await _navigationService.ChangePanelAsync(typeof(DayRecordPanelViewModel));
         }
 
@@ -218,13 +220,13 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
 
     public class CalendarPanelRecordedDayCardViewModel : CalendarPanelDayCardViewModel
     {
-        public DayRecordCardViewModel DayRecordCard { get; private set; }
+        public DayRecordForCalendarPanel DayRecord { get; private set; }
 
 
-        public CalendarPanelRecordedDayCardViewModel(DayRecordCardViewModel dayRecord, int dayOfWeekNumber, int weekOfMonthNumber)
+        public CalendarPanelRecordedDayCardViewModel(DayRecordForCalendarPanel dayRecord, int dayOfWeekNumber, int weekOfMonthNumber)
             : base(dayOfWeekNumber, weekOfMonthNumber)
         {
-            DayRecordCard = dayRecord;
+            DayRecord = dayRecord;
         }
     }
 }

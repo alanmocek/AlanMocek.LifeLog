@@ -28,7 +28,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
 
        
         public PanelDialogViewModel CurrentDialog { get; private set; }
-        public DayRecordViewModel DayRecord { get; private set; }
+        public DayRecordForDayRecordPanel DayRecord { get; private set; }
         public ObservableCollection<ActivityRecordForDayRecordPanel> ActivityRecords { get; private set; }
 
 
@@ -70,8 +70,8 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
                 throw new Exception("No day record id find to open day record panel.");
             }
 
-            var getDayRecordQuery = new GetDayRecordById(_temporaryApplicationValues.DayRecordIdToOpen.Value);
-            var getDayRecordQueryResult = await _dispatcher.DispatchQueryAndGetResultAsync<DayRecordViewModel, GetDayRecordById>(getDayRecordQuery);
+            var getDayRecordQuery = new GetDayRecordForDayRecordPanelById(_temporaryApplicationValues.DayRecordIdToOpen.Value);
+            var getDayRecordQueryResult = await _dispatcher.DispatchQueryAndGetResultAsync<DayRecordForDayRecordPanel, GetDayRecordForDayRecordPanelById>(getDayRecordQuery);
 
             if (getDayRecordQueryResult.Successful == false)
             {
@@ -105,7 +105,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
             var addActivityRecordDialog = _serviceProvider.GetRequiredService<DayRecordAddActivityRecordDialogViewModel>();
             addActivityRecordDialog.DialogClosed += OnDialogClosed;
             addActivityRecordDialog.ActivityRecordCreated += OnActivityRecordCreatedAsync;
-            await addActivityRecordDialog.InitializeDialogAsync(this.DayRecord);
+            await addActivityRecordDialog.InitializeDialogAsync(this.DayRecord.DayRecordId);
             CurrentDialog = addActivityRecordDialog;
             RaisePropertyChanged(nameof(CurrentDialog));
         }

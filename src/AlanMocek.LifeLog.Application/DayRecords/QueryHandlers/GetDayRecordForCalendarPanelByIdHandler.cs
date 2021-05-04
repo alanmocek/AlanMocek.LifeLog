@@ -10,23 +10,26 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.DayRecords.QueryHandlers
 {
-    public class GetDayRecordByIdHandler : IQueryHandler<GetDayRecordById, DayRecordViewModel>
+    public class GetDayRecordForCalendarPanelByIdHandler : IQueryHandler<GetDayRecordForCalendarPanelById, DayRecordForCalendarPanel>
     {
         private readonly IDayRecordsRepository _dayRecordsRepository;
 
 
-        public GetDayRecordByIdHandler(
+        public GetDayRecordForCalendarPanelByIdHandler(
             IDayRecordsRepository dayRecordsRepository)
         {
             _dayRecordsRepository = dayRecordsRepository ?? throw new ArgumentNullException(nameof(dayRecordsRepository));
         }
 
 
-        public async Task<DayRecordViewModel> HandleAndGetResultAsync(GetDayRecordById query)
+        public async Task<DayRecordForCalendarPanel> HandleAndGetResultAsync(GetDayRecordForCalendarPanelById query)
         {
             var dayRecord = await _dayRecordsRepository.GetByIdAsync(query.Id);
 
-            return new DayRecordViewModel(dayRecord.Id, dayRecord.Date);
+            var dayRecordForCalendarPanel = new DayRecordForCalendarPanel(dayRecord.Id, dayRecord.Date);
+
+            return dayRecordForCalendarPanel;
+
         }
     }
 }

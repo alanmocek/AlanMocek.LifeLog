@@ -58,6 +58,8 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
 
             await InitializeDatabaseAsync();
             await InitializePrimaryPanelAsync();
+            
+            IsApplicationInitialized = true;
         }
 
 

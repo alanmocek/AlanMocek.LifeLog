@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.DayRecords.ViewModels
 {
-    public class DayRecordViewModel : ViewModel
+    public class DayRecordForCalendarPanel : ViewModel
     {
         public Guid DayRecordId { get; private set; }
         public DateTime DayRecordDate { get; private set; }
 
 
-        public DayRecordViewModel(Guid dayRecordId, DateTime dayRecordDate)
+        public DayRecordForCalendarPanel(Guid dayRecordId, DateTime dayRecordDate)
         {
             DayRecordId = dayRecordId;
             DayRecordDate = dayRecordDate;

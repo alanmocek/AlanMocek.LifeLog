@@ -28,6 +28,23 @@ namespace AlanMocek.LifeLog.Data.Repositories
             _lifeLogContext.DayRecords.Add(dayRecord);
         }
 
+        public async Task<IEnumerable<DayRecord>> BrowseAsync(BrowseQuery query)
+        {
+            IQueryable<DayRecord> contextQuery = _lifeLogContext.DayRecords;
+
+            if(query.Year.HasValue)
+            {
+                contextQuery = contextQuery.Where(dayRecord => dayRecord.Date.Year == query.Year.Value);
+            }
+
+            if (query.Month.HasValue)
+            {
+                contextQuery = contextQuery.Where(dayRecord => dayRecord.Date.Month == query.Month.Value);
+            }
+
+            return await contextQuery.ToListAsync();
+        }
+
         public async Task<IEnumerable<DayRecord>> GetBrowsedByYearAndMonthAsync(int year, int month)
         {
             return await _lifeLogContext.DayRecords.Where(dayRecord => dayRecord.Date.Year == year && dayRecord.Date.Month == month).ToListAsync();

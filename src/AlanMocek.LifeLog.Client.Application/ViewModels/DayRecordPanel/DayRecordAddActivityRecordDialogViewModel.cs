@@ -22,7 +22,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
         private readonly CreateActivityRecordCommandFactory _createActivityRecordCommandFactory;
 
 
-        private DayRecordViewModel _dayRecord;
+        private Guid _dayRecordId;
         private ActivityViewModel _selectedActivity;
 
 
@@ -37,7 +37,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
             {
                 _selectedActivity = value;
                 RaisePropertyChanged(nameof(SelectedActivity));
-                UpdateActivityValue();
+                UpdateActivityValueWhenSelectedActivityChanged();
             }
         }
 
@@ -70,9 +70,9 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
         }
 
 
-        public async Task InitializeDialogAsync(DayRecordViewModel dayRecord)
+        public async Task InitializeDialogAsync(Guid dayRecordId)
         {
-            _dayRecord = dayRecord;
+            _dayRecordId = dayRecordId;
             await LoadAvailableActivitiesAsync();
         }
 
@@ -84,7 +84,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
 
             if(getAvailableActivitiesQueryResult.Successful == false)
             {
-                // TODO
+                // TODO - show error notyfication
                 return;
             }
 
@@ -105,14 +105,12 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
         {
             if(SelectedActivity is null)
             {
-                // TODO
+                // TODO - show error notyfication
                 return;
             }
 
             var createActivityRecordCommand = _createActivityRecordCommandFactory.FactorCreateActivityRecordCommand(Guid.NewGuid(),
-                _dayRecord, SelectedActivity, SelectedActivityRecordValue);
-
-            
+                _dayRecordId, SelectedActivity.ActivityId, SelectedActivity.ActivityType, SelectedActivityRecordValue);
 
             var createActivityRecordCommandResult = await _dispatcher.DispatchCommandAndGetResultAsync(createActivityRecordCommand);
 
@@ -124,7 +122,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
             await ActivityRecordCreated?.Invoke(new ActivityRecordCreatedEventArgs(createActivityRecordCommand.Id));
         }
 
-        private void UpdateActivityValue()
+        private void UpdateActivityValueWhenSelectedActivityChanged()
         {
             if(SelectedActivity is null || SelectedActivity.ActivityHasValue == false)
             {

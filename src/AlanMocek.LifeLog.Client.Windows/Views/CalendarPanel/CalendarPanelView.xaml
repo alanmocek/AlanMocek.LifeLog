@@ -104,10 +104,10 @@
                         
                         <DataTemplate DataType="{x:Type calendarPanelViewModels:CalendarPanelRecordedDayCardViewModel}">
                             <Border>
-                                <Button Command="{Binding DataContext.GoToDayRecordPanelOfDayRecordCardCommand, ElementName=ViewGrid}" CommandParameter="{Binding DayRecordCard}">
+                                <Button Command="{Binding DataContext.GoToDayRecordPanelOfDayRecordCardCommand, ElementName=ViewGrid}" CommandParameter="{Binding DayRecord.DayRecordId}">
                                     <Button.Content>
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock Text="{Binding DayRecordCard.DayRecordDate.Date.Day}"/>
+                                            <TextBlock Text="{Binding DayRecord.DayRecordDate.Date.Day}"/>
                                             <TextBlock Text="(Recorded)"/>
                                         </StackPanel>
                                     </Button.Content>
