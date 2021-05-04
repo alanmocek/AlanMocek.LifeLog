@@ -18,11 +18,14 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
         private readonly IDispatcher _dispatcher;
 
 
+        private Guid _activityToDeleteId;
+
+
         public event Action DialogClosed;
         public event Action<ActivityDeletedEventArgs> ActivityDeleted;
 
 
-        public ActivityViewModel ActivityToDelete { get; private set; }
+        public string ActivityToDeleteName { get; private set; }
 
 
         public ICommand CancelActivityDeletionCommand { get; private set; }
@@ -40,9 +43,10 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
         }
 
 
-        public void Initialize(ActivityViewModel activityToDelete)
+        public void Initialize(Guid activityToDeleteId, string activityToDeleteName)
         {
-            ActivityToDelete = activityToDelete;
+            _activityToDeleteId = activityToDeleteId;
+            ActivityToDeleteName = activityToDeleteName;
         }
 
 
@@ -54,7 +58,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 
         private async Task ConfirmActivityDeletionCommandExecutionAsync(object paramter)
         {
-            var deleteActivityCommand = new DeleteActivity(ActivityToDelete.ActivityId);
+            var deleteActivityCommand = new DeleteActivity(_activityToDeleteId);
 
             var deleteActivityCommandResult = await _dispatcher.DispatchCommandAndGetResultAsync(deleteActivityCommand);
 
@@ -63,7 +67,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
                 // TODO
             }
 
-            ActivityDeleted?.Invoke(new ActivityDeletedEventArgs(ActivityToDelete.ActivityId));
+            ActivityDeleted?.Invoke(new ActivityDeletedEventArgs(_activityToDeleteId));
         }
     }
 

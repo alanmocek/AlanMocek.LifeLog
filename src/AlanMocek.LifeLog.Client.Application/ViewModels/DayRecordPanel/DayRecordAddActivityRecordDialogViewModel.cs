@@ -23,14 +23,14 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
 
 
         private Guid _dayRecordId;
-        private ActivityViewModel _selectedActivity;
+        private ActivityForDayRecordPanel _selectedActivity;
 
 
         public event Action DialogClosed;
         public event Func<ActivityRecordCreatedEventArgs, Task> ActivityRecordCreated;
 
 
-        public ActivityViewModel SelectedActivity
+        public ActivityForDayRecordPanel SelectedActivity
         {
             get => _selectedActivity;
             set
@@ -43,7 +43,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
 
         public ActivityRecordValueViewModel SelectedActivityRecordValue { get; private set; }
 
-        public ObservableCollection<ActivityViewModel> AvailableActivities { get; private set; }
+        public ObservableCollection<ActivityForDayRecordPanel> AvailableActivities { get; private set; }
         
         
         public ICommand CloseDialogCommand { get; private set; }
@@ -61,7 +61,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
 
 
             SelectedActivity = null;
-            AvailableActivities = new ObservableCollection<ActivityViewModel>();
+            AvailableActivities = new ObservableCollection<ActivityForDayRecordPanel>();
             SelectedActivityRecordValue = null;
 
 
@@ -79,8 +79,8 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
 
         private async Task LoadAvailableActivitiesAsync()
         {
-            var getAvailableActivitiesQuery = new GetAllActivities();
-            var getAvailableActivitiesQueryResult = await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<ActivityViewModel>, GetAllActivities>(getAvailableActivitiesQuery);
+            var getAvailableActivitiesQuery = new BrowseActivitiesForDayRecordPanel();
+            var getAvailableActivitiesQueryResult = await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<ActivityForDayRecordPanel>, BrowseActivitiesForDayRecordPanel>(getAvailableActivitiesQuery);
 
             if(getAvailableActivitiesQueryResult.Successful == false)
             {

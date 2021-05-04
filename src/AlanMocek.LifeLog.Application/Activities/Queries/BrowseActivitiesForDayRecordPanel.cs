@@ -8,14 +8,8 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.Activities.Queries
 {
-    public record GetActivityById : ILifeLogQuery<ActivityViewModel>
+    public record BrowseActivitiesForDayRecordPanel : ILifeLogQuery<IEnumerable<ActivityForDayRecordPanel>>
     {
-        public Guid Id { get; init; }
 
-
-        public GetActivityById(Guid id)
-        {
-            Id = id;
-        }
     }
 }

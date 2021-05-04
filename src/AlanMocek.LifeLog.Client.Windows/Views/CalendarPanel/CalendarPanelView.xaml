@@ -4,9 +4,10 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.CalendarPanel"
+             xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;assembly=LifeLog.ClientApp"
              xmlns:calendarPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;assembly=LifeLog.ClientApp"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="1280">
+             d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance viewModels:CalendarPanelViewModel}">
     <Grid x:Name="ViewGrid" Background="White">
         <Grid x:Name="PanelGrid" Margin="20">
             <Grid.RowDefinitions>

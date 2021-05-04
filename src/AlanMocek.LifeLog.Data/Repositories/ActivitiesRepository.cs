@@ -54,5 +54,12 @@ namespace AlanMocek.LifeLog.Data.Repositories
         {
             return await _lifeLogContext.Activities.AnyAsync(activity => activity.Name == name);
         }
+
+        public async Task<IEnumerable<Activity>> BrowseAsync(BrowseQuery query)
+        {
+            IQueryable<Activity> contextQuery = _lifeLogContext.Activities;
+
+            return await contextQuery.ToListAsync();
+        }
     }
 }

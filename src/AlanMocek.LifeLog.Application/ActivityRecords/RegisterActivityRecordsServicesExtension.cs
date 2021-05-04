@@ -21,20 +21,20 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords
         public static IServiceCollection AddActivityRecordsServices(
              this IServiceCollection services)
         {
+            // Application
             services.AddScoped<IQueryHandler<GetActivityRecordForDayRecordPanelById, ActivityRecordForDayRecordPanel>, GetActivityRecordForDayRecordPanelByIdHandler>();
             services.AddScoped<IQueryHandler<BrowseActivityRecordsForDayRecordPanel, IEnumerable<ActivityRecordForDayRecordPanel>>, BrowseActivityRecordsForDayRecordPanelHandler>();
-
 
             services.AddScoped<ICommandHandler<CreateTimeActivityRecord>, CreateTimeActivityRecordHandler>();
             services.AddScoped<ICommandHandler<CreateQuantityActivityRecord>, CreateQuantityActivityRecordHandler>();
             services.AddScoped<ICommandHandler<CreateOccurrenceActivityRecord>, CreateOccurrenceActivityRecordHandler>();
             services.AddScoped<ICommandHandler<CreateClockActivityRecord>, CreateClockActivityRecordHandler>();
 
-
             services.AddScoped<ActivityRecordForDayRecordPanelMapper>();
 
+
+            // Core
             services.AddScoped<IActivityRecordsRepository, ActivityRecordsRepository>();
-            
             
             services.AddScoped<ActivityRecordCreator>();
             

@@ -26,7 +26,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 
 
         public PanelDialogViewModel CurrentDialog { get; private set; }
-        public ObservableCollection<ActivityViewModel> Activities { get; private set; }
+        public ObservableCollection<ActivityForActivitiesPanel> Activities { get; private set; }
 
 
         public ICommand OpenCreateActivityDialogCommand { get; private set; }
@@ -44,7 +44,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             _isInitialized = false;
 
             CurrentDialog = null;
-            Activities = new ObservableCollection<ActivityViewModel>();
+            Activities = new ObservableCollection<ActivityForActivitiesPanel>();
 
 
             OpenCreateActivityDialogCommand = new AsyncCommand(OpenCreateActivityDialogCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
@@ -63,8 +63,8 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 
         private async Task LoadActivitiesAsync()
         {
-            var getAllActivitiesQuery = new GetAllActivities();
-            var getAllActivitiesResult = await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<ActivityViewModel>, GetAllActivities>(getAllActivitiesQuery);
+            var getAllActivitiesQuery = new BrowseActivitiesForActivitiesPanel();
+            var getAllActivitiesResult = await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<ActivityForActivitiesPanel>, BrowseActivitiesForActivitiesPanel>(getAllActivitiesQuery);
             
             if(getAllActivitiesResult.Successful == false)
             {
@@ -97,8 +97,8 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
         private Task OpenDeleteActivityDialogCommandExecutionAsync(object parameter)
         {
             var deleteActivityDialog = _serviceProvider.GetRequiredService<ActivitiesPanelDeleteActivityDialogViewModel>();
-            var activityToDelete = (parameter as ActivityViewModel);
-            deleteActivityDialog.Initialize(activityToDelete);
+            var activityToDelete = (parameter as ActivityForActivitiesPanel);
+            deleteActivityDialog.Initialize(activityToDelete.ActivityId, activityToDelete.ActivityName);
             deleteActivityDialog.DialogClosed += OnDialogClosed;
             deleteActivityDialog.ActivityDeleted += OnActivityDeleted;
             CurrentDialog = deleteActivityDialog;
@@ -129,8 +129,8 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             CurrentDialog = null;
             RaisePropertyChanged(nameof(CurrentDialog));
 
-            var getCreatedActivityQuery = new GetActivityById(args.CreatedActivityId);
-            var getCreatedActivityQueryResult = await _dispatcher.DispatchQueryAndGetResultAsync<ActivityViewModel, GetActivityById> (getCreatedActivityQuery);
+            var getCreatedActivityQuery = new GetActivityForActivitiesPanelById(args.CreatedActivityId);
+            var getCreatedActivityQueryResult = await _dispatcher.DispatchQueryAndGetResultAsync<ActivityForActivitiesPanel, GetActivityForActivitiesPanelById> (getCreatedActivityQuery);
 
             if(getCreatedActivityQueryResult.Successful == false)
             {

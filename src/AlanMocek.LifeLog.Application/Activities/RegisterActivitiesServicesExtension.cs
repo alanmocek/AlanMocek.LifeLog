@@ -21,17 +21,20 @@ namespace AlanMocek.LifeLog.Application.Activities
         public static IServiceCollection AddActivitiesServices(
              this IServiceCollection services)
         {
-            services.AddScoped<IQueryHandler<GetAllActivities, IEnumerable<ActivityViewModel>>, GetAllActivitiesHandler>();
-            services.AddScoped<IQueryHandler<GetActivityById, ActivityViewModel>, GetActivityByIdHandler>();
-            
+            // Application
+            services.AddScoped<IQueryHandler<GetActivityForActivitiesPanelById, ActivityForActivitiesPanel>, GetActivityForActivitiesPanelByIdHandler>();
+            services.AddScoped<IQueryHandler<BrowseActivitiesForActivitiesPanel, IEnumerable<ActivityForActivitiesPanel>>, BrowseActivitiesForActivitiesPanelHandler>();
+            services.AddScoped<IQueryHandler<BrowseActivitiesForDayRecordPanel, IEnumerable<ActivityForDayRecordPanel>>, BrowseActivitiesForDayRecordPanelHandler>();
 
             services.AddScoped<ICommandHandler<CreateActivity>, CreateActivityHandler>();
             services.AddScoped<ICommandHandler<DeleteActivity>, DeleteActivityHandler>();
 
+            services.AddScoped<ActivityForActivitiesPanelMapper>();
 
+
+            // Core
             services.AddScoped<ActivitiesCreator>();
             services.AddScoped<ActivitiesFactory>();
-            services.AddScoped<ActivityViewModelsFactory>();
             
             services.AddScoped<IActivitiesRepository, ActivitiesRepository>();
 

@@ -11,28 +11,28 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.Activities.QueryHandlers
 {
-    public class GetActivityByIdHandler : IQueryHandler<GetActivityById, ActivityViewModel>
+    public class GetActivityForActivitiesPanelByIdHandler : IQueryHandler<GetActivityForActivitiesPanelById, ActivityForActivitiesPanel>
     {
         private readonly IActivitiesRepository _activitiesRepository;
-        private readonly ActivityViewModelsFactory _activityViewModelsFactory;
+        private readonly ActivityForActivitiesPanelMapper _activityForActivitiesPanelMapper;
 
 
-        public GetActivityByIdHandler(
+        public GetActivityForActivitiesPanelByIdHandler(
             IActivitiesRepository activitiesRepository,
-            ActivityViewModelsFactory activityViewModelsFactory)
+            ActivityForActivitiesPanelMapper activityForActivitiesPanelMapper)
         {
             _activitiesRepository = activitiesRepository ?? throw new ArgumentNullException(nameof(activitiesRepository));
-            _activityViewModelsFactory = activityViewModelsFactory ?? throw new ArgumentNullException(nameof(activityViewModelsFactory));
+            _activityForActivitiesPanelMapper = activityForActivitiesPanelMapper ?? throw new ArgumentNullException(nameof(activityForActivitiesPanelMapper));
         }
 
 
-        public async Task<ActivityViewModel> HandleAndGetResultAsync(GetActivityById query)
+        public async Task<ActivityForActivitiesPanel> HandleAndGetResultAsync(GetActivityForActivitiesPanelById query)
         {
             var activity = await _activitiesRepository.GetByIdAsync(query.Id);
-            
-            var activityViewModel = _activityViewModelsFactory.FactorActivityViewModel(activity);
-            
-            return activityViewModel;
+
+            var activityForActivitiesPanel = _activityForActivitiesPanelMapper.Map(activity);
+
+            return activityForActivitiesPanel;
         }
     }
 }

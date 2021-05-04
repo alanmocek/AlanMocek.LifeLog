@@ -13,5 +13,16 @@ namespace AlanMocek.LifeLog.Core.Activities.Services
         Task<bool> GetIsActivityWithNameExistingAsync(string name);
         Task<IEnumerable<Activity>> GetAllAsync();
         Task<Activity> GetByIdAsync(Guid id);
+        Task<IEnumerable<Activity>> BrowseAsync(BrowseQuery query);
     }
+
+
+    public record BrowseQuery
+    {
+        public BrowseQuery()
+        {
+
+        }
+    }
+
 }

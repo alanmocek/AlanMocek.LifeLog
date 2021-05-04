@@ -12,10 +12,10 @@ namespace AlanMocek.LifeLog.Core.Activities.Services
         {
             Activity activity = activityType switch
             {
-                "clock" => new ClockActivity(activityId, activityName),
-                "occurence" => new OccurrenceActivity(activityId, activityName),
+                "activity_clock" => new ClockActivity(activityId, activityName),
+                "activity_occurrence" => new OccurrenceActivity(activityId, activityName),
                 "activity_quantity" => new QuantityActivity(activityId, activityName),
-                "time" => new TimeActivity(activityId, activityName),
+                "activity_time" => new TimeActivity(activityId, activityName),
                 _ => throw new ArgumentException($"Activity type '{activityType}' is not supported.")
             };
 
