@@ -13,12 +13,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
+namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels
 {
-    public class DayRecordAddActivityRecordDialogViewModel : PanelDialogViewModel
+    public class DayRecordPanelAddActivityRecordDialog : PanelDialogViewModel
     {
         private readonly IDispatcher _dispatcher;
-        private readonly ActivityRecordValueViewModelsFactory _activityRecordValueViewModelsFactory;
+        private readonly DayRecordPanelAddActivityRecordDialogValueItemGetter _dayRecordPanelAddActivityRecordDialogValueItemGetter;
         private readonly CreateActivityRecordCommandFactory _createActivityRecordCommandFactory;
 
 
@@ -41,7 +41,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
             }
         }
 
-        public ActivityRecordValueViewModel SelectedActivityRecordValue { get; private set; }
+        public DayRecordPanelActivityRecordValueItem ValueForSelectedActivity { get; private set; }
 
         public ObservableCollection<ActivityForDayRecordPanel> AvailableActivities { get; private set; }
         
@@ -50,19 +50,19 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
         public ICommand CreateActivityRecordCommand { get; private set; }
 
 
-        public DayRecordAddActivityRecordDialogViewModel(
+        public DayRecordPanelAddActivityRecordDialog(
             IDispatcher dispatcher,
-            ActivityRecordValueViewModelsFactory activityRecordValueViewModelsFactory,
+            DayRecordPanelAddActivityRecordDialogValueItemGetter dayRecordPanelAddActivityRecordDialogValueItemGetter,
             CreateActivityRecordCommandFactory createActivityRecordCommandFactory)
         {
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
-            _activityRecordValueViewModelsFactory = activityRecordValueViewModelsFactory ?? throw new ArgumentNullException(nameof(activityRecordValueViewModelsFactory));
-            _createActivityRecordCommandFactory = createActivityRecordCommandFactory ?? throw new ArgumentNullException(nameof(_createActivityRecordCommandFactory));
+            _dayRecordPanelAddActivityRecordDialogValueItemGetter = dayRecordPanelAddActivityRecordDialogValueItemGetter ?? throw new ArgumentNullException(nameof(dayRecordPanelAddActivityRecordDialogValueItemGetter));
+            _createActivityRecordCommandFactory = createActivityRecordCommandFactory ?? throw new ArgumentNullException(nameof(createActivityRecordCommandFactory));
 
 
             SelectedActivity = null;
             AvailableActivities = new ObservableCollection<ActivityForDayRecordPanel>();
-            SelectedActivityRecordValue = null;
+            ValueForSelectedActivity = null;
 
 
             CloseDialogCommand = new AsyncCommand(CloseDialogCommandExecution, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
@@ -110,7 +110,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
             }
 
             var createActivityRecordCommand = _createActivityRecordCommandFactory.FactorCreateActivityRecordCommand(Guid.NewGuid(),
-                _dayRecordId, SelectedActivity.ActivityId, SelectedActivity.ActivityType, SelectedActivityRecordValue);
+                _dayRecordId, SelectedActivity.ActivityId, SelectedActivity.ActivityType, ValueForSelectedActivity);
 
             var createActivityRecordCommandResult = await _dispatcher.DispatchCommandAndGetResultAsync(createActivityRecordCommand);
 
@@ -126,13 +126,13 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
         {
             if(SelectedActivity is null || SelectedActivity.ActivityHasValue == false)
             {
-                SelectedActivityRecordValue = null;
-                RaisePropertyChanged(nameof(SelectedActivityRecordValue));
+                ValueForSelectedActivity = null;
+                RaisePropertyChanged(nameof(ValueForSelectedActivity));
                 return;
             }
 
-            SelectedActivityRecordValue = _activityRecordValueViewModelsFactory.FactorActivityRecordValueViewModelForActivityViewModel(SelectedActivity.ActivityType);
-            RaisePropertyChanged(nameof(SelectedActivityRecordValue));
+            ValueForSelectedActivity = _dayRecordPanelAddActivityRecordDialogValueItemGetter.GetFromActivityType(SelectedActivity.ActivityType);
+            RaisePropertyChanged(nameof(ValueForSelectedActivity));
         }
     }
 

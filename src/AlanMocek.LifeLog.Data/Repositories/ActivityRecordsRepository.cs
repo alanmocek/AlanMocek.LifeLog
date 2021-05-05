@@ -27,9 +27,16 @@ namespace AlanMocek.LifeLog.Data.Repositories
             _lifeLogContext.Add(activityRecord);
         }
 
-        public Task<IEnumerable<ActivityRecord>> BrowseAsync(BrowseQuery query)
+        public async Task<IEnumerable<ActivityRecord>> BrowseAsync(BrowseQuery query)
         {
-            throw new NotImplementedException();
+            IQueryable<ActivityRecord> contextQuery = _lifeLogContext.ActivityRecords;
+
+            if(query.DayRecordId.HasValue)
+            {
+                contextQuery = contextQuery.Where(activityRecord => activityRecord.DayRecordId == query.DayRecordId.Value);
+            }
+
+            return await contextQuery.ToListAsync();
         }
 
         public async Task<IEnumerable<IActivityRecordWithActivity>> BrowseWithActivityAsync(BrowseWithActivityQuery query)

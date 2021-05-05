@@ -23,7 +23,7 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
         {
             var activityRecord = await _activityRecordsRepository.GetByIdAsync(activityRecordId);
 
-            ActivityRecordOrder oldOrder = activityRecord.Order;
+            var oldOrder = activityRecord.Order;
 
             // VS bug?
             if(oldOrder == newOrder)
@@ -32,6 +32,8 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
             }
 
             var allDayRecordActivityRecords = await _activityRecordsRepository.BrowseAsync(new BrowseQuery(activityRecord.DayRecordId));
+
+            
 
             List<ActivityRecord> activityRecordsToChange = new List<ActivityRecord>();
 
@@ -45,6 +47,13 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
 
             if (newOrder > oldOrder)
             {
+                var maxOrder = allDayRecordActivityRecords.Max(activityRecord => activityRecord.Order);
+
+                if (oldOrder == maxOrder)
+                {
+                    return;
+                }
+
                 activityRecordsToChange = allDayRecordActivityRecords.Where(dayRecord => dayRecord.Order > oldOrder 
                 && dayRecord.Order <= newOrder).ToList();
 

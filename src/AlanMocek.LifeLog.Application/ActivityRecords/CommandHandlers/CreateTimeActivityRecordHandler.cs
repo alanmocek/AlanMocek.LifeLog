@@ -4,9 +4,6 @@ using AlanMocek.LifeLog.Core.ActivityRecords.Values;
 using AlanMocek.LifeLog.Data.Contexts;
 using AlanMocek.LifeLog.Infrastructure.Types;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.ActivityRecords.CommandHandlers

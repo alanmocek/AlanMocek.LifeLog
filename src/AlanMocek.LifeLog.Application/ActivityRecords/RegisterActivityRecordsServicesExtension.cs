@@ -1,18 +1,14 @@
 ﻿using AlanMocek.LifeLog.Application.ActivityRecords.CommandHandlers;
 using AlanMocek.LifeLog.Application.ActivityRecords.Commands;
+using AlanMocek.LifeLog.Application.ActivityRecords.DTOs;
 using AlanMocek.LifeLog.Application.ActivityRecords.Queries;
 using AlanMocek.LifeLog.Application.ActivityRecords.QueryHandlers;
 using AlanMocek.LifeLog.Application.ActivityRecords.Services;
-using AlanMocek.LifeLog.Application.ActivityRecords.ViewModels;
 using AlanMocek.LifeLog.Core.ActivityRecords.Services;
 using AlanMocek.LifeLog.Data.Repositories;
 using AlanMocek.LifeLog.Infrastructure.Types;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.ActivityRecords
 {
@@ -32,14 +28,14 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords
 
             services.AddScoped<ICommandHandler<ChangeActivityRecordOrder>, ChangeActivityRecordOrderHandler>();
 
-            services.AddScoped<ActivityRecordForDayRecordPanelMapper>();
+            services.AddScoped<ActivityRecordWithActivityToActivityRecordForDayRecordPanelMapper>();
 
 
             // Core
             services.AddScoped<IActivityRecordsRepository, ActivityRecordsRepository>();
             
             services.AddScoped<ActivityRecordCreator>();
-            
+            services.AddScoped<ActivityRecordOrderChanger>();
 
             return services;
         }

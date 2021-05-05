@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AlanMocek.LifeLog.Application\AlanMocek.LifeLog.Application.csproj" />
     <ProjectReference Include="..\AlanMocek.LifeLog.Client.Application\AlanMocek.LifeLog.Client.Application.csproj" />
     <ProjectReference Include="..\AlanMocek.LifeLog.Data\AlanMocek.LifeLog.Data.csproj" />
   </ItemGroup>

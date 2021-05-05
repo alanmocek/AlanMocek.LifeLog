@@ -4,8 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel"
-             xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel;assembly=LifeLog.ClientApp"
-             xmlns:activityRecordsViewModels="clr-namespace:AlanMocek.LifeLog.Application.ActivityRecords.ViewModels;assembly=LifeLog.App"
+             xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;assembly=LifeLog.ClientApp"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance viewModels:DayRecordPanelViewModel}">
     <Grid x:Name="ViewGrid" Background="White" >
@@ -37,48 +36,7 @@
             </Border>
 
             <ScrollViewer Grid.Row="2" Margin="0,10,0,0">
-                <ItemsControl ItemsSource="{Binding ActivityRecords}">
-                    <ItemsControl.Resources>
-                        <DataTemplate DataType="{x:Type activityRecordsViewModels:ClockActivityRecordForDayRecordPanel}">
-                            <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Clock" FontSize="14"/>
-                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}" FontSize="14"/>
-                                    <TextBlock Text="{Binding ActivityRecordHourValue}" FontSize="14"/>
-                                    <TextBlock Text="{Binding ActivityRecordMinuteValue}" FontSize="14"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-
-                        <DataTemplate DataType="{x:Type activityRecordsViewModels:OccurredActivityRecordForDayRecordPanel}">
-                            <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Occurrence" FontSize="14"/>
-                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}" FontSize="14"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-
-                        <DataTemplate DataType="{x:Type activityRecordsViewModels:TimeActivityRecordForDayRecordPanel}">
-                            <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Clock"/>
-                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}" FontSize="14"/>
-                                    <TextBlock Text="{Binding ActivityRecordTimeValue}" FontSize="14"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-
-                        <DataTemplate DataType="{x:Type activityRecordsViewModels:QuantityActivityRecordForDayRecordPanel}">
-                            <Border MinHeight="60" BorderThickness="1" BorderBrush="Black">
-                                <StackPanel Orientation="Horizontal">
-                                    <TextBlock Text="Quantity"/>
-                                    <TextBlock Text="{Binding ActivityRecordActivity.ActivityName}" FontSize="14"/>
-                                    <TextBlock Text="{Binding ActivityRecordQuantityValue}" FontSize="14"/>
-                                </StackPanel>
-                            </Border>
-                        </DataTemplate>
-                    </ItemsControl.Resources>
+                <ItemsControl ItemsSource="{Binding ActivityRecordsSource.View}">
                     <!--<Border MinHeight="60" BorderBrush="Black" BorderThickness="1">
                         <Grid>
                             <Grid.ColumnDefinitions>
@@ -93,7 +51,7 @@
                             <Border Grid.Column="0" MinWidth="40">
                                 <TextBlock Text=":" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
-                            
+
                             <Border MinHeight="40" MinWidth="40" Grid.Column="1" Margin="0,10">
                                 <TextBlock Text="Icon" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
@@ -105,7 +63,7 @@
                             <Border MinHeight="40" MinWidth="40" Grid.Column="3" Margin="10,10,0,10" BorderThickness="1" BorderBrush="Black">
                                 <TextBlock Text="300" VerticalAlignment="Center" HorizontalAlignment="Center"/>
                             </Border>
-                            
+
                             <Button Content="Edit" Grid.Column="4" MinHeight="40" MinWidth="40" Margin="10,10,0,10"/>
 
                             <Button Content="Delete" Grid.Column="5" MinHeight="40" MinWidth="40" Margin="10,10,10,10"/>

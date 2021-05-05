@@ -1,29 +1,25 @@
-﻿using AlanMocek.LifeLog.Application.Activities.ViewModels;
-using AlanMocek.LifeLog.Application.ActivityRecords.Commands;
-using AlanMocek.LifeLog.Application.DayRecords.ViewModels;
+﻿using AlanMocek.LifeLog.Application.ActivityRecords.Commands;
+using AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Client.Application.Services
 {
     public class CreateActivityRecordCommandFactory
     {
-        public CreateActivityRecord FactorCreateActivityRecordCommand(Guid commandId, Guid dayRecordId, Guid activityId, string activityType, ActivityRecordValueViewModel value)
+        public CreateActivityRecord FactorCreateActivityRecordCommand(Guid commandId, Guid dayRecordId, Guid activityId, string activityType, DayRecordPanelActivityRecordValueItem value)
         {
             return activityType switch
             {
                 "activity_time" => new CreateTimeActivityRecord(commandId, activityId, dayRecordId, 
-                new TimeSpan((value as TimeActivityRecordValueViewModel).Hours, (value as TimeActivityRecordValueViewModel).Minutes, (value as TimeActivityRecordValueViewModel).Seconds)),
+                new TimeSpan((value as DayRecordPanelTimeActivityRecordValueItem).Hours, (value as DayRecordPanelTimeActivityRecordValueItem).Minutes, (value as DayRecordPanelTimeActivityRecordValueItem).Seconds)),
                 
-                "activity_quantity" => new CreateQuantityActivityRecord(commandId, activityId, dayRecordId, (value as QuantityActivityRecordValueViewModel).Quantity),
+                "activity_quantity" => new CreateQuantityActivityRecord(commandId, activityId, dayRecordId, (value as DayRecordPanelQuantityActivityRecordValueItem).Quantity),
 
-                "activity_occurrence" => new CreateOccurrenceActivityRecord(commandId, activityId, dayRecordId),
 
                 "activity_clock" => new CreateClockActivityRecord(commandId, activityId, dayRecordId,
-                (value as ClockActivityRecordValueViewModel).Hour, (value as ClockActivityRecordValueViewModel).Minute),
+                (value as DayRecordPanelClockActivityRecordValueItem).Hour, (value as DayRecordPanelClockActivityRecordValueItem).Minute),
+
+                "activity_occurred" => new CreateOccurrenceActivityRecord(commandId, activityId, dayRecordId),
 
                 _ => throw new ArgumentException($"Factoring creation command of activity record for activity of type {activityType} is not implemented.")
             };

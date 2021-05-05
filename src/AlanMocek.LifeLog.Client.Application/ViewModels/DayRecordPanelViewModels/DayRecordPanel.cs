@@ -1,5 +1,4 @@
 ﻿using AlanMocek.LifeLog.Application.ActivityRecords.Queries;
-using AlanMocek.LifeLog.Application.ActivityRecords.ViewModels;
 using AlanMocek.LifeLog.Application.DayRecords.Queries;
 using AlanMocek.LifeLog.Application.DayRecords.ViewModels;
 using AlanMocek.LifeLog.Client.Application.Types;
@@ -16,40 +15,49 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
+using AlanMocek.LifeLog.Application.ActivityRecords.DTOs;
+using AlanMocek.LifeLog.Client.Application.Services;
+using System.Windows.Data;
 
-namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
+namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels
 {
-    public class DayRecordPanelViewModel : PanelViewModel
+    public class DayRecordPanel : PanelViewModel
     {
         private readonly TemporaryApplicationValues _temporaryApplicationValues;
         private readonly IDispatcher _dispatcher;
         private readonly NavigationService _navigationService;
         private readonly IServiceProvider _serviceProvider;
+        private readonly DayRecordPanelActivityRecordItemGetter _dayRecordPanelActivityRecordItemGetter;
 
        
         public PanelDialogViewModel CurrentDialog { get; private set; }
         public DayRecordForDayRecordPanel DayRecord { get; private set; }
-        public ObservableCollection<ActivityRecordForDayRecordPanel> ActivityRecords { get; private set; }
+        public ObservableCollection<DayRecordPanelActivityRecordItem> ActivityRecords { get; private set; }
+        public CollectionViewSource ActivityRecordsSource { get; private set; }
 
 
         public ICommand OpenAddActivityRecordDialogCommand { get; private set; }
 
 
-        public DayRecordPanelViewModel(
+        public DayRecordPanel(
             TemporaryApplicationValues temporaryApplicationValues,
             IDispatcher dispatcher,
             NavigationService navigationService,
-            IServiceProvider serviceProvider)
+            IServiceProvider serviceProvider,
+            DayRecordPanelActivityRecordItemGetter dayRecordPanelActivityRecordItemGetter)
         {
             _temporaryApplicationValues = temporaryApplicationValues ?? throw new ArgumentNullException(nameof(temporaryApplicationValues));
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
             _navigationService = navigationService ?? throw new ArgumentNullException(nameof(navigationService));
             _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            _dayRecordPanelActivityRecordItemGetter = dayRecordPanelActivityRecordItemGetter ?? throw new ArgumentNullException(nameof(dayRecordPanelActivityRecordItemGetter));
 
 
             CurrentDialog = null;
             DayRecord = null;
-            ActivityRecords = new ObservableCollection<ActivityRecordForDayRecordPanel>();
+            ActivityRecords = new ObservableCollection<DayRecordPanelActivityRecordItem>();
+            ActivityRecordsSource = new CollectionViewSource();
+            ActivityRecordsSource.Source = ActivityRecords;
 
 
             OpenAddActivityRecordDialogCommand = new AsyncCommand(OpenAddActivityRecordDialogCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
@@ -96,13 +104,15 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
 
             foreach(var activityRecord in getActivityRecordsQueryResult.Result)
             {
-                ActivityRecords.Add(activityRecord);
+                await AddActivityRecordItemAsync(activityRecord);
             }
+
+            // TODO ActivityRecords.OrderBy(activityRecordItem => activityRecordItem.ActivityRecord.Order);
         }
 
         private async Task OpenAddActivityRecordDialogCommandExecutionAsync(object parameter)
         {
-            var addActivityRecordDialog = _serviceProvider.GetRequiredService<DayRecordAddActivityRecordDialogViewModel>();
+            var addActivityRecordDialog = _serviceProvider.GetRequiredService<DayRecordPanelAddActivityRecordDialog>();
             addActivityRecordDialog.DialogClosed += OnDialogClosed;
             addActivityRecordDialog.ActivityRecordCreated += OnActivityRecordCreatedAsync;
             await addActivityRecordDialog.InitializeDialogAsync(this.DayRecord.DayRecordId);
@@ -118,7 +128,6 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
 
         private async Task OnActivityRecordCreatedAsync(ActivityRecordCreatedEventArgs args)
         {
-            
             var getCreatedActivityRecord= new GetActivityRecordForDayRecordPanelById(args.CreatedActivityRecordId);
             var getCreatedActivityRecordResult = await _dispatcher.DispatchQueryAndGetResultAsync<ActivityRecordForDayRecordPanel, GetActivityRecordForDayRecordPanelById>(getCreatedActivityRecord);
 
@@ -128,8 +137,22 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel
                 return;
             }
 
-            ActivityRecords.Add(getCreatedActivityRecordResult.Result);
+            await AddActivityRecordItemAsync(getCreatedActivityRecordResult.Result);
             OnDialogClosed();
+        }
+
+        private async Task OnActivityRecordItemOrderChangedAsync()
+        {
+            ActivityRecords.Clear();
+            await LoadActivityRecords();
+        }
+
+        private async Task AddActivityRecordItemAsync(ActivityRecordForDayRecordPanel activityRecord)
+        {
+            var activityRecordItem = _dayRecordPanelActivityRecordItemGetter.GetFromActivityType(activityRecord.Activity.Type);
+            activityRecordItem.OrderChanged += OnActivityRecordItemOrderChangedAsync;
+            await activityRecordItem.InitializeAsync(activityRecord);
+            ActivityRecords.Add(activityRecordItem);
         }
     }
 }
