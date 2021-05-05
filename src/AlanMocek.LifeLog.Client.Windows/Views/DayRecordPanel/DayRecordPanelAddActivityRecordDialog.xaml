@@ -4,9 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel"
-             xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel;assembly=LifeLog.ClientApp"
-             xmlns:activityRecordValueViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.Services;assembly=LifeLog.ClientApp"
-             mc:Ignorable="d" MinWidth="400" d:DataContext="{d:DesignInstance viewModels:DayRecordAddActivityRecordDialogViewModel}">
+             xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;assembly=LifeLog.ClientApp"
+             mc:Ignorable="d" MinWidth="400" d:DataContext="{d:DesignInstance viewModels:DayRecordPanelAddActivityRecordDialog}">
     <Grid x:Name="AddActivityRecordDialogGrid">
         <Border Background="White">
             <Grid Margin="20">
@@ -40,16 +39,16 @@
                         </StackPanel>
 
                         <ContentPresenter  Visibility="{Binding Path=DataContext.SelectedActivityRecordValue, ElementName=AddActivityRecordDialogGrid, Converter={StaticResource ObjectExistenceToVisiblityConverter}}" 
-                                          Content="{Binding SelectedActivityRecordValue}">
+                                          Content="{Binding ValueForSelectedActivity}">
                             <ContentPresenter.Resources>
-                                <DataTemplate DataType="{x:Type activityRecordValueViewModels:QuantityActivityRecordValueViewModel}">
+                                <DataTemplate DataType="{x:Type viewModels:DayRecordPanelQuantityActivityRecordValueItem}">
                                     <StackPanel Margin="0,20,0,0" Orientation="Vertical">
                                         <Label Content="Quantity:"/>
                                         <TextBox  Text="{Binding Quantity}" MinHeight="32" HorizontalContentAlignment="Left" VerticalContentAlignment="Center"/>
                                     </StackPanel>
                                 </DataTemplate>
 
-                                <DataTemplate DataType="{x:Type activityRecordValueViewModels:ClockActivityRecordValueViewModel}">
+                                <DataTemplate DataType="{x:Type viewModels:DayRecordPanelClockActivityRecordValueItem}">
                                     <StackPanel Margin="0,20,0,0" Orientation="Vertical">
                                         <Label Content="Oclock:"/>
                                         <StackPanel Orientation="Horizontal">
@@ -60,7 +59,7 @@
                                     </StackPanel>
                                 </DataTemplate>
 
-                                <DataTemplate DataType="{x:Type activityRecordValueViewModels:TimeActivityRecordValueViewModel}">
+                                <DataTemplate DataType="{x:Type viewModels:DayRecordPanelTimeActivityRecordValueItem}">
                                     <StackPanel Margin="0,20,0,0" Orientation="Vertical">
                                         <Label Content="Time:"/>
                                         <StackPanel Orientation="Horizontal">

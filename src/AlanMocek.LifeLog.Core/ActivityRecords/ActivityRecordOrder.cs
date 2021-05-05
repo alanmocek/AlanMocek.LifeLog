@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Core.ActivityRecords
 {
-    public record ActivityRecordOrder
+    public record ActivityRecordOrder : IComparable
     {
         public int Order { get; init; }
 
@@ -32,6 +32,24 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords
             return this with { Order = Order + 1 };
         }
 
+        public int CompareTo(object obj)
+        {
+            if ((obj is ActivityRecordOrder) == false)
+                throw new ArgumentException(nameof(obj));
+
+            var otherOrder = obj as ActivityRecordOrder;
+
+            if (this > otherOrder)
+                return 1;
+
+            if (this == otherOrder)
+                return 0;
+
+            if (this < otherOrder)
+                return -1;
+
+            throw new Exception();
+        }
 
         public static bool operator >(ActivityRecordOrder left, ActivityRecordOrder right)
              => left.Order > right.Order;

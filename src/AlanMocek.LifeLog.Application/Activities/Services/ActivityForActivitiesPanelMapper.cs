@@ -20,7 +20,7 @@ namespace AlanMocek.LifeLog.Application.Activities.Services
 
                 "activity_quantity" => new QuantityActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
 
-                "activity_occurrence" => new OccurredActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
+                "activity_occurred" => new OccurredActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
 
                 _ => throw new ArgumentException($"Maping {typeof(Activity)} of type {activity.Type} to {nameof(ActivityForActivitiesPanel)} is not implemented.")
             };

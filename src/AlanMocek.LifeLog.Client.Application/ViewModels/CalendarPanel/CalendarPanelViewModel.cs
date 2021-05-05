@@ -2,7 +2,7 @@
 using AlanMocek.LifeLog.Application.DayRecords.Queries;
 using AlanMocek.LifeLog.Application.DayRecords.ViewModels;
 using AlanMocek.LifeLog.Client.Application.Types;
-using AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel;
+using AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;
 using AlanMocek.LifeLog.Infrastructure.Dispatchers;
 using AlanMocek.LifeLog.Infrastructure.Types;
 using AlanMocek.LifeLog.Infrastructure.WPF;
@@ -171,7 +171,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
             var dayRecordId = (Guid)parameter;
 
             _temporaryApplicationValues.DayRecordIdToOpen = dayRecordId;
-            await _navigationService.ChangePanelAsync(typeof(DayRecordPanelViewModel));
+            await _navigationService.ChangePanelAsync(typeof(DayRecordPanelViewModels.DayRecordPanel));
         }
 
 

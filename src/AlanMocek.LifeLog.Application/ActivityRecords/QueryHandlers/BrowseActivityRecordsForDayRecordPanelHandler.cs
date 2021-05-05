@@ -1,12 +1,11 @@
-﻿using AlanMocek.LifeLog.Application.ActivityRecords.Queries;
+﻿using AlanMocek.LifeLog.Application.ActivityRecords.DTOs;
+using AlanMocek.LifeLog.Application.ActivityRecords.Queries;
 using AlanMocek.LifeLog.Application.ActivityRecords.Services;
-using AlanMocek.LifeLog.Application.ActivityRecords.ViewModels;
 using AlanMocek.LifeLog.Core.ActivityRecords.Services;
 using AlanMocek.LifeLog.Infrastructure.Types;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Application.ActivityRecords.QueryHandlers
@@ -15,12 +14,12 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords.QueryHandlers
         : IQueryHandler<BrowseActivityRecordsForDayRecordPanel, IEnumerable<ActivityRecordForDayRecordPanel>>
     {
         private readonly IActivityRecordsRepository _activityRecordsRepository;
-        private readonly ActivityRecordForDayRecordPanelMapper _activityRecordForDayRecordPanelMapper;
+        private readonly ActivityRecordWithActivityToActivityRecordForDayRecordPanelMapper _activityRecordForDayRecordPanelMapper;
 
 
         public BrowseActivityRecordsForDayRecordPanelHandler(
             IActivityRecordsRepository activityRecordsRepository,
-            ActivityRecordForDayRecordPanelMapper activityRecordForDayRecordPanelMapper)
+            ActivityRecordWithActivityToActivityRecordForDayRecordPanelMapper activityRecordForDayRecordPanelMapper)
         {
             _activityRecordsRepository = activityRecordsRepository ?? throw new ArgumentNullException(nameof(activityRecordsRepository));
             _activityRecordForDayRecordPanelMapper = activityRecordForDayRecordPanelMapper ?? throw new ArgumentNullException(nameof(activityRecordForDayRecordPanelMapper));

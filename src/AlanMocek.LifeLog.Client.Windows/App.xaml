@@ -10,7 +10,7 @@
              xmlns:activitiesPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel;assembly=LifeLog.ClientApp"
              xmlns:activitiesPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.ActivitiesPanel"
              
-             xmlns:dayRecordPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel;assembly=LifeLog.ClientApp"
+             xmlns:dayRecordPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;assembly=LifeLog.ClientApp"
              xmlns:dayRecordPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel"
 
              xmlns:calendarPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;assembly=LifeLog.ClientApp"
@@ -38,12 +38,30 @@
         </DataTemplate>
 
 
-        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelViewModel}">
+        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanel}">
             <dayRecordPanelViews:DayRecordPanelView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordAddActivityRecordDialogViewModel}">
+        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelAddActivityRecordDialog}">
             <dayRecordPanelViews:DayRecordPanelAddActivityRecordDialog/>
+        </DataTemplate>
+
+        
+        <!-- Add... -->
+        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelQuantityActivityRecordItem}">
+            <dayRecordPanelViews:DayRecordPanelQuantityActivityRecordItemElement/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelClockActivityRecordItem}">
+            <dayRecordPanelViews:DayRecordPanelClockActivityRecordItemElement/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelTimeActivityRecordItem}">
+            <dayRecordPanelViews:DayRecordPanelTimeActivityRecordItemElement/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelOccurredActivityRecordItem}">
+            <dayRecordPanelViews:DayRecordPanelOccurredActivityRecordItemElement/>
         </DataTemplate>
 
 

@@ -6,7 +6,7 @@ using AlanMocek.LifeLog.Client.Application.Types;
 using AlanMocek.LifeLog.Client.Application.ViewModels;
 using AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel;
 using AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;
-using AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanel;
+using AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;
 using AlanMocek.LifeLog.Data.Contexts;
 using AlanMocek.LifeLog.Infrastructure.Dispatchers;
 using AlanMocek.LifeLog.Infrastructure.Types;
@@ -51,7 +51,7 @@ namespace AlanMocek.LifeLog.Client.Windows
                 // Add main panels view models
                 services.AddScoped<ActivitiesPanelViewModel>();
                 services.AddScoped<CalendarPanelViewModel>();
-                services.AddTransient<DayRecordPanelViewModel>();
+                
 
 
                 // Add main window
@@ -68,11 +68,23 @@ namespace AlanMocek.LifeLog.Client.Windows
                 // Add dialogs view models
                 services.AddTransient<ActivitiesPanelCreateActivityDialogViewModel>();
                 services.AddTransient<ActivitiesPanelDeleteActivityDialogViewModel>();
-                services.AddTransient<DayRecordAddActivityRecordDialogViewModel>();
+                services.AddTransient<DayRecordPanelAddActivityRecordDialog>();
+
+                // Add DayRecordPanel view models
+                services.AddTransient<DayRecordPanel>();
+                services.AddTransient<DayRecordPanelClockActivityRecordItem>();
+                services.AddTransient<DayRecordPanelQuantityActivityRecordItem>();
+                services.AddTransient<DayRecordPanelTimeActivityRecordItem>();
+                services.AddTransient<DayRecordPanelOccurredActivityRecordItem>();
+                services.AddTransient<DayRecordPanelClockActivityRecordValueItem>();
+                services.AddTransient<DayRecordPanelQuantityActivityRecordValueItem>();
+                services.AddTransient<DayRecordPanelTimeActivityRecordValueItem>();
+                services.AddTransient<DayRecordPanelOccurredActivityRecordValueItem>();
 
 
                 // Add client services
-                services.AddSingleton<ActivityRecordValueViewModelsFactory>();
+                services.AddSingleton<DayRecordPanelActivityRecordItemGetter>();
+                services.AddSingleton<DayRecordPanelAddActivityRecordDialogValueItemGetter>();
                 services.AddSingleton<CreateActivityRecordCommandFactory>();
                 services.AddSingleton<NavigationService>();
                 services.AddSingleton<TemporaryApplicationValues>();
