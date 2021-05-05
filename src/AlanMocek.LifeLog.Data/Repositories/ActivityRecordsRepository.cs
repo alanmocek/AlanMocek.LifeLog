@@ -27,6 +27,11 @@ namespace AlanMocek.LifeLog.Data.Repositories
             _lifeLogContext.Add(activityRecord);
         }
 
+        public Task<IEnumerable<ActivityRecord>> BrowseAsync(BrowseQuery query)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<IEnumerable<IActivityRecordWithActivity>> BrowseWithActivityAsync(BrowseWithActivityQuery query)
         {
             IQueryable<IActivityRecordWithActivity> contextQuery = _lifeLogContext.ActivityRecords;

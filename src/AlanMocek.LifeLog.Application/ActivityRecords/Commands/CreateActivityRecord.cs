@@ -21,4 +21,52 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords.Commands
             DayRecordId = dayReportId;
         }
     }
+
+
+    public record CreateClockActivityRecord : CreateActivityRecord
+    {
+        public int Hour { get; init; }
+        public int Minute { get; init; }
+
+
+        public CreateClockActivityRecord(Guid id, Guid activityId, Guid dayReportId, int hour, int minute)
+            : base(id, activityId, dayReportId)
+        {
+            Hour = hour;
+            Minute = minute;
+        }
+    }
+
+
+    public record CreateOccurrenceActivityRecord : CreateActivityRecord
+    {
+        public CreateOccurrenceActivityRecord(Guid id, Guid activityId, Guid dayReportId) : base(id, activityId, dayReportId)
+        {
+        }
+    }
+
+
+    public record CreateQuantityActivityRecord : CreateActivityRecord
+    {
+        public int Quantity { get; init; }
+
+
+        public CreateQuantityActivityRecord(Guid id, Guid activityId, Guid dayReportId, int quantity) : base(id, activityId, dayReportId)
+        {
+            Quantity = quantity;
+        }
+    }
+
+
+    public record CreateTimeActivityRecord : CreateActivityRecord
+    {
+        public TimeSpan Time { get; init; }
+
+
+        public CreateTimeActivityRecord(Guid id, Guid activityId, Guid dayReportId, TimeSpan time)
+            : base(id, activityId, dayReportId)
+        {
+            Time = time;
+        }
+    }
 }

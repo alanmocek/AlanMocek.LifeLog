@@ -14,6 +14,7 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
         Task<int> GetCountForDayRecordWithIdAsync(Guid dayRecordId);
         Task<IActivityRecordWithActivity> GetWithActivityByIdAsync(Guid id);
         Task<IEnumerable<IActivityRecordWithActivity>> BrowseWithActivityAsync(BrowseWithActivityQuery query);
+        Task<IEnumerable<ActivityRecord>> BrowseAsync(BrowseQuery query);
     }
 
 
@@ -28,4 +29,15 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
         }
     }
 
+
+    public record BrowseQuery
+    {
+        public Guid? DayRecordId { get; init; }
+
+
+        public BrowseQuery(Guid? dayRecordId)
+        {
+            DayRecordId = dayRecordId;
+        }
+    }
 }

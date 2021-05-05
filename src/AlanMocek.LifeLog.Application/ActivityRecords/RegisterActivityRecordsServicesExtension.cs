@@ -30,6 +30,8 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords
             services.AddScoped<ICommandHandler<CreateOccurrenceActivityRecord>, CreateOccurrenceActivityRecordHandler>();
             services.AddScoped<ICommandHandler<CreateClockActivityRecord>, CreateClockActivityRecordHandler>();
 
+            services.AddScoped<ICommandHandler<ChangeActivityRecordOrder>, ChangeActivityRecordOrderHandler>();
+
             services.AddScoped<ActivityRecordForDayRecordPanelMapper>();
 
 

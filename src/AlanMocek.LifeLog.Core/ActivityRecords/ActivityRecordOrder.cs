@@ -20,5 +20,29 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords
 
             Order = order;
         }
+
+
+        public ActivityRecordOrder Smaller()
+        {
+            return this with { Order = Order - 1 };
+        }
+
+        public ActivityRecordOrder Greater()
+        {
+            return this with { Order = Order + 1 };
+        }
+
+
+        public static bool operator >(ActivityRecordOrder left, ActivityRecordOrder right)
+             => left.Order > right.Order;
+
+        public static bool operator <(ActivityRecordOrder left, ActivityRecordOrder right)
+             => left.Order < right.Order;
+
+        public static bool operator >=(ActivityRecordOrder left, ActivityRecordOrder right)
+             => left.Order >= right.Order;
+
+        public static bool operator <=(ActivityRecordOrder left, ActivityRecordOrder right)
+             => left.Order <= right.Order;
     }
 }
