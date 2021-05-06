@@ -88,5 +88,10 @@ namespace AlanMocek.LifeLog.Data.Repositories
 
             return activityRecord;
         }
+
+        public void Remove(ActivityRecord activityRecord)
+        {
+            _lifeLogContext.ActivityRecords.Remove(activityRecord);
+        }
     }
 }

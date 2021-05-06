@@ -28,12 +28,15 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords
 
             services.AddScoped<ICommandHandler<ChangeActivityRecordOrder>, ChangeActivityRecordOrderHandler>();
 
+            services.AddScoped<ICommandHandler<DeleteActivityRecord>, DeleteActivityRecordHandler>();
+
             services.AddScoped<ActivityRecordWithActivityToActivityRecordForDayRecordPanelMapper>();
 
 
             // Core
             services.AddScoped<IActivityRecordsRepository, ActivityRecordsRepository>();
             
+            services.AddScoped<ActivityRecordsDeleter>();
             services.AddScoped<ActivityRecordCreator>();
             services.AddScoped<ActivityRecordOrderChanger>();
 

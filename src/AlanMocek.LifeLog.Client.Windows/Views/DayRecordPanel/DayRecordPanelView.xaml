@@ -5,8 +5,19 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel"
              xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;assembly=LifeLog.ClientApp"
+             xmlns:scm="clr-namespace:System.ComponentModel;assembly=WindowsBase"
              mc:Ignorable="d" 
              d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance viewModels:DayRecordPanel}">
+
+    <UserControl.Resources>
+        <CollectionViewSource x:Key='ActivityRecordsSource' Source="{Binding ActivityRecords}">
+            <CollectionViewSource.SortDescriptions>
+                <scm:SortDescription PropertyName="Order" />
+            </CollectionViewSource.SortDescriptions>
+
+        </CollectionViewSource>
+    </UserControl.Resources>
+
     <Grid x:Name="ViewGrid" Background="White" >
         <Grid x:Name="PanelGrid" Margin="20">
             <Grid.RowDefinitions>
@@ -36,7 +47,7 @@
             </Border>
 
             <ScrollViewer Grid.Row="2" Margin="0,10,0,0">
-                <ItemsControl ItemsSource="{Binding ActivityRecordsSource.View}">
+                <ItemsControl ItemsSource="{Binding Source={StaticResource ActivityRecordsSource}}">
                     <!--<Border MinHeight="60" BorderBrush="Black" BorderThickness="1">
                         <Grid>
                             <Grid.ColumnDefinitions>

@@ -38,7 +38,7 @@
                             </ComboBox>
                         </StackPanel>
 
-                        <ContentPresenter  Visibility="{Binding Path=DataContext.SelectedActivityRecordValue, ElementName=AddActivityRecordDialogGrid, Converter={StaticResource ObjectExistenceToVisiblityConverter}}" 
+                        <ContentPresenter  Visibility="{Binding Path=DataContext.ValueForSelectedActivity, ElementName=AddActivityRecordDialogGrid, Converter={StaticResource ObjectExistenceToVisiblityConverter}}" 
                                           Content="{Binding ValueForSelectedActivity}">
                             <ContentPresenter.Resources>
                                 <DataTemplate DataType="{x:Type viewModels:DayRecordPanelQuantityActivityRecordValueItem}">

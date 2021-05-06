@@ -18,11 +18,14 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
 
 
         public event Func<Task> OrderChanged;
+        public event Func<ActivityRecordDeletedEventArgs, Task> Deleted;
 
 
         public ActivityRecordForDayRecordPanel ActivityRecord { get; private set; }
+        public int Order => ActivityRecord.Order;
 
 
+        public ICommand DeleteCommand { get; private set; }
         public ICommand ChangeOrderUpCommand { get; private set; }
         public ICommand ChangeOrderDownCommand { get; private set; }
 
@@ -36,6 +39,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
             ActivityRecord = null;
 
 
+            DeleteCommand = new AsyncCommand(DeleteCommandAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
             ChangeOrderUpCommand = new AsyncCommand(ChangeOrderUpCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
             ChangeOrderDownCommand = new AsyncCommand(ChangeOrderDownCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
         }
@@ -48,6 +52,20 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
             return Task.CompletedTask;
         }
 
+
+        private async Task DeleteCommandAsync(object parameter)
+        {
+            var deleteActivityRecordCommand = new DeleteActivityRecord(ActivityRecord.Id);
+            var deleteActivityRecordCommandResult = await _dispatcher.DispatchCommandAndGetResultAsync(deleteActivityRecordCommand);
+
+            if(deleteActivityRecordCommandResult.Successful == false)
+            {
+                // TODO
+                return;
+            }
+
+            await Deleted?.Invoke(new ActivityRecordDeletedEventArgs(ActivityRecord.Id));
+        }
 
         private async Task ChangeOrderUpCommandExecutionAsync(object parameter)
         {
@@ -62,6 +80,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
 
             ActivityRecord = ActivityRecord with { Order = ActivityRecord.Order + 1 };
             RaisePropertyChanged(nameof(ActivityRecord));
+            RaisePropertyChanged(nameof(Order));
 
             await OrderChanged?.Invoke();
         }
@@ -79,8 +98,20 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
 
             ActivityRecord = ActivityRecord with { Order = ActivityRecord.Order - 1 };
             RaisePropertyChanged(nameof(ActivityRecord));
+            RaisePropertyChanged(nameof(Order));
 
             await OrderChanged?.Invoke();
+        }
+    }
+
+    public class ActivityRecordDeletedEventArgs : EventArgs
+    {
+        public Guid ActivityRecordId { get; private set; }
+
+
+        public ActivityRecordDeletedEventArgs(Guid activityRecordId)
+        {
+            ActivityRecordId = activityRecordId;
         }
     }
 

@@ -9,6 +9,7 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
     public interface IActivityRecordsRepository
     {
         void Add(ActivityRecord activityRecord);
+        void Remove(ActivityRecord activityRecord);
         Task<IEnumerable<ActivityRecord>> GetAllForDayRecordWithIdAsync(Guid dayRecordId);
         Task<ActivityRecord> GetByIdAsync(Guid id);
         Task<int> GetCountForDayRecordWithIdAsync(Guid dayRecordId);

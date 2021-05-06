@@ -144,13 +144,21 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
         private async Task OnActivityRecordItemOrderChangedAsync()
         {
             ActivityRecords.Clear();
-            await LoadActivityRecords();
+            await LoadActivityRecords(); // TODO to change
+        }
+
+        private async Task OnActivityRecordDeletedAsync(ActivityRecordDeletedEventArgs args)
+        {
+            var activityRecordItem = ActivityRecords.FirstOrDefault(activityRecordItem => activityRecordItem.ActivityRecord.Id == args.ActivityRecordId);
+            ActivityRecords.Remove(activityRecordItem);
+            await OnActivityRecordItemOrderChangedAsync();
         }
 
         private async Task AddActivityRecordItemAsync(ActivityRecordForDayRecordPanel activityRecord)
         {
             var activityRecordItem = _dayRecordPanelActivityRecordItemGetter.GetFromActivityType(activityRecord.Activity.Type);
             activityRecordItem.OrderChanged += OnActivityRecordItemOrderChangedAsync;
+            activityRecordItem.Deleted += OnActivityRecordDeletedAsync;
             await activityRecordItem.InitializeAsync(activityRecord);
             ActivityRecords.Add(activityRecordItem);
         }
