@@ -25,7 +25,7 @@
                     <TextBlock Text="{Binding Activity.Name}" VerticalAlignment="Center" FontSize="14"/>
                 </Border>
 
-                <Button Content="Edit" Grid.Column="2" MinHeight="40" MinWidth="40" Margin="10,0,0,0" FontSize="14"/>
+                <Button Content="Edit" Grid.Column="2" MinHeight="40" MinWidth="40" Margin="10,0,0,0" FontSize="14" IsEnabled="False"/>
 
                 <Button Content="Delete" Grid.Column="3" MinHeight="40" MinWidth="40" Margin="10,0,0,0" FontSize="14" Command="{Binding RequestActivityDeletionCommand}"/>
             </Grid>

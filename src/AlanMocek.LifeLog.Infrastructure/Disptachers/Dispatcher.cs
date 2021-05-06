@@ -47,7 +47,6 @@ namespace AlanMocek.LifeLog.Infrastructure.Dispatchers
                 }
                 catch (CoreException coreException)
                 {
-                    Trace.WriteLine(coreException.Message);
                     var result = CommandResult.Failure(coreException.Message);
                     return result;
                 }
@@ -68,8 +67,6 @@ namespace AlanMocek.LifeLog.Infrastructure.Dispatchers
                 }
                 catch(CoreException coreException)
                 {
-                    // TODO report error;
-                    Trace.WriteLine(coreException.Message);
                     var result = QueryResult<TQueryResult>.Failure(coreException.Message);
                     return result;
                 }
