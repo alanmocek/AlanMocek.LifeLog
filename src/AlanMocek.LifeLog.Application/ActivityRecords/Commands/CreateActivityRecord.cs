@@ -56,13 +56,17 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords.Commands
 
     public record CreateTimeActivityRecord : CreateActivityRecord
     {
-        public TimeSpan Time { get; init; }
+        public int Hours { get; init; }
+        public int Minutes { get; init; }
+        public int Seconds { get; init; }
 
 
-        public CreateTimeActivityRecord(Guid id, Guid activityId, Guid dayReportId, TimeSpan time)
+        public CreateTimeActivityRecord(Guid id, Guid activityId, Guid dayReportId, int hours, int minutes, int seconds)
             : base(id, activityId, dayReportId)
         {
-            Time = time;
+            Hours = hours;
+            Minutes = minutes;
+            Seconds = seconds;
         }
     }
 }

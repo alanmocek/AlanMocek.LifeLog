@@ -15,7 +15,13 @@ namespace AlanMocek.LifeLog.Data.Configurations
         {
             builder.OwnsOne(activityRecord => activityRecord.Value, ownsBuilder =>
             {
-                ownsBuilder.Property(value => value.Time)
+                ownsBuilder.Property(value => value.Hours)
+                .IsRequired(true);
+
+                ownsBuilder.Property(value => value.Minutes)
+                .IsRequired(true);
+
+                ownsBuilder.Property(value => value.Seconds)
                 .IsRequired(true);
             });
         }

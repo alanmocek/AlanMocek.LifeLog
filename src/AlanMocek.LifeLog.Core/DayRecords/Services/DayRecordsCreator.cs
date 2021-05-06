@@ -19,7 +19,7 @@ namespace AlanMocek.LifeLog.Core.DayRecords.Services
         }
 
 
-        public async Task<DayRecord> CreateDayRecordForDateAsync(Guid id, DateTime date)
+        public async Task<DayRecord> CreateForDateAsync(Guid id, DateTime date)
         {
             var isDayRecordAlreadyExsitingForDate = await _dayRecordsRepository.GetIsExistingForDateAsync(date);
 

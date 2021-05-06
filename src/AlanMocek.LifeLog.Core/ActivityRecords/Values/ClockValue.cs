@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Core.ActivityRecords.Values
 {
-    public record ClockValue
+    public record ClockValue : ActivityRecordValue
     {
         public int Hour { get; init; }
         public int Minute { get; init; }

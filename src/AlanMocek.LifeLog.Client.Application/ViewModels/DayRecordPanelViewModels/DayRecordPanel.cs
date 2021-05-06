@@ -1,6 +1,5 @@
 ﻿using AlanMocek.LifeLog.Application.ActivityRecords.Queries;
 using AlanMocek.LifeLog.Application.DayRecords.Queries;
-using AlanMocek.LifeLog.Application.DayRecords.ViewModels;
 using AlanMocek.LifeLog.Client.Application.Types;
 using AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;
 using AlanMocek.LifeLog.Infrastructure.Dispatchers;
@@ -18,6 +17,7 @@ using Microsoft.Extensions.DependencyInjection;
 using AlanMocek.LifeLog.Application.ActivityRecords.DTOs;
 using AlanMocek.LifeLog.Client.Application.Services;
 using System.Windows.Data;
+using AlanMocek.LifeLog.Application.DayRecords.DTOs;
 
 namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels
 {
@@ -83,7 +83,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
 
             if (getDayRecordQueryResult.Successful == false)
             {
-                await _navigationService.ChangePanelAsync(typeof(CalendarPanelViewModel));
+                await _navigationService.ChangePanelAsync(typeof(CalendarPanel.CalendarPanel));
             }
 
             DayRecord = getDayRecordQueryResult.Result;
@@ -92,7 +92,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
 
         private async Task LoadActivityRecords()
         {
-            var browseActivityRecordsWithActivityQuery = new BrowseActivityRecordsForDayRecordPanel(DayRecord.DayRecordId);
+            var browseActivityRecordsWithActivityQuery = new BrowseActivityRecordsForDayRecordPanel(DayRecord.Id);
             var getActivityRecordsQueryResult = 
                 await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<ActivityRecordForDayRecordPanel>, BrowseActivityRecordsForDayRecordPanel>(browseActivityRecordsWithActivityQuery);
 
@@ -115,7 +115,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
             var addActivityRecordDialog = _serviceProvider.GetRequiredService<DayRecordPanelAddActivityRecordDialog>();
             addActivityRecordDialog.DialogClosed += OnDialogClosed;
             addActivityRecordDialog.ActivityRecordCreated += OnActivityRecordCreatedAsync;
-            await addActivityRecordDialog.InitializeDialogAsync(this.DayRecord.DayRecordId);
+            await addActivityRecordDialog.InitializeDialogAsync(this.DayRecord.Id);
             CurrentDialog = addActivityRecordDialog;
             RaisePropertyChanged(nameof(CurrentDialog));
         }

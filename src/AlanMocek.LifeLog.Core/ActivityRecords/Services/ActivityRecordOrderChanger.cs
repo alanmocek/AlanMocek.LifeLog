@@ -19,7 +19,7 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
         }
 
 
-        public async Task ChangeOrder(Guid activityRecordId, ActivityRecordOrder newOrder)
+        public async Task ChangeOrderAsync(Guid activityRecordId, ActivityRecordOrder newOrder)
         {
             var activityRecord = await _activityRecordsRepository.GetByIdAsync(activityRecordId);
 
@@ -32,8 +32,6 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
             }
 
             var allDayRecordActivityRecords = await _activityRecordsRepository.BrowseAsync(new BrowseQuery(activityRecord.DayRecordId));
-
-            
 
             List<ActivityRecord> activityRecordsToChange = new List<ActivityRecord>();
 

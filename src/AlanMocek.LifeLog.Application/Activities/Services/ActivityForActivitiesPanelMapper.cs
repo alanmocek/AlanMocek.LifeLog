@@ -1,4 +1,4 @@
-﻿using AlanMocek.LifeLog.Application.Activities.ViewModels;
+﻿using AlanMocek.LifeLog.Application.Activities.DTOs;
 using AlanMocek.LifeLog.Core.Activities;
 using System;
 using System.Collections.Generic;
@@ -14,15 +14,15 @@ namespace AlanMocek.LifeLog.Application.Activities.Services
         {
             return activity.Type switch
             {
-                "activity_time" => new TimeActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
+                ActivitiesTypes.TimeActivity => new TimeActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
 
-                "activity_clock" => new ClockActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
+                ActivitiesTypes.ClockActivity => new ClockActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
 
-                "activity_quantity" => new QuantityActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
+                ActivitiesTypes.QuantityActivity => new QuantityActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
 
-                "activity_occurred" => new OccurredActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
+                ActivitiesTypes.OccurrenceActivity => new OccurrenceActivityForActivitiesPanel(activity.Id, activity.Name, activity.Type, activity.HasValue),
 
-                _ => throw new ArgumentException($"Maping {typeof(Activity)} of type {activity.Type} to {nameof(ActivityForActivitiesPanel)} is not implemented.")
+                _ => throw new NotImplementedException($"Maping {typeof(Activity)} of type {activity.Type} to {nameof(ActivityForActivitiesPanel)} is not implemented.")
             };
         }
     }

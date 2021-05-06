@@ -6,7 +6,7 @@
              xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel"
              xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;assembly=LifeLog.ClientApp"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance viewModels:DayRecordPanelViewModel}">
+             d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance viewModels:DayRecordPanel}">
     <Grid x:Name="ViewGrid" Background="White" >
         <Grid x:Name="PanelGrid" Margin="20">
             <Grid.RowDefinitions>
@@ -20,13 +20,13 @@
 
                 <Border DockPanel.Dock="Left" MinHeight="40">
                     <TextBlock VerticalAlignment="Center" FontSize="14">
-                        <Run Text="{Binding DayRecord.DayRecordDate.DayOfWeek, Mode=OneWay}" FontWeight="Bold"/>
+                        <Run Text="{Binding DayRecord.Date.DayOfWeek, Mode=OneWay}" FontWeight="Bold"/>
                         <Run Text=" "/>
-                        <Run Text="{Binding DayRecord.DayRecordDate.Date.Day, Mode=OneWay}" FontWeight="Bold"/>
+                        <Run Text="{Binding DayRecord.Date.Date.Day, Mode=OneWay}" FontWeight="Bold"/>
                         <Run Text="."/>
-                        <Run Text="{Binding DayRecord.DayRecordDate.Date.Month, Mode=OneWay}"/>
+                        <Run Text="{Binding DayRecord.Date.Date.Month, Mode=OneWay}"/>
                         <Run Text="."/>
-                        <Run Text="{Binding DayRecord.DayRecordDate.Date.Year, Mode=OneWay}"/>
+                        <Run Text="{Binding DayRecord.Date.Date.Year, Mode=OneWay}"/>
                     </TextBlock>
                 </Border>
             </DockPanel>

@@ -1,4 +1,5 @@
 ﻿using AlanMocek.LifeLog.Application.ActivityRecords.DTOs;
+using AlanMocek.LifeLog.Core.Activities;
 using AlanMocek.LifeLog.Core.ActivityRecords;
 using System;
 
@@ -13,20 +14,21 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords.Services
 
             return activityRecordWithActivity.Activity.Type switch
             {
-                "activity_time" => new TimeActivityRecordForDayRecordPanel(activityRecordWithActivity.Id, activityRecordWithActivity.DayRecordId, activityRecordWithActivity.Order.Order,
-                activityRecordForDayRecordPanelActivity, (activityRecordWithActivity as TimeActivityRecord).Value.Time),
+                ActivitiesTypes.TimeActivity => new TimeActivityRecordForDayRecordPanel(activityRecordWithActivity.Id, activityRecordWithActivity.DayRecordId, activityRecordWithActivity.Order.Order,
+                activityRecordForDayRecordPanelActivity, (activityRecordWithActivity as TimeActivityRecord).Value.Hours, (activityRecordWithActivity as TimeActivityRecord).Value.Minutes,
+                (activityRecordWithActivity as TimeActivityRecord).Value.Seconds),
 
-                "activity_clock" => new ClockActivityRecordForDayRecordPanel(activityRecordWithActivity.Id, activityRecordWithActivity.DayRecordId, activityRecordWithActivity.Order.Order,
+                ActivitiesTypes.ClockActivity => new ClockActivityRecordForDayRecordPanel(activityRecordWithActivity.Id, activityRecordWithActivity.DayRecordId, activityRecordWithActivity.Order.Order,
                 activityRecordForDayRecordPanelActivity, (activityRecordWithActivity as ClockActivityRecord).Value.Hour,
                 (activityRecordWithActivity as ClockActivityRecord).Value.Minute),
 
-                "activity_quantity" => new QuantityActivityRecordForDayRecordPanel(activityRecordWithActivity.Id, activityRecordWithActivity.DayRecordId, activityRecordWithActivity.Order.Order,
+                ActivitiesTypes.QuantityActivity => new QuantityActivityRecordForDayRecordPanel(activityRecordWithActivity.Id, activityRecordWithActivity.DayRecordId, activityRecordWithActivity.Order.Order,
                 activityRecordForDayRecordPanelActivity, (activityRecordWithActivity as QuantityActivityRecord).Value.Quantity),
 
-                "activity_occurred" => new OccurredActivityRecordForDayRecordPanel(activityRecordWithActivity.Id, activityRecordWithActivity.DayRecordId, activityRecordWithActivity.Order.Order,
+                ActivitiesTypes.OccurrenceActivity => new OccurrenceActivityRecordForDayRecordPanel(activityRecordWithActivity.Id, activityRecordWithActivity.DayRecordId, activityRecordWithActivity.Order.Order,
                 activityRecordForDayRecordPanelActivity),
 
-                _ => throw new ArgumentException($"Maping {typeof(ActivityRecord)} of type {activityRecordWithActivity.Activity.Type} to {nameof(ActivityRecordForDayRecordPanel)} is not implemented.")
+                _ => throw new NotImplementedException($"Maping {typeof(ActivityRecord)} of type {activityRecordWithActivity.Activity.Type} to {nameof(ActivityRecordForDayRecordPanel)} is not implemented.")
             };
         }
     }

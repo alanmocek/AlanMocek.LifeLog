@@ -22,14 +22,18 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords.DTOs
 
     public record TimeActivityRecordForDayRecordPanel : ActivityRecordForDayRecordPanel
     {
-        public TimeSpan TimeValue { get; init; }
+        public int HoursValue { get; init; }
+        public int MinutesValue { get; init; }
+        public int SecondsValue { get; init; }
 
 
         public TimeActivityRecordForDayRecordPanel(Guid id, Guid dayRecordId, int order,
-            ActivityRecordForDayRecordPanelActivity activity, TimeSpan timeValue)
+            ActivityRecordForDayRecordPanelActivity activity, int hoursValue, int minutesValue, int secondsValue)
             : base(id, dayRecordId, order, activity)
         {
-            TimeValue = timeValue;
+            HoursValue = hoursValue;
+            MinutesValue = minutesValue;
+            SecondsValue = secondsValue;
         }
     }
 
@@ -61,9 +65,9 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords.DTOs
         }
     }
 
-    public record OccurredActivityRecordForDayRecordPanel : ActivityRecordForDayRecordPanel
+    public record OccurrenceActivityRecordForDayRecordPanel : ActivityRecordForDayRecordPanel
     {
-        public OccurredActivityRecordForDayRecordPanel(Guid id, Guid dayRecordId, int order,
+        public OccurrenceActivityRecordForDayRecordPanel(Guid id, Guid dayRecordId, int order,
             ActivityRecordForDayRecordPanelActivity activity)
             : base(id, dayRecordId, order, activity)
         {

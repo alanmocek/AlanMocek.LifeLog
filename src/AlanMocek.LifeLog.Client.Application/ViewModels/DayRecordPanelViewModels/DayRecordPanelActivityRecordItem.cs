@@ -98,13 +98,13 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
         }
     }
 
-    public class DayRecordPanelOccurredActivityRecordItem : DayRecordPanelActivityRecordItem
+    public class DayRecordPanelOccurrenceActivityRecordItem : DayRecordPanelActivityRecordItem
     {
-        public OccurredActivityRecordForDayRecordPanel OccurredActivityRecord
-            => ActivityRecord as OccurredActivityRecordForDayRecordPanel;
+        public OccurrenceActivityRecordForDayRecordPanel OccurrenceActivityRecord
+            => ActivityRecord as OccurrenceActivityRecordForDayRecordPanel;
 
 
-        public DayRecordPanelOccurredActivityRecordItem(IDispatcher dispatcher)
+        public DayRecordPanelOccurrenceActivityRecordItem(IDispatcher dispatcher)
             : base(dispatcher)
         {
 

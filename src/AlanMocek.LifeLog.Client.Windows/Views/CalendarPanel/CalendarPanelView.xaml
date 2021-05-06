@@ -7,7 +7,7 @@
              xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;assembly=LifeLog.ClientApp"
              xmlns:calendarPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;assembly=LifeLog.ClientApp"
              mc:Ignorable="d" 
-             d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance viewModels:CalendarPanelViewModel}">
+             d:DesignHeight="720" d:DesignWidth="1280" d:DataContext="{d:DesignInstance viewModels:CalendarPanel}">
     <Grid x:Name="ViewGrid" Background="White">
         <Grid x:Name="PanelGrid" Margin="20">
             <Grid.RowDefinitions>
@@ -111,10 +111,10 @@
                         
                         <DataTemplate DataType="{x:Type calendarPanelViewModels:CalendarPanelRecordedDayCardViewModel}">
                             <Border>
-                                <Button Margin="10" Command="{Binding DataContext.GoToDayRecordPanelOfDayRecordCardCommand, ElementName=ViewGrid}" CommandParameter="{Binding DayRecord.DayRecordId}">
+                                <Button Margin="10" Command="{Binding DataContext.GoToDayRecordPanelOfDayRecordCardCommand, ElementName=ViewGrid}" CommandParameter="{Binding DayRecord.Id}">
                                     <Button.Content>
                                         <StackPanel Orientation="Vertical">
-                                            <TextBlock Text="{Binding DayRecord.DayRecordDate.Date.Day}" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold"/>
+                                            <TextBlock Text="{Binding DayRecord.Date.Day}" HorizontalAlignment="Center" FontSize="14" FontWeight="Bold"/>
                                             <TextBlock Text="(Recorded)" HorizontalAlignment="Center" FontSize="12"/>
                                         </StackPanel>
                                     </Button.Content>

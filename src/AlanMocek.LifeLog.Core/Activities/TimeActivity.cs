@@ -6,8 +6,13 @@ namespace AlanMocek.LifeLog.Core.Activities
 {
     public class TimeActivity : Activity
     {
-        public TimeActivity(Guid id, string name) 
-            : base(id, name, "activity_time", true)
+        /// <summary>
+        /// Internal constructor for <see cref="Services.ActivitiesFactory"/> use.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <param name="name"></param>
+        internal TimeActivity(Guid id, string name) 
+            : base(id, name, ActivitiesTypes.TimeActivity, true)
         {
 
         }

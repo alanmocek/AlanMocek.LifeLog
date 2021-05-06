@@ -22,14 +22,21 @@ namespace AlanMocek.LifeLog.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("TEXT");
+
                     b.Property<bool>("HasValue")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Type")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("UpdatedAtUtc")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -48,11 +55,17 @@ namespace AlanMocek.LifeLog.Data.Migrations
                     b.Property<Guid>("ActivityId")
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ActivityType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAtUtc")
+                        .HasColumnType("TEXT");
+
                     b.Property<Guid>("DayRecordId")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("Type")
-                        .IsRequired()
+                    b.Property<DateTime>("UpdatedAtUtc")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -63,13 +76,16 @@ namespace AlanMocek.LifeLog.Data.Migrations
 
                     b.ToTable("ActivityRecords");
 
-                    b.HasDiscriminator<string>("Type").HasValue("ActivityRecord");
+                    b.HasDiscriminator<string>("ActivityType").HasValue("ActivityRecord");
                 });
 
             modelBuilder.Entity("AlanMocek.LifeLog.Core.DayRecords.DayRecord", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CreatedAtUtc")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("Date")
@@ -112,28 +128,28 @@ namespace AlanMocek.LifeLog.Data.Migrations
                 {
                     b.HasBaseType("AlanMocek.LifeLog.Core.ActivityRecords.ActivityRecord");
 
-                    b.HasDiscriminator().HasValue("activity_record_clock");
+                    b.HasDiscriminator().HasValue("activity_clock");
                 });
 
             modelBuilder.Entity("AlanMocek.LifeLog.Core.ActivityRecords.OccurrenceActivityRecord", b =>
                 {
                     b.HasBaseType("AlanMocek.LifeLog.Core.ActivityRecords.ActivityRecord");
 
-                    b.HasDiscriminator().HasValue("activity_record_occurrence");
+                    b.HasDiscriminator().HasValue("activity_occurrence");
                 });
 
             modelBuilder.Entity("AlanMocek.LifeLog.Core.ActivityRecords.QuantityActivityRecord", b =>
                 {
                     b.HasBaseType("AlanMocek.LifeLog.Core.ActivityRecords.ActivityRecord");
 
-                    b.HasDiscriminator().HasValue("activity_record_quantity");
+                    b.HasDiscriminator().HasValue("activity_quantity");
                 });
 
             modelBuilder.Entity("AlanMocek.LifeLog.Core.ActivityRecords.TimeActivityRecord", b =>
                 {
                     b.HasBaseType("AlanMocek.LifeLog.Core.ActivityRecords.ActivityRecord");
 
-                    b.HasDiscriminator().HasValue("activity_record_time");
+                    b.HasDiscriminator().HasValue("activity_time");
                 });
 
             modelBuilder.Entity("AlanMocek.LifeLog.Core.ActivityRecords.ActivityRecord", b =>
@@ -223,8 +239,14 @@ namespace AlanMocek.LifeLog.Data.Migrations
                             b1.Property<Guid>("TimeActivityRecordId")
                                 .HasColumnType("TEXT");
 
-                            b1.Property<TimeSpan>("Time")
-                                .HasColumnType("TEXT");
+                            b1.Property<int>("Hours")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Minutes")
+                                .HasColumnType("INTEGER");
+
+                            b1.Property<int>("Seconds")
+                                .HasColumnType("INTEGER");
 
                             b1.HasKey("TimeActivityRecordId");
 

@@ -1,8 +1,8 @@
 ﻿using AlanMocek.LifeLog.Application.DayRecords.CommandHandlers;
 using AlanMocek.LifeLog.Application.DayRecords.Commands;
+using AlanMocek.LifeLog.Application.DayRecords.DTOs;
 using AlanMocek.LifeLog.Application.DayRecords.Queries;
 using AlanMocek.LifeLog.Application.DayRecords.QueryHandlers;
-using AlanMocek.LifeLog.Application.DayRecords.ViewModels;
 using AlanMocek.LifeLog.Core.DayRecords.Services;
 using AlanMocek.LifeLog.Data.Repositories;
 using AlanMocek.LifeLog.Infrastructure.Types;

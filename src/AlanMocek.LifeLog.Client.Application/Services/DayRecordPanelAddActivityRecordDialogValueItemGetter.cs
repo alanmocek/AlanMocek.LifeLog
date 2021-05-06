@@ -28,7 +28,7 @@ namespace AlanMocek.LifeLog.Client.Application.Services
                 "activity_quantity" => _serviceProvider.GetRequiredService<DayRecordPanelQuantityActivityRecordValueItem>(),
                 "activity_clock" => _serviceProvider.GetRequiredService<DayRecordPanelClockActivityRecordValueItem>(),
                 "activity_time" => _serviceProvider.GetRequiredService<DayRecordPanelTimeActivityRecordValueItem>(),
-                "activity_occurred" => _serviceProvider.GetRequiredService<DayRecordPanelOccurredActivityRecordValueItem>(),
+                "activity_occurrence" => _serviceProvider.GetRequiredService<DayRecordPanelOccurrenceActivityRecordValueItem>(),
                 _ => throw new ArgumentException($"DayRecordPanelAddActivityRecordDialogValueItem getting for activity of type '{activityType}' is not implemented.")
             };
         }

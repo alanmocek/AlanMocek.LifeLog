@@ -23,7 +23,7 @@ namespace AlanMocek.LifeLog.Data.Configurations
             builder.Property(activityRecord => activityRecord.DayRecordId)
                 .IsRequired(true);
 
-            builder.Property(activityRecord => activityRecord.Type)
+            builder.Property(activityRecord => activityRecord.ActivityType)
                 .IsRequired(true);
 
             builder.OwnsOne(activityRecord => activityRecord.Order, ownsBuilder =>

@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel.DayRecordPanelOccurredActivityRecordItemElement"
+﻿<UserControl x:Class="AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel.DayRecordPanelOccurrenceActivityRecordItemElement"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -6,13 +6,13 @@
              xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel"
              xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;assembly=LifeLog.ClientApp"
              mc:Ignorable="d" 
-             d:DesignHeight="80" d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:DayRecordPanelOccurredActivityRecordItem}">
+             d:DesignHeight="80" d:DesignWidth="800" d:DataContext="{d:DesignInstance viewModels:DayRecordPanelOccurrenceActivityRecordItem}">
     <Grid>
         <Border BorderThickness="1" BorderBrush="Black">
             <StackPanel Orientation="Horizontal">
-                <TextBlock Text="{Binding OccurredActivityRecord.Order}"/>
+                <TextBlock Text="{Binding OccurrenceActivityRecord.Order}"/>
                 <TextBlock Text="|"/>
-                <TextBlock Text="{Binding OccurredActivityRecord.Activity.Name}"/>
+                <TextBlock Text="{Binding OccurrenceActivityRecord.Activity.Name}"/>
                 <StackPanel Orientation="Vertical">
                     <Button Content="/\" Command="{Binding ChangeOrderDownCommand}"/>
                     <Button Content="\/" Command="{Binding ChangeOrderUpCommand}"/>

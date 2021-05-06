@@ -1,9 +1,9 @@
 ﻿using AlanMocek.LifeLog.Application.Activities.CommandHandlers;
 using AlanMocek.LifeLog.Application.Activities.Commands;
+using AlanMocek.LifeLog.Application.Activities.DTOs;
 using AlanMocek.LifeLog.Application.Activities.Queries;
 using AlanMocek.LifeLog.Application.Activities.QueryHandlers;
 using AlanMocek.LifeLog.Application.Activities.Services;
-using AlanMocek.LifeLog.Application.Activities.ViewModels;
 using AlanMocek.LifeLog.Core.Activities.Services;
 using AlanMocek.LifeLog.Data.Repositories;
 using AlanMocek.LifeLog.Infrastructure.Types;

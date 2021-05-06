@@ -11,7 +11,7 @@ using System.Windows.Input;
 
 namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 {
-    public class ActivitiesPanelCreateActivityDialogViewModel : PanelDialogViewModel
+    public class ActivitiesPanelCreateActivityDialog : PanelDialogViewModel
     {
         private readonly IDispatcher _dispatcher;
 
@@ -54,7 +54,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
         public ICommand CloseDialogCommand { get; private set; }
 
 
-        public ActivitiesPanelCreateActivityDialogViewModel(
+        public ActivitiesPanelCreateActivityDialog(
             IDispatcher dispatcher)
         {
             _dispatcher = dispatcher;

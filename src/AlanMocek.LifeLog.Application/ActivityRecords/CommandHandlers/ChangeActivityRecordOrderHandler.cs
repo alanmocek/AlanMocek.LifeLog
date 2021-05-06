@@ -27,7 +27,7 @@ namespace AlanMocek.LifeLog.Application.ActivityRecords.CommandHandlers
         {
             var newActivityRecordOrder = new ActivityRecordOrder(command.NewOrder);
             
-            await _activityRecordOrderChanger.ChangeOrder(command.Id, newActivityRecordOrder);
+            await _activityRecordOrderChanger.ChangeOrderAsync(command.Id, newActivityRecordOrder);
 
             await _lifeLogContext.SaveChangesAsync();
         }

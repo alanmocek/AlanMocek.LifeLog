@@ -33,11 +33,6 @@ namespace AlanMocek.LifeLog.Data.Repositories
             _lifeLogContext.Activities.Remove(activity);
         }
 
-        public async Task<IEnumerable<Activity>> GetAllAsync()
-        {
-            return await _lifeLogContext.Activities.ToListAsync();
-        }
-
         public async Task<Activity> GetByIdAsync(Guid id)
         {
             var activity = await _lifeLogContext.Activities.FirstOrDefaultAsync(activity => activity.Id == id);

@@ -1,6 +1,5 @@
 ﻿using AlanMocek.LifeLog.Application.Activities.Commands;
 using AlanMocek.LifeLog.Application.Activities.Queries;
-using AlanMocek.LifeLog.Application.Activities.ViewModels;
 using AlanMocek.LifeLog.Infrastructure.Dispatchers;
 using AlanMocek.LifeLog.Infrastructure.WPF;
 using System;
@@ -13,10 +12,11 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
+using AlanMocek.LifeLog.Application.Activities.DTOs;
 
 namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 {
-    public class ActivitiesPanelViewModel : PanelViewModel
+    public class ActivitiesPanel : PanelViewModel
     {
         private readonly IDispatcher _dispatcher;
         private readonly IServiceProvider _serviceProvider;
@@ -26,14 +26,13 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 
 
         public PanelDialogViewModel CurrentDialog { get; private set; }
-        public ObservableCollection<ActivityForActivitiesPanel> Activities { get; private set; }
+        public ObservableCollection<ActivitiesPanelActivityItem> ActivityItems { get; private set; }
 
 
         public ICommand OpenCreateActivityDialogCommand { get; private set; }
-        public ICommand OpenDeleteActivityDialogCommand { get; private set; }
 
 
-        public ActivitiesPanelViewModel(
+        public ActivitiesPanel(
             IDispatcher dispatcher,
             IServiceProvider serviceProvider)
         {
@@ -44,11 +43,10 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             _isInitialized = false;
 
             CurrentDialog = null;
-            Activities = new ObservableCollection<ActivityForActivitiesPanel>();
+            ActivityItems = new ObservableCollection<ActivitiesPanelActivityItem>();
 
 
             OpenCreateActivityDialogCommand = new AsyncCommand(OpenCreateActivityDialogCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
-            OpenDeleteActivityDialogCommand = new AsyncCommand(OpenDeleteActivityDialogCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
         }
 
 
@@ -72,21 +70,16 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
                 return;
             }
             
-            foreach(var activityViewModel in getAllActivitiesResult.Result)
+            foreach(var activity in getAllActivitiesResult.Result)
             {
-                Activities.Add(activityViewModel);
+                AddActivityItem(activity);
             }
         }
 
 
-        /// <summary>
-        /// Execution part of <see cref="OpenCreateActivityDialogCommand"/>.
-        /// </summary>
-        /// <param name="parameter"></param>
-        /// <returns></returns>
         private Task OpenCreateActivityDialogCommandExecutionAsync(object parameter)
         {
-            var createActivityDialog = _serviceProvider.GetRequiredService<ActivitiesPanelCreateActivityDialogViewModel>();
+            var createActivityDialog = _serviceProvider.GetRequiredService<ActivitiesPanelCreateActivityDialog>();
             createActivityDialog.DialogClosed += OnDialogClosed;
             createActivityDialog.ActivityCreated += OnActivityCreatedAsync;
             CurrentDialog = createActivityDialog;
@@ -94,17 +87,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             return Task.CompletedTask;
         }
 
-        private Task OpenDeleteActivityDialogCommandExecutionAsync(object parameter)
-        {
-            var deleteActivityDialog = _serviceProvider.GetRequiredService<ActivitiesPanelDeleteActivityDialogViewModel>();
-            var activityToDelete = (parameter as ActivityForActivitiesPanel);
-            deleteActivityDialog.Initialize(activityToDelete.ActivityId, activityToDelete.ActivityName);
-            deleteActivityDialog.DialogClosed += OnDialogClosed;
-            deleteActivityDialog.ActivityDeleted += OnActivityDeleted;
-            CurrentDialog = deleteActivityDialog;
-            RaisePropertyChanged(nameof(CurrentDialog));
-            return Task.CompletedTask;
-        }
+        
 
         private void OnDialogClosed()
         {
@@ -117,17 +100,18 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             CurrentDialog = null;
             RaisePropertyChanged(nameof(CurrentDialog));
 
-            var deletedActivity = Activities.FirstOrDefault(activity => activity.ActivityId == args.DeletedActivityId);
+            var deletedActivity = ActivityItems.FirstOrDefault(activityItem => activityItem.Activity.Id == args.DeletedActivityId);
             if (deletedActivity is null)
+            {
                 return;
+            }
 
-            Activities.Remove(deletedActivity);
+            ActivityItems.Remove(deletedActivity);
         }
 
         private async Task OnActivityCreatedAsync(ActivityCreatedEventArgs args)
         {
-            CurrentDialog = null;
-            RaisePropertyChanged(nameof(CurrentDialog));
+            OnDialogClosed();
 
             var getCreatedActivityQuery = new GetActivityForActivitiesPanelById(args.CreatedActivityId);
             var getCreatedActivityQueryResult = await _dispatcher.DispatchQueryAndGetResultAsync<ActivityForActivitiesPanel, GetActivityForActivitiesPanelById> (getCreatedActivityQuery);
@@ -137,7 +121,34 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
                 // TODO
             }
 
-            Activities.Add(getCreatedActivityQueryResult.Result);
+            var createdActivity = getCreatedActivityQueryResult.Result;
+
+            AddActivityItem(createdActivity);
+        }
+
+
+        private void AddActivityItem(ActivityForActivitiesPanel activity)
+        {
+            var activityItem = _serviceProvider.GetRequiredService<ActivitiesPanelActivityItem>();
+            activityItem.ActivityDeletionRequested += OnActivityDeletionRequestedAsync;
+            activityItem.Initialize(activity);
+            ActivityItems.Add(activityItem);
+        }
+
+        private async Task OnActivityDeletionRequestedAsync(ActivityDeletionRequestedEventArgs args)
+        {
+            await OpenDeleteActivityDialognAsync(args.Activity);
+        }
+
+        private Task OpenDeleteActivityDialognAsync(ActivityForActivitiesPanel activity)
+        {
+            var deleteActivityDialog = _serviceProvider.GetRequiredService<ActivitiesPanelDeleteActivityDialog>();
+            deleteActivityDialog.Initialize(activity.Id, activity.Name);
+            deleteActivityDialog.DialogClosed += OnDialogClosed;
+            deleteActivityDialog.ActivityDeleted += OnActivityDeleted;
+            CurrentDialog = deleteActivityDialog;
+            RaisePropertyChanged(nameof(CurrentDialog));
+            return Task.CompletedTask;
         }
     }
 }

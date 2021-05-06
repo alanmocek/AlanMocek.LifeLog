@@ -8,15 +8,15 @@ namespace AlanMocek.LifeLog.Core.Activities.Services
 {
     public class ActivitiesFactory
     {
-        internal Activity FactorActivityByType(Guid activityId, string activityName, string activityType)
+        internal Activity FactorActivityByType(Guid id, string name, string type)
         {
-            Activity activity = activityType switch
+            Activity activity = type switch
             {
-                "activity_clock" => new ClockActivity(activityId, activityName),
-                "activity_occurrence" => new OccurredActivity(activityId, activityName),
-                "activity_quantity" => new QuantityActivity(activityId, activityName),
-                "activity_time" => new TimeActivity(activityId, activityName),
-                _ => throw new ArgumentException($"Activity type '{activityType}' is not supported.")
+                ActivitiesTypes.ClockActivity => new ClockActivity(id, name),
+                ActivitiesTypes.OccurrenceActivity => new OccurrenceActivity(id, name),
+                ActivitiesTypes.QuantityActivity => new QuantityActivity(id, name),
+                ActivitiesTypes.TimeActivity => new TimeActivity(id, name),
+                _ => throw new NotImplementedException($"Activity factoring of type '{type}' is not implemented.")
             };
 
             return activity;

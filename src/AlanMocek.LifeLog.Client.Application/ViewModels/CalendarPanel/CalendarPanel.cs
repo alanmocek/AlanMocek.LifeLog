@@ -1,8 +1,7 @@
 ﻿using AlanMocek.LifeLog.Application.DayRecords.Commands;
+using AlanMocek.LifeLog.Application.DayRecords.DTOs;
 using AlanMocek.LifeLog.Application.DayRecords.Queries;
-using AlanMocek.LifeLog.Application.DayRecords.ViewModels;
 using AlanMocek.LifeLog.Client.Application.Types;
-using AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewModels;
 using AlanMocek.LifeLog.Infrastructure.Dispatchers;
 using AlanMocek.LifeLog.Infrastructure.Types;
 using AlanMocek.LifeLog.Infrastructure.WPF;
@@ -17,7 +16,7 @@ using System.Windows.Input;
 
 namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
 {
-    public class CalendarPanelViewModel : PanelViewModel
+    public class CalendarPanel : PanelViewModel
     {
         private readonly IDispatcher _dispatcher;
         private readonly NavigationService _navigationService;
@@ -54,7 +53,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
         public ICommand GoToDayRecordPanelOfDayRecordCardCommand { get; private set; }
 
 
-        public CalendarPanelViewModel(
+        public CalendarPanel(
             IDispatcher dispatcher,
             NavigationService navigationService,
             TemporaryApplicationValues temporaryApplicationValues)
@@ -112,9 +111,9 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
                 var dayDate = new DateTime(SelectedYear, SelectedMonth, i);
                 var dayOfWeekAsNumber = GetDayOfWeekAsNumber(dayDate.DayOfWeek);
                 
-                var dayRecordForDay = dayRecords.FirstOrDefault(dayRecord => dayRecord.DayRecordDate.Year == dayDate.Year
-                && dayRecord.DayRecordDate.Month == dayDate.Month
-                && dayRecord.DayRecordDate.Day == dayDate.Day);
+                var dayRecordForDay = dayRecords.FirstOrDefault(dayRecord => dayRecord.Date.Year == dayDate.Year
+                && dayRecord.Date.Month == dayDate.Month
+                && dayRecord.Date.Day == dayDate.Day);
 
                 if(dayRecordForDay is null)
                 {
@@ -163,7 +162,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
 
             Days[dayCardIndex] = new CalendarPanelRecordedDayCardViewModel(createdDayRecord, dayCard.DayOfWeekAsNumber, dayCard.WeekOfMonthAsNumber);
 
-            await GotoDayRecordPanelCommandExecutionAsync(createdDayRecord.DayRecordId);
+            await GotoDayRecordPanelCommandExecutionAsync(createdDayRecord.Id);
         }
 
         private async Task GotoDayRecordPanelCommandExecutionAsync(object parameter)

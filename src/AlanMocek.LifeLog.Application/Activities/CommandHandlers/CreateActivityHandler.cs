@@ -30,7 +30,7 @@ namespace AlanMocek.LifeLog.Application.Activities.CommandHandlers
 
         public async Task HandleAsync(CreateActivity command)
         {
-            var activity = await _activitiesCreator.CreateActivityAsync(command.Id, command.Name, command.Type);
+            var activity = await _activitiesCreator.CreateAsync(command.Id, command.Name, command.Type);
 
             _activitiesRepository.Add(activity);
 

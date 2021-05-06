@@ -11,7 +11,10 @@ namespace AlanMocek.LifeLog.Core.DayRecords
     {
         public Guid Id { get; private set; }
         public DateTime Date { get; private set; }
+        public DateTime CreatedAtUtc { get; private set; }
 
+
+        private DayRecord() { }
 
         /// <summary>
         /// Internal constructor for <see cref="DayRecordsCreator"/> use.
@@ -22,6 +25,7 @@ namespace AlanMocek.LifeLog.Core.DayRecords
         {
             Id = id;
             Date = date;
+            CreatedAtUtc = DateTime.UtcNow;
         }
     }
 }

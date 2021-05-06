@@ -10,8 +10,7 @@ namespace AlanMocek.LifeLog.Client.Application.Services
         {
             return activityType switch
             {
-                "activity_time" => new CreateTimeActivityRecord(commandId, activityId, dayRecordId, 
-                new TimeSpan((value as DayRecordPanelTimeActivityRecordValueItem).Hours, (value as DayRecordPanelTimeActivityRecordValueItem).Minutes, (value as DayRecordPanelTimeActivityRecordValueItem).Seconds)),
+                "activity_time" => new CreateTimeActivityRecord(commandId, activityId, dayRecordId, (value as DayRecordPanelTimeActivityRecordValueItem).Hours, (value as DayRecordPanelTimeActivityRecordValueItem).Minutes, (value as DayRecordPanelTimeActivityRecordValueItem).Seconds),
                 
                 "activity_quantity" => new CreateQuantityActivityRecord(commandId, activityId, dayRecordId, (value as DayRecordPanelQuantityActivityRecordValueItem).Quantity),
 
@@ -19,7 +18,7 @@ namespace AlanMocek.LifeLog.Client.Application.Services
                 "activity_clock" => new CreateClockActivityRecord(commandId, activityId, dayRecordId,
                 (value as DayRecordPanelClockActivityRecordValueItem).Hour, (value as DayRecordPanelClockActivityRecordValueItem).Minute),
 
-                "activity_occurred" => new CreateOccurrenceActivityRecord(commandId, activityId, dayRecordId),
+                "activity_occurrence" => new CreateOccurrenceActivityRecord(commandId, activityId, dayRecordId),
 
                 _ => throw new ArgumentException($"Factoring creation command of activity record for activity of type {activityType} is not implemented.")
             };

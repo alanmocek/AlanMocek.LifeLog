@@ -16,23 +16,28 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords
 
         public Guid Id { get; private set; }
         public Guid ActivityId { get; private set; }
+        public string ActivityType { get; private set; }
         public Guid DayRecordId { get; private set; }
-        public string Type { get; private set; }
         public ActivityRecordOrder Order { get; private set; }
+        public DateTime CreatedAtUtc { get; private set; }
+        public DateTime UpdatedAtUtc { get; private set; }
 
 
         Activity IActivityRecordWithActivity.Activity => _IActivityRecordWithActivity_Activity;
 
 
-        public ActivityRecord() { }
+        protected ActivityRecord() { }
 
-        public ActivityRecord(Guid id, Guid activityId, Guid dayRecordId, ActivityRecordOrder order, string type)
+        internal ActivityRecord(Guid id, Activity activity, Guid dayRecordId, ActivityRecordOrder order)
         {
             Id = id;
-            ActivityId = activityId;
+            ActivityId = activity.Id;
+            ActivityType = activity.Type;
             DayRecordId = dayRecordId;
             Order = order;
-            Type = type;
+            var nowUtc = DateTime.UtcNow;
+            CreatedAtUtc = nowUtc;
+            UpdatedAtUtc = nowUtc;
         }
 
 

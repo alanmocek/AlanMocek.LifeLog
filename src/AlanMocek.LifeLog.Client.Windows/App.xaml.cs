@@ -49,8 +49,8 @@ namespace AlanMocek.LifeLog.Client.Windows
 
 
                 // Add main panels view models
-                services.AddScoped<ActivitiesPanelViewModel>();
-                services.AddScoped<CalendarPanelViewModel>();
+                
+                services.AddScoped<CalendarPanel>();
                 
 
 
@@ -63,23 +63,27 @@ namespace AlanMocek.LifeLog.Client.Windows
                 services.AddActivitiesServices();
                 services.AddDayRecordsServices();
                 services.AddActivityRecordsServices();
-                
 
-                // Add dialogs view models
-                services.AddTransient<ActivitiesPanelCreateActivityDialogViewModel>();
-                services.AddTransient<ActivitiesPanelDeleteActivityDialogViewModel>();
-                services.AddTransient<DayRecordPanelAddActivityRecordDialog>();
+
+                // Add ActivitiesPanel view models
+                services.AddScoped<ActivitiesPanel>();
+                services.AddTransient<ActivitiesPanelActivityItem>();
+                services.AddTransient<ActivitiesPanelCreateActivityDialog>();
+                services.AddTransient<ActivitiesPanelDeleteActivityDialog>();
 
                 // Add DayRecordPanel view models
                 services.AddTransient<DayRecordPanel>();
+                services.AddTransient<DayRecordPanelAddActivityRecordDialog>();
+                
                 services.AddTransient<DayRecordPanelClockActivityRecordItem>();
                 services.AddTransient<DayRecordPanelQuantityActivityRecordItem>();
                 services.AddTransient<DayRecordPanelTimeActivityRecordItem>();
-                services.AddTransient<DayRecordPanelOccurredActivityRecordItem>();
+                services.AddTransient<DayRecordPanelOccurrenceActivityRecordItem>();
+               
                 services.AddTransient<DayRecordPanelClockActivityRecordValueItem>();
                 services.AddTransient<DayRecordPanelQuantityActivityRecordValueItem>();
                 services.AddTransient<DayRecordPanelTimeActivityRecordValueItem>();
-                services.AddTransient<DayRecordPanelOccurredActivityRecordValueItem>();
+                services.AddTransient<DayRecordPanelOccurrenceActivityRecordValueItem>();
 
 
                 // Add client services

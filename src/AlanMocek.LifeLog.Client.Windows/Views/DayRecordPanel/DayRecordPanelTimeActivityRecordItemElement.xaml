@@ -14,11 +14,11 @@
                 <TextBlock Text="|"/>
                 <TextBlock Text="{Binding TimeActivityRecord.Activity.Name}"/>
                 <TextBlock Text="|"/>
-                <TextBlock Text="{Binding TimeActivityRecord.TimeValue.Hours}"/>
+                <TextBlock Text="{Binding TimeActivityRecord.HoursValue}"/>
                 <TextBlock Text=":"/>
-                <TextBlock Text="{Binding TimeActivityRecord.TimeValue.Minutes}"/>
+                <TextBlock Text="{Binding TimeActivityRecord.MinutesValue}"/>
                 <TextBlock Text=":"/>
-                <TextBlock Text="{Binding TimeActivityRecord.TimeValue.Seconds}"/>
+                <TextBlock Text="{Binding TimeActivityRecord.SecondsValue}"/>
             </StackPanel>
         </Border>
     </Grid>

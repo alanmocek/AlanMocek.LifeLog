@@ -1,4 +1,5 @@
-﻿using AlanMocek.LifeLog.Core.Activities.Services;
+﻿using AlanMocek.LifeLog.Core.Activities;
+using AlanMocek.LifeLog.Core.Activities.Services;
 using AlanMocek.LifeLog.Core.ActivityRecords.Values;
 using AlanMocek.LifeLog.Infrastructure.Types;
 using System;
@@ -21,48 +22,22 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Services
         }
 
 
-        public async Task<TimeActivityRecord> CreateTimeActivityRecordAsync(Guid id, Guid activityId,
-            Guid dayRecordId, TimeValue time)
+        public async Task<ActivityRecord> CreateAsync(Guid id, Activity activity, Guid dayRecordId, ActivityRecordValue value)
         {
-            var order = await GetOrderAsync(dayRecordId);
-            
-            var activityRecord = new TimeActivityRecord(id, activityId, dayRecordId, order, time);
+            var nextOrder = await GetNextOrderAsync(dayRecordId);
 
-            return activityRecord;
-        }
-
-        public async Task<QuantityActivityRecord> CreateQuantityActivityRecordAsync(Guid id, Guid activityId,
-            Guid dayRecordId, QuantityValue quantity)
-        {
-            var order = await GetOrderAsync(dayRecordId);
-
-            var activityRecord = new QuantityActivityRecord(id, activityId, dayRecordId, order, quantity);
-
-            return activityRecord;
-        }
-
-        public async Task<OccurrenceActivityRecord> CreateOccurrenceActivityRecordAsync(Guid id, Guid activityId,
-            Guid dayRecordId)
-        {
-            var order = await GetOrderAsync(dayRecordId);
-
-            var activityRecord = new OccurrenceActivityRecord(id, activityId, dayRecordId, order);
-
-            return activityRecord;
-        }
-
-        public async Task<ClockActivityRecord> CreateClockActivityRecordAsync(Guid id, Guid activityId,
-            Guid dayRecordId, ClockValue clock)
-        {
-            var order = await GetOrderAsync(dayRecordId);
-
-            var activityRecord = new ClockActivityRecord(id, activityId, dayRecordId, order, clock);
-
-            return activityRecord;
+            return activity.Type switch
+            { 
+                ActivitiesTypes.OccurrenceActivity => new OccurrenceActivityRecord(id, activity, dayRecordId, nextOrder),
+                ActivitiesTypes.QuantityActivity => new QuantityActivityRecord(id, activity, dayRecordId, nextOrder, value as QuantityValue),
+                ActivitiesTypes.TimeActivity => new TimeActivityRecord(id, activity, dayRecordId, nextOrder, value as TimeValue),
+                ActivitiesTypes.ClockActivity => new ClockActivityRecord(id, activity, dayRecordId, nextOrder, value as ClockValue),
+                _ => throw new NotImplementedException($"Creating {nameof(ActivityRecord)} for activity of type {activity.Type} is not implemented.")
+            };
         }
 
 
-        private async Task<ActivityRecordOrder> GetOrderAsync(Guid dayRecordId)
+        private async Task<ActivityRecordOrder> GetNextOrderAsync(Guid dayRecordId)
         {
             var activityRecordCountInDayRecord = await _activityRecordsRepository.GetCountForDayRecordWithIdAsync(dayRecordId);
 

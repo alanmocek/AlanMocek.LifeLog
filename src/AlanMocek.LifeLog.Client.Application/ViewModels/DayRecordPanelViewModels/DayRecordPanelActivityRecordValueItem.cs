@@ -54,9 +54,9 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
         }
     }
 
-    public class DayRecordPanelOccurredActivityRecordValueItem : DayRecordPanelActivityRecordValueItem
+    public class DayRecordPanelOccurrenceActivityRecordValueItem : DayRecordPanelActivityRecordValueItem
     {
-        public DayRecordPanelOccurredActivityRecordValueItem()
+        public DayRecordPanelOccurrenceActivityRecordValueItem()
         {
             
         }

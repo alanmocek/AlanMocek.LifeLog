@@ -30,7 +30,7 @@ namespace AlanMocek.LifeLog.Application.DayRecords.CommandHandlers
 
         public async Task HandleAsync(CreateDayRecord command)
         {
-            var dayRecord = await _dayRecordsCreator.CreateDayRecordForDateAsync(command.Id, command.Date);
+            var dayRecord = await _dayRecordsCreator.CreateForDateAsync(command.Id, command.Date);
 
             _dayRecordsRepository.Add(dayRecord);
 

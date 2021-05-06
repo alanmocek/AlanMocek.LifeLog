@@ -1,5 +1,4 @@
 ﻿using AlanMocek.LifeLog.Application.Activities.Commands;
-using AlanMocek.LifeLog.Application.Activities.ViewModels;
 using AlanMocek.LifeLog.Infrastructure.Dispatchers;
 using AlanMocek.LifeLog.Infrastructure.Types;
 using AlanMocek.LifeLog.Infrastructure.WPF;
@@ -13,7 +12,7 @@ using System.Windows.Input;
 
 namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 {
-    public class ActivitiesPanelDeleteActivityDialogViewModel : PanelDialogViewModel
+    public class ActivitiesPanelDeleteActivityDialog : PanelDialogViewModel
     {
         private readonly IDispatcher _dispatcher;
 
@@ -32,7 +31,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
         public ICommand ConfirmActivityDeletionCommand { get; private set; }
 
 
-        public ActivitiesPanelDeleteActivityDialogViewModel(
+        public ActivitiesPanelDeleteActivityDialog(
             IDispatcher dispatcher)
         {
             _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));

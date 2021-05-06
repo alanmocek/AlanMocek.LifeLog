@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace AlanMocek.LifeLog.Client.Windows.Views.DayRecordPanel
 {
     /// <summary>
-    /// Interaction logic for DayRecordPanelOccurredActivityRecordItemElement.xaml
+    /// Interaction logic for DayRecordPanelOccurrenceActivityRecordItemElement.xaml
     /// </summary>
-    public partial class DayRecordPanelOccurredActivityRecordItemElement : UserControl
+    public partial class DayRecordPanelOccurrenceActivityRecordItemElement : UserControl
     {
-        public DayRecordPanelOccurredActivityRecordItemElement()
+        public DayRecordPanelOccurrenceActivityRecordItemElement()
         {
             InitializeComponent();
         }

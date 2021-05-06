@@ -17,7 +17,7 @@ namespace AlanMocek.LifeLog.Data.Contexts
         public DbSet<QuantityActivity> QuantityActivities { get; set; }
         public DbSet<ClockActivity> ClockActivities { get; set; }
         public DbSet<TimeActivity> TimeActivities { get; set; }
-        public DbSet<OccurredActivity> OccurrenceActivities { get; set; }
+        public DbSet<OccurrenceActivity> OccurrenceActivities { get; set; }
 
         public DbSet<DayRecord> DayRecords { get; set; }
 
@@ -39,21 +39,24 @@ namespace AlanMocek.LifeLog.Data.Contexts
         {
             modelBuilder.Entity<Activity>()
                 .HasDiscriminator(activity => activity.Type)
-                .HasValue<ClockActivity>("activity_clock")
-                .HasValue<OccurredActivity>("activity_occurred")
-                .HasValue<TimeActivity>("activity_time")
-                .HasValue<QuantityActivity>("activity_quantity");
+                .HasValue<ClockActivity>(ActivitiesTypes.ClockActivity)
+                .HasValue<OccurrenceActivity>(ActivitiesTypes.OccurrenceActivity)
+                .HasValue<TimeActivity>(ActivitiesTypes.TimeActivity)
+                .HasValue<QuantityActivity>(ActivitiesTypes.QuantityActivity);
 
             
 
 
             modelBuilder.Entity<ActivityRecord>()
-                .HasDiscriminator(activityRecord => activityRecord.Type)
-                .HasValue<ClockActivityRecord>("activity_record_clock")
-                .HasValue<OccurrenceActivityRecord>("activity_record_occurrence")
-                .HasValue<TimeActivityRecord>("activity_record_time")
-                .HasValue<QuantityActivityRecord>("activity_record_quantity");
+                .HasDiscriminator(activityRecord => activityRecord.ActivityType)
+                .HasValue<ClockActivityRecord>(ActivitiesTypes.ClockActivity)
+                .HasValue<OccurrenceActivityRecord>(ActivitiesTypes.OccurrenceActivity)
+                .HasValue<TimeActivityRecord>(ActivitiesTypes.TimeActivity)
+                .HasValue<QuantityActivityRecord>(ActivitiesTypes.QuantityActivity);
 
+
+            modelBuilder.ApplyConfiguration(new ActivityConfiguration());
+            modelBuilder.ApplyConfiguration(new DayRecordConfiguration());
 
             modelBuilder.ApplyConfiguration(new ActivityRecordConfiguration());
             modelBuilder.ApplyConfiguration(new ClockActivityRecordConfiguration());

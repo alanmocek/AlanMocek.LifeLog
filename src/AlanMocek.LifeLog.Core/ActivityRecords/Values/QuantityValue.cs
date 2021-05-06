@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AlanMocek.LifeLog.Core.ActivityRecords.Values
 {
-    public record QuantityValue
+    public record QuantityValue : ActivityRecordValue
     {
         public int Quantity { get; init; }
 
@@ -16,13 +16,13 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Values
         {
             if (quantity <= 0) 
             {
-                throw new CoreException("Quantity can not be less or equal to zero."); // TODO to core exception
+                throw new CoreException("Quantity can not be less or equal to zero.");
             }
 
 
             if(quantity > 99999)
             {
-                throw new CoreException("Quantity can not be greater then 99999."); // TODO to core exception
+                throw new CoreException("Quantity can not be greater then 99999.");
             }
 
             Quantity = quantity;

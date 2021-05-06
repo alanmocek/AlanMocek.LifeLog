@@ -70,13 +70,13 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
             {
                 case "calendar":
                     {
-                        await _navigationService.ChangePanelAsync(typeof(CalendarPanelViewModel));
+                        await _navigationService.ChangePanelAsync(typeof(CalendarPanel.CalendarPanel));
                         break;
                     }
 
                 case "activities":
                     {
-                        await _navigationService.ChangePanelAsync(typeof(ActivitiesPanelViewModel));
+                        await _navigationService.ChangePanelAsync(typeof(ActivitiesPanel.ActivitiesPanel));
                         break;
                     }
 
@@ -94,7 +94,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels
 
         private async Task InitializePrimaryPanelAsync()
         {
-            await _navigationService.ChangePanelAsync(typeof(CalendarPanelViewModel));
+            await _navigationService.ChangePanelAsync(typeof(CalendarPanel.CalendarPanel));
         }
 
         private Task OnCurrentPanelChanged()

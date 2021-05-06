@@ -22,13 +22,13 @@ namespace AlanMocek.LifeLog.Core.Activities.Services
         }
 
 
-        public async Task<Activity> CreateActivityAsync(Guid id, string name, string type)
+        public async Task<Activity> CreateAsync(Guid id, string name, string type)
         {
             var isActivityWithNameExisting = await _activitiesRepository.GetIsActivityWithNameExistingAsync(name);
 
             if(isActivityWithNameExisting == true)
             {
-                throw new CoreException("Existing with name"); // TODO
+                throw new CoreException("Activity with this name is already created.");
             }
 
             var activity = _activitiesFactory.FactorActivityByType(id, name, type);

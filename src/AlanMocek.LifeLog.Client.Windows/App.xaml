@@ -20,20 +20,20 @@
         <converters:ObjectExistenceToVisiblityConverter x:Key="ObjectExistenceToVisiblityConverter"/>
 
         
-        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelViewModel}">
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanel}">
             <activitiesPanelViews:ActivitiesPanelView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelCreateActivityDialogViewModel}">
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelCreateActivityDialog}">
             <activitiesPanelViews:ActivitiesPanelCreateActivityDialogView/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelDeleteActivityDialogViewModel}">
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelDeleteActivityDialog}">
             <activitiesPanelViews:ActivitiesPanelDeleteActivityDialogView/>
         </DataTemplate>
 
         
-        <DataTemplate DataType="{x:Type calendarPanelViewModels:CalendarPanelViewModel}">
+        <DataTemplate DataType="{x:Type calendarPanelViewModels:CalendarPanel}">
             <calendarPanelViews:CalendarPanelView/>
         </DataTemplate>
 
@@ -60,8 +60,14 @@
             <dayRecordPanelViews:DayRecordPanelTimeActivityRecordItemElement/>
         </DataTemplate>
 
-        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelOccurredActivityRecordItem}">
-            <dayRecordPanelViews:DayRecordPanelOccurredActivityRecordItemElement/>
+        <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelOccurrenceActivityRecordItem}">
+            <dayRecordPanelViews:DayRecordPanelOccurrenceActivityRecordItemElement/>
+        </DataTemplate>
+        
+        
+        <!-- Add... -->
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelActivityItem}">
+            <activitiesPanelViews:ActivitiesPanelActivityItem/>
         </DataTemplate>
 
 

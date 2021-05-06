@@ -11,8 +11,4 @@
     <ProjectReference Include="..\AlanMocek.LifeLog.Infrastructure\AlanMocek.LifeLog.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Activities\DTOs\" />
-  </ItemGroup>
-
 </Project>

@@ -31,7 +31,7 @@
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
                                         <ComboBoxItem MinHeight="32" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
-                                            <TextBlock Text="{Binding ActivityName}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
+                                            <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
                                         </ComboBoxItem>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>

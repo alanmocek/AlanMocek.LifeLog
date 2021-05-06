@@ -1,6 +1,5 @@
-﻿using AlanMocek.LifeLog.Application.Activities.Queries;
-using AlanMocek.LifeLog.Application.Activities.ViewModels;
-using AlanMocek.LifeLog.Application.DayRecords.ViewModels;
+﻿using AlanMocek.LifeLog.Application.Activities.DTOs;
+using AlanMocek.LifeLog.Application.Activities.Queries;
 using AlanMocek.LifeLog.Client.Application.Services;
 using AlanMocek.LifeLog.Infrastructure.Dispatchers;
 using AlanMocek.LifeLog.Infrastructure.WPF;
@@ -110,7 +109,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
             }
 
             var createActivityRecordCommand = _createActivityRecordCommandFactory.FactorCreateActivityRecordCommand(Guid.NewGuid(),
-                _dayRecordId, SelectedActivity.ActivityId, SelectedActivity.ActivityType, ValueForSelectedActivity);
+                _dayRecordId, SelectedActivity.Id, SelectedActivity.Type, ValueForSelectedActivity);
 
             var createActivityRecordCommandResult = await _dispatcher.DispatchCommandAndGetResultAsync(createActivityRecordCommand);
 
@@ -124,14 +123,14 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
 
         private void UpdateActivityValueWhenSelectedActivityChanged()
         {
-            if(SelectedActivity is null || SelectedActivity.ActivityHasValue == false)
+            if(SelectedActivity is null || SelectedActivity.HasValue == false)
             {
                 ValueForSelectedActivity = null;
                 RaisePropertyChanged(nameof(ValueForSelectedActivity));
                 return;
             }
 
-            ValueForSelectedActivity = _dayRecordPanelAddActivityRecordDialogValueItemGetter.GetFromActivityType(SelectedActivity.ActivityType);
+            ValueForSelectedActivity = _dayRecordPanelAddActivityRecordDialogValueItemGetter.GetFromActivityType(SelectedActivity.Type);
             RaisePropertyChanged(nameof(ValueForSelectedActivity));
         }
     }
