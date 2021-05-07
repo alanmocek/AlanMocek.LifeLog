@@ -1,17 +1,11 @@
 ﻿using AlanMocek.LifeLog.Infrastructure.WPF;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
-using Microsoft.Extensions.DependencyInjection;
-using AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel;
 using AlanMocek.LifeLog.Data.Contexts;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 using System.Runtime.ExceptionServices;
-using AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;
 using AlanMocek.LifeLog.Infrastructure.Types;
 
 namespace AlanMocek.LifeLog.Client.Application.ViewModels

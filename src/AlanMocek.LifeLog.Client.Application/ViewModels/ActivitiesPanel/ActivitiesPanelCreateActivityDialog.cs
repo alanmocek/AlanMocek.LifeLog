@@ -1,4 +1,5 @@
 ﻿using AlanMocek.LifeLog.Application.Activities.Commands;
+using AlanMocek.LifeLog.Client.Application.Services;
 using AlanMocek.LifeLog.Infrastructure.Dispatchers;
 using AlanMocek.LifeLog.Infrastructure.WPF;
 using System;
@@ -14,10 +15,11 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
     public class ActivitiesPanelCreateActivityDialog : PanelDialogViewModel
     {
         private readonly IDispatcher _dispatcher;
+        private readonly AvailableActivityTypeItemsGetter _availableActivityTypeItemsGetter;
 
 
         private string _newActivityName;
-        private string _newActivityType;
+        private AvailableActivityTypeItem _newActivityType;
 
 
         public event Action DialogClosed;
@@ -33,18 +35,18 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
                 RaisePropertyChanged(nameof(NewActivityName));
             }
         }
-        public string NewActivityType
+        public AvailableActivityTypeItem NewActivityTypeItem
         {
             get => _newActivityType;
             set
             {
                 _newActivityType = value;
-                RaisePropertyChanged(nameof(NewActivityType));
+                RaisePropertyChanged(nameof(NewActivityTypeItem));
             }
         }
 
 
-        public List<string> AvailableActivityTypes { get; private set; }
+        public List<AvailableActivityTypeItem> AvailableActivityTypeItems { get; private set; }
 
 
         public string ErrorMessage { get; private set; }
@@ -55,22 +57,18 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 
 
         public ActivitiesPanelCreateActivityDialog(
-            IDispatcher dispatcher)
+            IDispatcher dispatcher,
+            AvailableActivityTypeItemsGetter availableActivityTypeItemsGetter)
         {
-            _dispatcher = dispatcher;
+            _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+            _availableActivityTypeItemsGetter = availableActivityTypeItemsGetter ?? throw new ArgumentNullException(nameof(availableActivityTypeItemsGetter));
 
 
             _newActivityName = string.Empty;
             _newActivityType = null;
 
 
-            AvailableActivityTypes = new List<string>()
-            {
-                "activity_time",
-                "activity_clock",
-                "activity_occurrence",
-                "activity_quantity"
-            };
+            AvailableActivityTypeItems = new List<AvailableActivityTypeItem>();
 
 
             CreateActivityCommand = new AsyncCommand(CreateActivityCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
@@ -78,9 +76,19 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
         }
 
 
+        public void Initialize()
+        {
+            var availableTypeItems = _availableActivityTypeItemsGetter.GetAll();
+            foreach(var availableTypeItem in availableTypeItems)
+            {
+                AvailableActivityTypeItems.Add(availableTypeItem);
+            }
+        }
+
+
         private async Task CreateActivityCommandExecutionAsync(object parameter)
         {
-            var createActivityCommand = new CreateActivity(Guid.NewGuid(), NewActivityName, NewActivityType);
+            var createActivityCommand = new CreateActivity(Guid.NewGuid(), NewActivityName, NewActivityTypeItem.Type);
             var createActivityCommandResult = await _dispatcher.DispatchCommandAndGetResultAsync(createActivityCommand);
 
             if(createActivityCommandResult.Successful == false)
@@ -98,6 +106,26 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             return Task.CompletedTask;
         }
     }
+
+    public class AvailableActivityTypeItem : ViewModel 
+    { 
+        public string Type { get; private set; }
+        public string Name { get; private set; }
+
+
+        public AvailableActivityTypeItem()
+        {
+
+        }
+
+
+        public void Initialize(string type, string name)
+        {
+            Type = type;
+            Name = name;
+        }
+    }
+
 
 
     public class ActivityCreatedEventArgs : EventArgs

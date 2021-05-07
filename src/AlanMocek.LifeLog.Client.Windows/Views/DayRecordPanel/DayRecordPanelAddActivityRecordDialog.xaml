@@ -30,9 +30,9 @@
                             <ComboBox SelectedItem="{Binding SelectedActivity}" ItemsSource="{Binding AvailableActivities}" MinHeight="36">
                                 <ComboBox.ItemTemplate>
                                     <DataTemplate>
-                                        <ComboBoxItem MinHeight="32" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                                        <Border MinHeight="32" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
                                             <TextBlock Text="{Binding Name}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="14"/>
-                                        </ComboBoxItem>
+                                        </Border>
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>

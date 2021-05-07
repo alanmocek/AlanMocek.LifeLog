@@ -10,14 +10,14 @@ using System.Windows.Data;
 namespace AlanMocek.LifeLog.Client.Application.Converters
 {
     /// <summary>
-    /// For object - returns <see cref="Visibility.Visible"/>.
-    /// For null - returns <see cref="Visibility.Collapsed"/>.
+    /// For true - returns <see cref="Visibility.Visible"/>.
+    /// For false - returns <see cref="Visibility.Collapsed"/>.
     /// </summary>
-    public class ObjectExistenceToVisiblityConverter : IValueConverter
+    public class BoolToVisiblityConverter : IValueConverter
     {
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            if(value is null)
+            if((bool)value == false)
             {
                 return Visibility.Collapsed;
             }

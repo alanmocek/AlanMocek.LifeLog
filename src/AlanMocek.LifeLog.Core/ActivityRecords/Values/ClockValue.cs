@@ -17,12 +17,12 @@ namespace AlanMocek.LifeLog.Core.ActivityRecords.Values
         {
             if(hour < 0 || hour > 23)
             {
-                throw new CoreException("Hour can not be less than zero or greater than 23."); // todo core exception
+                throw new CoreException("Hour can not be less than zero or greater than 23.");
             }
 
             if(minute < 0 || minute > 59)
             {
-                throw new CoreException("Minut can not be less than zero or greater than 59."); // todo core exception
+                throw new CoreException("Minut can not be less than zero or greater than 59.");
             }
 
             Hour = hour;

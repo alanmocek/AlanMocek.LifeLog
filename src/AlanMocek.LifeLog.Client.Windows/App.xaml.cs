@@ -43,15 +43,13 @@ namespace AlanMocek.LifeLog.Client.Windows
         => Host.CreateDefaultBuilder(args)
             .ConfigureServices((context, services) =>
             {
-                // Add core services
+                // Add Data services
                 services.AddDbContext<LifeLogContext>(options => options.UseSqlite("Data Source = UserData.db"));
+
+
+                // Add infrastracture services
                 services.AddScoped<IDispatcher, Dispatcher>();
-
-
-                // Add main panels view models
-                
-                services.AddScoped<CalendarPanel>();
-                
+                services.AddSingleton<NavigationService>();
 
 
                 // Add main window
@@ -59,7 +57,7 @@ namespace AlanMocek.LifeLog.Client.Windows
                 services.AddScoped<MainViewModel>();
 
 
-                // Add app main services
+                // Add core services
                 services.AddActivitiesServices();
                 services.AddDayRecordsServices();
                 services.AddActivityRecordsServices();
@@ -70,6 +68,8 @@ namespace AlanMocek.LifeLog.Client.Windows
                 services.AddTransient<ActivitiesPanelActivityItem>();
                 services.AddTransient<ActivitiesPanelCreateActivityDialog>();
                 services.AddTransient<ActivitiesPanelDeleteActivityDialog>();
+                services.AddTransient<AvailableActivityTypeItem>();
+
 
                 // Add DayRecordPanel view models
                 services.AddTransient<DayRecordPanel>();
@@ -86,12 +86,16 @@ namespace AlanMocek.LifeLog.Client.Windows
                 services.AddTransient<DayRecordPanelOccurrenceActivityRecordValueItem>();
 
 
+                // Add CalendarPanel view models
+                services.AddScoped<CalendarPanel>();
+
+
                 // Add client services
                 services.AddSingleton<DayRecordPanelActivityRecordItemGetter>();
                 services.AddSingleton<DayRecordPanelAddActivityRecordDialogValueItemGetter>();
                 services.AddSingleton<CreateActivityRecordCommandFactory>();
-                services.AddSingleton<NavigationService>();
                 services.AddSingleton<TemporaryApplicationValues>();
+                services.AddSingleton<AvailableActivityTypeItemsGetter>();
             });
 
         private async void Application_Startup(object sender, StartupEventArgs e)

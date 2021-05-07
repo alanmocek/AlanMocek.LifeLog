@@ -4,7 +4,8 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.ActivitiesPanel"
-             mc:Ignorable="d" MinWidth="400">
+             xmlns:viewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel;assembly=LifeLog.ClientApp"
+             mc:Ignorable="d" MinWidth="400" d:DataContext="{d:DesignInstance viewModels:ActivitiesPanelCreateActivityDialog}">
     <Grid>
         <Border Background="White">
             <Grid Margin="20">
@@ -31,10 +32,10 @@
 
                         <StackPanel Orientation="Vertical" Margin="0,20,0,0">
                             <Label Content="Activity Type:" MinHeight="32" FontSize="14"/>
-                            <ComboBox SelectedItem="{Binding NewActivityType}" ItemsSource="{Binding AvailableActivityTypes}" MinHeight="36">
+                            <ComboBox SelectedItem="{Binding NewActivityTypeItem}" ItemsSource="{Binding AvailableActivityTypeItems}" MinHeight="36">
                                 <ComboBox.ItemTemplate>
-                                    <DataTemplate>
-                                        <ComboBoxItem FontSize="14" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Content="{Binding}" MinHeight="32" />
+                                    <DataTemplate DataType="{x:Type viewModels:AvailableActivityTypeItem}">
+                                        <TextBlock FontSize="14" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Text="{Binding Name}" MinHeight="32" />
                                     </DataTemplate>
                                 </ComboBox.ItemTemplate>
                             </ComboBox>

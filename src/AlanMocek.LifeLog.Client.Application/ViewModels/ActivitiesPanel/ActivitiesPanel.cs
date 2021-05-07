@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using Microsoft.Extensions.DependencyInjection;
 using AlanMocek.LifeLog.Application.Activities.DTOs;
+using AlanMocek.LifeLog.Client.Application.Services;
 
 namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
 {
@@ -36,9 +37,9 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             IDispatcher dispatcher,
             IServiceProvider serviceProvider)
         {
-            _dispatcher = dispatcher;
-            _serviceProvider = serviceProvider;
-
+            _dispatcher = dispatcher ?? throw new ArgumentNullException(nameof(dispatcher));
+            _serviceProvider = serviceProvider ?? throw new ArgumentNullException(nameof(serviceProvider));
+            
 
             _isInitialized = false;
 
@@ -82,6 +83,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.ActivitiesPanel
             var createActivityDialog = _serviceProvider.GetRequiredService<ActivitiesPanelCreateActivityDialog>();
             createActivityDialog.DialogClosed += OnDialogClosed;
             createActivityDialog.ActivityCreated += OnActivityCreatedAsync;
+            createActivityDialog.Initialize();
             CurrentDialog = createActivityDialog;
             RaisePropertyChanged(nameof(CurrentDialog));
             return Task.CompletedTask;

@@ -28,7 +28,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
         private int _selectedMonth;
 
 
-        public ObservableCollection<CalendarPanelDayCardViewModel> Days { get; private set; }
+        public ObservableCollection<CalendarPanelDayElement> Days { get; private set; }
         public int SelectedYear
         {
             get => _selectedYear;
@@ -63,7 +63,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
             _temporaryApplicationValues = temporaryApplicationValues;
 
 
-            Days = new ObservableCollection<CalendarPanelDayCardViewModel>();
+            Days = new ObservableCollection<CalendarPanelDayElement>();
 
 
             _isInitialized = false;
@@ -91,9 +91,6 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
         {
             var browseDayRecords = new BrowseDayRecordsForCalendarPanel(SelectedYear, SelectedMonth);
             var browseDayRecordsResult = await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<DayRecordForCalendarPanel>, BrowseDayRecordsForCalendarPanel>(browseDayRecords);
-            //var getDayRecordForSelectedYearAndMonthQuery = new GetDayRecordCardsByYearAndMonth(SelectedYear, SelectedMonth);
-            //var getDayRecordForSelectedYearAndMonthQueryResult =
-            //    await _dispatcher.DispatchQueryAndGetResultAsync<IEnumerable<DayRecordCardViewModel>, GetDayRecordCardsByYearAndMonth>(getDayRecordForSelectedYearAndMonthQuery);
 
             if(browseDayRecordsResult.Successful == false)
             {
@@ -106,37 +103,47 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
             var daysInMonth = DateTime.DaysInMonth(SelectedYear, SelectedMonth);
 
             var weekOfMonthAsNumber = 1;
-            for (int i=1;i<=daysInMonth;i++)
+            for (int day=1;day<=daysInMonth;day++)
             {
-                var dayDate = new DateTime(SelectedYear, SelectedMonth, i);
-                var dayOfWeekAsNumber = GetDayOfWeekAsNumber(dayDate.DayOfWeek);
-                
-                var dayRecordForDay = dayRecords.FirstOrDefault(dayRecord => dayRecord.Date.Year == dayDate.Year
-                && dayRecord.Date.Month == dayDate.Month
-                && dayRecord.Date.Day == dayDate.Day);
-
-                if(dayRecordForDay is null)
-                {
-                    Days.Add(new CalendarPanelNotRecordedDayCardViewModel(i, dayOfWeekAsNumber, weekOfMonthAsNumber));
-                }
-
-                if(dayRecordForDay is not null)
-                {
-                    Days.Add(new CalendarPanelRecordedDayCardViewModel(dayRecordForDay, dayOfWeekAsNumber, weekOfMonthAsNumber));
-                }
+                int dayOfWeekAsNumber = AddDayElement(dayRecords, weekOfMonthAsNumber, day);
 
                 if (dayOfWeekAsNumber == 7)
                 {
-                    // Go to next week
+                    // Increase week number
                     weekOfMonthAsNumber++;
                 }
             }
         }
 
+        private int AddDayElement(IEnumerable<DayRecordForCalendarPanel> dayRecords, int weekOfMonthAsNumber, int i)
+        {
+            var dayDate = new DateTime(SelectedYear, SelectedMonth, i);
+            var dayOfWeekAsNumber = GetDayOfWeekAsNumber(dayDate.DayOfWeek);
+            var isToday = dayDate.Day == DateTime.Now.Day && dayDate.Month == DateTime.Now.Month && dayDate.Year == DateTime.Now.Year;
+
+
+            var dayRecordForDay = dayRecords.FirstOrDefault(dayRecord => dayRecord.Date.Year == dayDate.Year
+            && dayRecord.Date.Month == dayDate.Month
+            && dayRecord.Date.Day == dayDate.Day);
+
+            var DayRecordForDayExist = dayRecordForDay is not null;
+
+            if (DayRecordForDayExist == false)
+            {
+                Days.Add(new CalendarPanelNotRecordedDayElement(i, dayOfWeekAsNumber, weekOfMonthAsNumber, isToday));
+            }
+
+            if (DayRecordForDayExist == true)
+            {
+                Days.Add(new CalendarPanelRecordedDayElement(dayRecordForDay, dayOfWeekAsNumber, weekOfMonthAsNumber, isToday));
+            }
+
+            return dayOfWeekAsNumber;
+        }
 
         private async Task CreateDayRecordForDayCardCommandExecutionAsync(object parameter)
         {
-            var dayCard = parameter as CalendarPanelNotRecordedDayCardViewModel;
+            var dayCard = parameter as CalendarPanelNotRecordedDayElement;
             
             var createDayRecordCommand = new CreateDayRecord(Guid.NewGuid(), new DateTime(SelectedYear, SelectedMonth, dayCard.Day));
             var createDayRecordCommandResult = await _dispatcher.DispatchCommandAndGetResultAsync(createDayRecordCommand);
@@ -160,7 +167,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
 
             var createdDayRecord = getCreatedDayRecordQueryResult.Result;
 
-            Days[dayCardIndex] = new CalendarPanelRecordedDayCardViewModel(createdDayRecord, dayCard.DayOfWeekAsNumber, dayCard.WeekOfMonthAsNumber);
+            Days[dayCardIndex] = new CalendarPanelRecordedDayElement(createdDayRecord, dayCard.DayOfWeekAsNumber, dayCard.WeekOfMonthAsNumber, dayCard.IsToday);
 
             await GotoDayRecordPanelCommandExecutionAsync(createdDayRecord.Id);
         }
@@ -187,7 +194,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
     }
 
 
-    public abstract class CalendarPanelDayCardViewModel : ViewModel
+    public abstract class CalendarPanelDayElement : ViewModel
     {
         public int DayOfWeekAsNumber { get; private set; }
         public int WeekOfMonthAsNumber { get; private set; }
@@ -195,35 +202,38 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel
         public int DayOfWeekAsNumberForGrid => DayOfWeekAsNumber - 1;
         public int WeekOfMonthAsNumberForGrid => WeekOfMonthAsNumber - 1;
 
+        public bool IsToday { get; private set; }
 
-        public CalendarPanelDayCardViewModel(int dayOfWeekAsNumber, int weekOfMonthAsNumber)
+
+        public CalendarPanelDayElement(int dayOfWeekAsNumber, int weekOfMonthAsNumber, bool isToday)
         {
             DayOfWeekAsNumber = dayOfWeekAsNumber;
             WeekOfMonthAsNumber = weekOfMonthAsNumber;
+            IsToday = isToday;
         }
     }
 
 
-    public class CalendarPanelNotRecordedDayCardViewModel : CalendarPanelDayCardViewModel
+    public class CalendarPanelNotRecordedDayElement : CalendarPanelDayElement
     {
         public int Day { get; private set; }
 
 
-        public CalendarPanelNotRecordedDayCardViewModel(int day, int dayOfWeekNumber, int weekOfMonthNumber)
-            : base(dayOfWeekNumber, weekOfMonthNumber) 
+        public CalendarPanelNotRecordedDayElement(int day, int dayOfWeekNumber, int weekOfMonthNumber, bool isToday)
+            : base(dayOfWeekNumber, weekOfMonthNumber, isToday) 
         {
             Day = day;
         }
     }
 
 
-    public class CalendarPanelRecordedDayCardViewModel : CalendarPanelDayCardViewModel
+    public class CalendarPanelRecordedDayElement : CalendarPanelDayElement
     {
         public DayRecordForCalendarPanel DayRecord { get; private set; }
 
 
-        public CalendarPanelRecordedDayCardViewModel(DayRecordForCalendarPanel dayRecord, int dayOfWeekNumber, int weekOfMonthNumber)
-            : base(dayOfWeekNumber, weekOfMonthNumber)
+        public CalendarPanelRecordedDayElement(DayRecordForCalendarPanel dayRecord, int dayOfWeekNumber, int weekOfMonthNumber, bool isToday)
+            : base(dayOfWeekNumber, weekOfMonthNumber, isToday)
         {
             DayRecord = dayRecord;
         }

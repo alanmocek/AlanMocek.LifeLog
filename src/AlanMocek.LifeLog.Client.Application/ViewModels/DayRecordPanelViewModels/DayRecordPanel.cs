@@ -33,7 +33,6 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
         public PanelDialogViewModel CurrentDialog { get; private set; }
         public DayRecordForDayRecordPanel DayRecord { get; private set; }
         public ObservableCollection<DayRecordPanelActivityRecordItem> ActivityRecords { get; private set; }
-        public CollectionViewSource ActivityRecordsSource { get; private set; }
 
 
         public ICommand OpenAddActivityRecordDialogCommand { get; private set; }
@@ -56,8 +55,6 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
             CurrentDialog = null;
             DayRecord = null;
             ActivityRecords = new ObservableCollection<DayRecordPanelActivityRecordItem>();
-            ActivityRecordsSource = new CollectionViewSource();
-            ActivityRecordsSource.Source = ActivityRecords;
 
 
             OpenAddActivityRecordDialogCommand = new AsyncCommand(OpenAddActivityRecordDialogCommandExecutionAsync, (ex) => ExceptionDispatchInfo.Capture(ex).Throw());
@@ -75,7 +72,7 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
         {
             if (_temporaryApplicationValues.DayRecordIdToOpen.HasValue == false)
             {
-                throw new Exception("No day record id find to open day record panel.");
+                throw new Exception("No day record id found to open day record panel.");
             }
 
             var getDayRecordQuery = new GetDayRecordForDayRecordPanelById(_temporaryApplicationValues.DayRecordIdToOpen.Value);
@@ -106,8 +103,6 @@ namespace AlanMocek.LifeLog.Client.Application.ViewModels.DayRecordPanelViewMode
             {
                 await AddActivityRecordItemAsync(activityRecord);
             }
-
-            // TODO ActivityRecords.OrderBy(activityRecordItem => activityRecordItem.ActivityRecord.Order);
         }
 
         private async Task OpenAddActivityRecordDialogCommandExecutionAsync(object parameter)

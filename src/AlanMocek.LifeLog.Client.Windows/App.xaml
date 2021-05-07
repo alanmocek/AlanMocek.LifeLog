@@ -16,28 +16,18 @@
              xmlns:calendarPanelViewModels="clr-namespace:AlanMocek.LifeLog.Client.Application.ViewModels.CalendarPanel;assembly=LifeLog.ClientApp"
              xmlns:calendarPanelViews="clr-namespace:AlanMocek.LifeLog.Client.Windows.Views.CalendarPanel">
     <Application.Resources>
-
+        <!-- Add converters-->
         <converters:ObjectExistenceToVisiblityConverter x:Key="ObjectExistenceToVisiblityConverter"/>
+        <converters:BoolToVisiblityConverter x:Key="BoolToVisiblityConverter"/>
 
-        
-        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanel}">
-            <activitiesPanelViews:ActivitiesPanelView/>
-        </DataTemplate>
 
-        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelCreateActivityDialog}">
-            <activitiesPanelViews:ActivitiesPanelCreateActivityDialogView/>
-        </DataTemplate>
-
-        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelDeleteActivityDialog}">
-            <activitiesPanelViews:ActivitiesPanelDeleteActivityDialogView/>
-        </DataTemplate>
-
-        
+        <!-- Add CalendarPanel data templates-->
         <DataTemplate DataType="{x:Type calendarPanelViewModels:CalendarPanel}">
             <calendarPanelViews:CalendarPanelView/>
         </DataTemplate>
 
 
+        <!-- Add DayRecordPanel data templates-->
         <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanel}">
             <dayRecordPanelViews:DayRecordPanelView/>
         </DataTemplate>
@@ -45,9 +35,7 @@
         <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelAddActivityRecordDialog}">
             <dayRecordPanelViews:DayRecordPanelAddActivityRecordDialog/>
         </DataTemplate>
-
         
-        <!-- Add... -->
         <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelQuantityActivityRecordItem}">
             <dayRecordPanelViews:DayRecordPanelQuantityActivityRecordItemElement/>
         </DataTemplate>
@@ -63,11 +51,23 @@
         <DataTemplate DataType="{x:Type dayRecordPanelViewModels:DayRecordPanelOccurrenceActivityRecordItem}">
             <dayRecordPanelViews:DayRecordPanelOccurrenceActivityRecordItemElement/>
         </DataTemplate>
-        
-        
-        <!-- Add... -->
+
+
+        <!-- Add ActivitiesPanel data templates-->
         <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelActivityItem}">
             <activitiesPanelViews:ActivitiesPanelActivityItem/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanel}">
+            <activitiesPanelViews:ActivitiesPanelView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelCreateActivityDialog}">
+            <activitiesPanelViews:ActivitiesPanelCreateActivityDialogView/>
+        </DataTemplate>
+
+        <DataTemplate DataType="{x:Type activitiesPanelViewModels:ActivitiesPanelDeleteActivityDialog}">
+            <activitiesPanelViews:ActivitiesPanelDeleteActivityDialogView/>
         </DataTemplate>
 
 
